@@ -1,0 +1,29 @@
+struct RECTANGLE {
+	rect: struct,
+	area: rect -> int,
+	perim: rect -> int
+}
+
+let Rectangle = (fn () {
+	struct rect {
+		height: int,
+		width: int
+	}
+	fun area r = r.height * r.width;
+	fun perim r = 2 * r.height + 2 * r.width;
+	RECTANGLE {
+		rect = rect,
+		area = area,
+		perim = perim
+	}
+}) ()
+
+let Rectangle = RECTANGLE {
+	rect = struct {
+		height: int,
+		width: int
+	},
+	area = fn r = r.height * r.width,
+	perim = fn r = 2 * r.height + 2 * r.width;
+}
+

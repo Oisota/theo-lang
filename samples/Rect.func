@@ -1,0 +1,28 @@
+interface RECTANGLE {
+    type Rect // abstract data type
+    let new : (int, int) -> rect
+    let height : rect -> int
+    let width : rect -> int
+    let area : rect -> int
+    let perim : rect -> int
+}
+
+namespace Rectangle : RECTANGLE {
+    struct rect {
+		height: int,
+		width: int
+    }
+    fun new h w = rect { height = h, width = w }
+    fun height r = r.height
+    fun width r = r.width
+    fun area r = r.width * r.height
+    fun perim r = (2 * r.height) + (2 * width) 
+}
+
+let import : string -> struct
+let Rectangle = import 'Rectangle'
+
+let myrect = Rectangle.new 5 6
+let area = Rectangle.area myrect
+let perim = myrect 
+    |> Rectangle.perim

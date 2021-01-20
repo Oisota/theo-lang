@@ -1,0 +1,29 @@
+interface AST {
+    let eval : expr -> unit
+}
+
+namespace Ast : AST {
+    enum number { 
+        Int int, 
+        Real float 
+    }
+
+    enum expresssion {
+        Num number,
+        Add (expression, expression),
+        Sub (expression, expression),
+        Mul (expression, expression),
+        Div (expression, expression)
+    }
+
+    exception TypeMismatch
+
+    fun add (Int i1) (Int i2) = Int (i1 + i2),
+        add (Real r1) (Real r2) = Real (r1 + r2),
+        add (_, _) = raise TypeMismatch
+
+    fun eval Add (e1, e2) = add (eval e1) (eval e2),
+        eval Sub (e1, e2) = subtract (eval e1) (eval e2),
+        eval Mult (e1, e2) = multiply (eval e1) (eval e2),
+        eval Div (e1, e2) = divide (eval e1) (eval e2)
+}

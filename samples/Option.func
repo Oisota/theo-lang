@@ -1,0 +1,35 @@
+interface OPTION {
+    type <a> option
+    let isSome : <a> option -> bool
+    let getOpt : (<a> option, <a>) -> <a>
+    let map : (<a> -> <b>) -> <a> option -> <b> option
+}
+
+namespace Option :> OPTION {
+    type <a> option {
+        Some a,
+        None
+    }
+
+    fun isSome (Some _) = true,
+        isSome (None) = false
+
+    fun get (Some value, _) = value,
+        get (None, default) = default
+
+    fun map f (Some value) = f value,
+        map _ (None) = None
+}
+
+let a = option::Some 5
+
+let b = a
+    |> Option.map fn a => a * 5
+    |> Option.map fn a => a / 2
+    |> Option.map fn a => a + 34
+
+
+IO.print case b {
+    Option.Some x => 'It Worked',
+    Option.None => 'It Failed
+}

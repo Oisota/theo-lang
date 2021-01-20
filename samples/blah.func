@@ -1,0 +1,39 @@
+let List = import 'List'
+
+fun fib n {
+    if n = 0 { 0 }
+    else if n = 1 { 1 }
+    else { (fib n - 1) + (fib n - 2) }
+}
+
+fun fib n {
+    case n {
+        0 => 0,
+        1 => 1,
+        _ => (fib n-1) + (fib n - 2)
+    }
+}
+
+fun fib 0 = 0,
+    fib 1 = 1,
+    fib n = (fib n - 1) + (fib n - 2)
+
+let fib = fn n => {
+}
+
+
+fun (|>) f g = g f
+infix fun |> f g = g f
+
+let mylist = [1,2,3,4,5,6]
+
+List.map (fn x => x * x) mylist
+
+let res = mylist 
+    |> List.map (fn x => x * x)
+    |> List.filter (fn x => x > 25)
+    |> List.reduce (fn x y => x + y) 0
+
+let l : List<int> = List.new
+	|> List.prepend 5
+	|> List.prepend 6

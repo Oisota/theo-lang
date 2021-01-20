@@ -1,0 +1,73 @@
+(* func EBNF Grammar *)
+white_space   = { " " | "\t" | "\n" | "\r" } ;
+space         = { " " | "\t" | "\n" | "\r" }+ ;
+nonzero_digit = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ; 
+digit         = "0" | nonzero_digit ; 
+letter        = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | 
+                "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | 
+                "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | 
+                "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ; 
+char          = letter | digit | symbol ; (* where symbol is any printable unicode symbol *)
+
+id_list = id | id "," id_list ;
+id      = ( letter | "_" ) , { letter | digit | "_" } ;
+
+program = white_space
+        , decl_list
+        , white_space
+        , stmt_list
+        , white_space ;
+
+(* type literals *)
+int    = digit | ( nonzero_digit , { digit } ) ;
+float  = int , "." , int ;
+number = [ "~" ] , ( int | float ) ;
+
+string = ( '"' , { char } , '"' ) 
+       | ( "'" , { char } , "'" ) ;
+tuple  = "(" , white_space , expr_list , white_space , ")" ;
+list   = "[" , white_space , expr_list , white_space , "]" ;
+vector = "<" , white_space , expr_list , white_space , ">" ;
+set    = "#{" , white_space , expr_list , white_space , "}" ;
+
+dict = "{" , white_space , key_value_list , white_space , "}" ;
+key_value_list = key_value_pair | key_value_pair "," key_value_list ;
+key_value_pair = value , white_space , ":" , white_space , value ;
+
+sequence = string | list | vector | set | tuple ;
+collection = sequence | dict ;
+collection_access = ( id | collection ) , "[" , value , "]" ;
+
+
+lambda = "fn" , space , id_list "=>" , expr ;
+
+function = "fun", space , id_list , white_space , ")" , "{", decl_list , stmt_list , return "}" ;
+func_call = ( "(" func ")" , white_space , "(" expr_list ")" ) 
+          | ( ( id | object_property ) , "(" expr_list ")" ) ;
+
+
+
+type      = "let" ;
+types     = ;
+value     = bool | number | string | list | vector | set | map | id | func | func_call ;
+
+assgmt = ( id | object_property ) , white_space , "=" , white_space , expr ;
+
+decl_list = { decl } ;
+decl      = type , white_space , id_list ;
+
+expr      = math_expr | bool_expr ;
+expr_list = expr 
+          | expr , white_space , "," , white_space , expr_list ;
+
+(* Unify everything under one expr rule *)
+(* TODO: exponentiation operator '^', modulus operator '%' *)
+math_expr = term { "+" term | "-" term } ;
+term            = factor {"*" factor | "/" factor} ;
+factor          = "(" expr ")" | value ;
+
+(* == != < > <= >= && || ! *)
+(*TODO need to add operator precedence *)
+bool_expr = expr { "==" expr | "!=" expr | "<" expr | ">" expr "<=" expr | ">=" expr | "and" expr | "or" expr | "xor" expr } ;
+
+expr = 

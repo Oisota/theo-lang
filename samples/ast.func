@@ -1,0 +1,26 @@
+namespace AST {
+    type identifier = string
+    enum number {
+        Int int,
+        Real float
+    }
+    enum var_type {
+        INT, 
+        REAL
+    }
+    type declaration = (var_type, identifier list)
+    enum expression {
+        Num number,
+        Var identifier,
+        Add (expression, expression),
+        Sub (expression, expression),
+        Mul (expression, expression),
+        Div (expression, expression)
+    }
+    enum statement {
+        Assign (identifer, expression),
+        IPrint expression,
+        RPrint expression
+    }
+    type program = (declaration list, statement list)
+}

@@ -1,0 +1,18 @@
+let IO = import 'IO'
+let String = import 'String'
+
+let AST = import 'AST'
+
+fun main args:vector -> int {
+    let tokens = "test.tiny"
+        |> IO.open
+        |> IO.read
+        |> String.replace "\n" " "
+        |> String.split " "
+
+    let program 
+}
+
+fun prog tokens:string list -> AST.prog {
+    
+}

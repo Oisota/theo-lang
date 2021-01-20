@@ -1,0 +1,37 @@
+// Lambda expresions
+fn x { 
+    x * x 
+}
+
+// conditional expressions
+if bool_expr {
+    expr
+} else if bool_expr {
+    expr
+} else {
+    expr
+}
+
+//value bindings
+let x = value
+
+//type declaration
+type <a> myList {
+    Cons (a, a myList),
+    Nil
+}
+
+type <a> option {
+    Some a,
+    None
+}
+
+//type synonym
+type myPoint = (int, int)
+type token = string
+
+//case expr
+case opt {
+    Some value => value,
+    None => 0
+}

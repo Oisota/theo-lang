@@ -1,0 +1,68 @@
+//namespace imports
+let Sys = import 'System'
+let IO = import 'IO'
+let RE = import 'RegExp'
+let List = import 'List'
+
+fun main args:vector -> int {
+    let j = 4, r = 9
+    let name = 'Derek'
+    let show_vec = <'Yu Yu Hakusho', 'Dragon Ball Z', 'Death Note'> //vector, random access, array
+    let shows_list = ['Yu Yu Hakusho', 'Dragon Ball Z', 'Death Note'] //list, Listuential acces, linked list
+    let show_tup = (5, 6.0, 'blah') //tuple, collection of possibly differing types
+    let rect = {'length': 4, 'width': 5} //dict, has type string int dict
+    let s = #{4, 5, 6} //set, doesn't allow duplicates
+    let a = 15
+    let b = a * 3
+    let c = (b - a) - 1
+
+	let c = 5, x = 6, t = 5.4 {
+		
+	}
+
+    IO.print('Hello World')
+    IO.print('Hello %s', name)
+
+    //scope block creates scope that doesn't have access to surrounding scope 
+    res = scope x y {
+        x * y //only x and y are visible
+    } 
+
+    if j <= r and a = 15 { 
+        io.print('Bar') 
+    } else if r = j or b > 10 { 
+        io.print('Foo') 
+    } else { 
+        io.print('') 
+    }
+
+    List.map io.print shows
+    //or
+    shows 
+    |> List.map io.print
+
+    1
+}
+
+
+// allow equal sign a for single expression on the right hand side
+fun fib 0 = 0,
+    fib 1 = 1,
+    fib n = (fib n - 1) + ( fib n - 2)
+
+type point {
+    Point (int, int)
+}
+
+let p = Point (5, 6)
+
+let Point (length, width) = p; //destructure point based on pattern matching
+
+IO.print(length) // -> 5
+IO.print(width) // -> 6
+
+let x = [1,2,4,5,6]
+let sum = x
+    |> List.filter (fn x => x < 100)
+    |> List.map (fn x => Math.pow x 2 0)
+    |> List.reduce (+) 0
