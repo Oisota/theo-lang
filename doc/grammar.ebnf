@@ -9,8 +9,8 @@ letter        = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" 
                 "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ; 
 char          = letter | digit | symbol ; (* where symbol is any printable unicode symbol *)
 
-id_list = id | id "," id_list ;
 id      = ( letter | "_" ) , { letter | digit | "_" } ;
+id_list = id | id "," id_list ;
 
 program = white_space
         , decl_list
@@ -56,7 +56,8 @@ assgmt = ( id | object_property ) , white_space , "=" , white_space , expr ;
 decl_list = { decl } ;
 decl      = type , white_space , id_list ;
 
-expr      = math_expr | bool_expr ;
+expr_block = "{" , expr_list , "}" ;
+expr      = expr_block | math_expr | bool_expr ;
 expr_list = expr 
           | expr , white_space , "," , white_space , expr_list ;
 

@@ -53,8 +53,8 @@ See [Types](types.markdown) and [Core Modules](core_modules.markdown) for more d
 ### Enumerations
 Algebraic datatypes will be able to be defined as so:
 ```text
-enum List[a] {
-    Cons (a, List[a]),
+enum List<A> {
+    Cons (A, List<A>),
     Nil
 }
 
@@ -69,42 +69,6 @@ let mylist = List.Cons (5, List.Cons (6, List.Cons (7, List.Nil)))
 let card = (Rank.Three, Suit.Spade)
 ```
 
-### Structures
-Structures provide a datatype with named fields that can be of differing types.
-```
-struct Point {
-	x: float,
-	y: float
-}
-
-struct Person {
-	name: string,
-	age: int
-}
-
-struct Card {
-	rank: Rank,
-	suit: Suit
-}
-
-let p1 = Point { 
-	x = 5, 
-	y = 6 
-}
-let {x, y} = p1
-let x = p1.x
-let y = p1.y
-
-let p2 = Person { 
-	name = "Derek Morey", 
-	age = 23 
-}
-
-let card = Card {
-	rank = Rank.Jack,
-	suit = Suit.Heart
-}
-```
 
 ### Type Synonyms/Named Tuples
 ```
@@ -130,11 +94,10 @@ else if y == 9 { 'Bar' }
 else { 'Bat' }
 ```
 
-### Values
-The language will not have variables in the traditional sense.
-It will have names bound to values.
-The keyword `let` will be used to bind a name to a value.
-The bindings will be not be able to be changed once assigned and values will be immutable by default.
+### Variables
+The `let` keyword will be used to bind a name to a value.
+The bindings will be not be able to be changed once assigned and primitive values will be immutable.
+Although the name binding may be immutable, changes to a mutable data structure will still be possible.
 
 Variable declaration will look like:
 ```text
@@ -148,7 +111,7 @@ Case expressions will be used to pattern match over data types and other data st
 The compiler will check to ensure all cases of a pattern are handled by the expressions.
 
 ```text
-enum Option[a] {
+enum Option<a> {
     Some a,
     None
 }
@@ -182,75 +145,10 @@ let mysuit = case mycard {
 //above throws compiler error
 ```
 
-### Code Reuse and Modularity
-The module system will be roughly equivalent to the ML module system.
-Instead of structures and signatures, there will be namespaces and interfaces.
-Namespaces may or may not implement an interface.
-Namespaces will just be a group of related code accessible using dot notation.
-For ex: `module1.blah`.
-Interfaces will declare a type signature for a module to conform to, but will not provide any implementations on their own.
-Modules will then implement the type signature of the interface.
-Functors will also be available as they are in the ML module system.
-See [Core Modules](core_modules.markdown) for more detail.
-
-```text
-interface STACK {
-    type Stack[T]
-	let push: [T] -> stack[T] -> stack[T],
-	let pop: stack[T] -> ([T], stack[T]),
-	let empty: stack[T] -> bool
-}
-
-namespace Stack : STACK {
-    enum Stack[T] {
-        Node (T, T stack)
-        Empty,
-    }
-	fun push e s = Node (e, s)
-	fun pop Empty = Option.None,
-		pop (Node (e, s)) = (Option.Some e, s)
-	fun empty Empty = true,
-		empty _ = false
-	let Stack = STACK {
-		stack = stack,
-		push = push,
-		pop = pop,
-		empty = empty
-	}
-}
-```
-
-Consider simplifying the language and abondoning module systems all together, relying on functions and structs.
-Structs will replace interfaces and namespaces will be actual instances of those structs.
-A module might look like:
-```
-struct STACK[E] {
-	Stack: enum,
-	push: [E] -> Stack[E] -> Stack[E],
-	pop: Stack[E] -> ([E], Stack[E]),
-	empty: Stack[E] -> bool
-}
-
-(fn () {
-	enum Stack[T] {
-		Node (T, Stack[T])
-		Empty,
-	}
-	
-	fun push e s = Node (e, s)
-	fun pop Empty = Option.None,
-		pop (Node (e, s)) = (Option.Some e, s)
-	fun empty Empty = true,
-		empty _ = false
-
-	let Stack = STACK {
-		Stack = stack,
-		push = push,
-		pop = pop,
-		empty = empty
-	}
-}) ()
-```
+### Module System
+The module system will be file and directory based similar to how Python and Node.js do things.
+A single file will be considered a "module" and a directory with a special index file (name for this file TBD) will be considered a package.
+Under the hood, modules and packages will be transformed into structs with the top-level file contents being the members of the struct.
 
 ### Comments
 'C' style inline and block comments will be supported.
@@ -260,4 +158,22 @@ struct STACK[E] {
 */
 
 //This is an inline comment
+```
+
+### Macros
+Should the language have macros?
+I'm debating on whether there should even be literal notation for dicts/lists/etc.
+It might be easier from a grammar definition standpoint to have macros that would expand to create lists.
+For example:
+```text
+let l1 = @list[1,2,3,4,5]
+```
+Would expand to:
+```text
+let l1 = list()
+l1.add(1)
+l1.add(2)
+l1.add(4)
+l1.add(4)
+l1.add(5)
 ```

@@ -15,15 +15,16 @@ These are the core modules that will be available:
 - Set
 - Ref
 - Option
+- Result
 
 ### Other Modules
 - Math
 - Util
 - IO
 - Regex
-- Math
 - File
 - OS
 - Sys
 - Crypto
 - HTTP
+- Concurrency
