@@ -3,7 +3,7 @@ let String = import 'String'
 
 let AST = import 'AST'
 
-fun main args:vector -> int {
+fun main(args: vector): int {
     let tokens = "test.tiny"
         |> IO.open
         |> IO.read

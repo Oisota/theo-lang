@@ -32,6 +32,10 @@ The language will be an expression based language.
 It will support mainly a mix of functional and procedural/imperative programming, favoring the functional approach.
 This should be considered when building the standard library and how built-in data structures should operate.
 
+### Implementation
+I'm thinking that it will be easiest to have the language compile to C source code similar to how Nim works.
+This will make it easy to generate a standalone executable and will allow the language to run anywhere that has a C compiler.
+
 Design
 ------
 ### Types
@@ -42,7 +46,9 @@ The language will be statically typed and have the following built-in primitive 
 - Char (**char**)
 - Tuple (**tuple**)
 
-**TODO:** figure which types will be primitives and which will be collections
+**TODO:**
+- figure which types will be primitives and which will be collections
+- figure out how unsigned ints will be added and if different sizes should be supported like `i32`, `u8`, etc.
 
 The types of expressions will be inferred and will rarely need to be stated explicitly.
 Type annotations may be used if the user feels they make the code clearer or if the compiler can't infer the type.
@@ -51,7 +57,7 @@ Programs won't compile unless they type check.
 See [Types](types.markdown) and [Core Modules](core_modules.markdown) for more detail.
 
 ### Enumerations
-Algebraic datatypes will be able to be defined as so:
+Algebraic data types will be able to be defined as so:
 ```text
 enum List<A> {
     Cons (A, List<A>),
@@ -87,7 +93,8 @@ Each `if` expression will evaluate to a value.
 Every `if` must have a corresponding `else`.
 
 ```text
-let x = 5, y = 8
+let x = 5
+let y = 8
 
 if x == 10 { 'Foo' }
 else if y == 9 { 'Bar' }
@@ -177,3 +184,5 @@ l1.add(4)
 l1.add(4)
 l1.add(5)
 ```
+
+This could most likely be added later and we shouldn't worry about this for the initial implementation.

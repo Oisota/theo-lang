@@ -1,0 +1,12 @@
+fun main() {
+	let x = 5 * 8
+}
+
+fun add(a: int, b: int): int {
+	a + b
+}
+
+struct Point {
+	x: float
+	y: float
+}

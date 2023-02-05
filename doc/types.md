@@ -17,6 +17,8 @@ let x = 5
 let y = 5.6
 ```
 
+**Should we also provide other types like i8, i16, u8, u16, u32, etc. for ints and floats?**
+
 ### Char
 Single character value.
 Denoted using single quotes: `'a'`
@@ -24,7 +26,7 @@ Denoted using single quotes: `'a'`
 ### Key
 The key type will be like a constant string that is replaced at compile time.
 It will take the place of using strings as keys.
-Still deciding on a notation.
+Still deciding on a notation. (#foo :foo $foo @foo)
 
 ```text
 x[#foo] = 5
@@ -52,6 +54,7 @@ let add = fn x {
 ```
 Functions should work like ML functions in that they only take one value.
 See [Example](../samples/blah.func) for more detail.
+**May change this**
 
 #### Scopes
 Functions create their own scope.
