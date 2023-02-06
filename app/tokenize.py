@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from collections import namedtuple
 
 class TokenType(Enum):
-    WHITE_SPACE = auto()
     VAR_NAME = auto()
     PAREN_OPEN = auto()
     PAREN_CLOSE = auto()
@@ -14,8 +13,10 @@ class TokenType(Enum):
     COMMA = auto()
     KEYWORD = auto()
     NUMBER = auto()
+    STRING = auto()
     OPERATOR = auto()
     IDENTIFIER = auto()
+    COMMENT = auto()
 
 @dataclass
 class Token:
@@ -39,7 +40,6 @@ def lex_char(type, value, input, current):
 
 def lex_pattern(type, pattern, input, current):
     """Generic function for lexing a regexp pattern"""
-    # TODO need to debug this, not working quite right
     consumed_chars = 0
     value = ''
     char = input[current]
@@ -60,6 +60,34 @@ def lex_keyword(type, keyword, input, current):
 
     if len(keyword) == consumed_chars:
         return TokenizeResult(consumed_chars, Token(type, keyword))
+    return TokenizeResult(0, None)
+
+def lex_line_comment(input, current):
+    """Lex a single line comment"""
+    consumed = 2
+    value = ''
+    if input[current] == '/' and input[current + 1] == '/':
+        char = input[current + consumed]
+        while char != '\n':
+            value += char
+            consumed += 1
+            char = input[current + consumed]
+        return TokenizeResult(consumed, None) # currently just ignoring comments
+    return TokenizeResult(0, None)
+
+def lex_multiline_comment(input, current):
+    """Lex a multiline comment"""
+    consumed = 2
+    value = ''
+    if input[current] == '/' and input[current + 1] == '*':
+        char = input[current + consumed]
+        next_char = input[current + consumed + 1]
+        while char != '*' and next_char != '/':
+            value += char
+            consumed += 1
+            char = input[current + consumed]
+            next_char = input[current + consumed + 1]
+        return TokenizeResult(consumed, None) # currently just ignoring comments
     return TokenizeResult(0, None)
 
 # concrete lexing functions
@@ -95,13 +123,41 @@ def lex_skip_whitespace(input, current):
         return TokenizeResult(1, None)
     return TokenizeResult(0, None)
 
+def lex_string(input, current):
+    if input[current] == '"':
+        value = ''
+        consumed = 1
+        char = input[current + consumed]
+        while char != '"':
+            if char is None:
+                raise Exception('unterminated string')
+            value += char
+            consumed += 1
+            char = input[current + consumed]
+
+        return TokenizeResult(consumed + 1, Token(TokenType.STRING, value))
+    return TokenizeResult(0, None)
+
 def build_keyword_lambda(token_type, keyword):
     return lambda i, c: lex_keyword(token_type, keyword, i, c)
 
+def build_string_tokenizers(strings, token_type):
+    tokenizers = []
+
+    for s in strings:
+        fn = build_keyword_lambda(token_type, s) # needed to properly capture variables in loop
+        tokenizers.append(fn)
+
+    return tokenizers
+
 def tokenize(input):
     """Read file and parse contents into token array"""
+    # TODO
+    # - add newline token? (maybe needed to denote end of expression)
     tokenizers = [
         lex_skip_whitespace,
+        lex_line_comment,
+        lex_multiline_comment,
         lex_paren_open,
         lex_paren_close,
         lex_curly_open,
@@ -110,17 +166,35 @@ def tokenize(input):
         lex_comma,
     ]
     # match keywords before indentifiers
-    keywords = ['fun', 'if', 'else', 'struct', 'interface', 'let', 'while', 'for', 'import']
-    for kw in keywords:
-        fn = build_keyword_lambda(TokenType.KEYWORD, kw) # needed to properly capture variables in loop
-        tokenizers.append(fn)
-    operators = ['and', 'or', '+', '-', '*', '/', '=']
-    for op in operators:
-        fn = build_keyword_lambda(TokenType.OPERATOR, op) # needed to properly capture variables in loop
-        tokenizers.append(fn)
+    keywords = ['fun', 'if', 'else', 'case', 'struct', 'interface', 'type', 'impl', 'enum', 'let', 'while', 'for', 'import', 'scope']
+    tokenizers += build_string_tokenizers(keywords, TokenType.KEYWORD)
+    operators = [
+        'and',
+        'or',
+        'not',
+        '=>',
+        '+=',
+        '-=',
+        '*=',
+        '/='
+        '==',
+        '!=',
+        '<=',
+        '>=',
+        '+',
+        '-',
+        '*',
+        '/',
+        '=',
+        '.',
+        '<',
+        '>',
+        ]
+    tokenizers += build_string_tokenizers(operators, TokenType.OPERATOR)
     tokenizers += [
         lex_identifier,
         lex_number,
+        lex_string,
     ]
 
     tokens = []

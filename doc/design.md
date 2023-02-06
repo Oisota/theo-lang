@@ -52,6 +52,7 @@ The language will be statically typed and have the following built-in primitive 
 
 The types of expressions will be inferred and will rarely need to be stated explicitly.
 Type annotations may be used if the user feels they make the code clearer or if the compiler can't infer the type.
+Function signatures must always be specified.
 Programs won't compile unless they type check.
 
 See [Types](types.markdown) and [Core Modules](core_modules.markdown) for more detail.
@@ -184,5 +185,10 @@ l1.add(4)
 l1.add(4)
 l1.add(5)
 ```
+Having literal notation for data structures complicates the grammar needing special cases for various data
+structures.
+It also adds mental tax having to remember what each symbol means.
+Would also need to overload the curly brackets to mean several different things: (blocks, dicts, sets).
+Probably best to leave them out to make things more regular.
 
 This could most likely be added later and we shouldn't worry about this for the initial implementation.

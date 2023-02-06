@@ -28,3 +28,4 @@ These are the core modules that will be available:
 - Crypto
 - HTTP
 - Concurrency
+- Regex

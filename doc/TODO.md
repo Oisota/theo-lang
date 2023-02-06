@@ -1,5 +1,4 @@
-TODO
-====
+# TODO
 1. Formally define the language grammar using EBNF
 2. Build prototype of the language
 	- build a recursive descent parser in python
