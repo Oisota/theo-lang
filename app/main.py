@@ -1,17 +1,20 @@
 import sys
 
-from tokenize import tokenize
+from .lexer import tokenize
 
 def main():
     """Main entry point for the compiler"""
     input_file = sys.argv[1]
+    tokens = []
     with open(input_file) as file:
-        tokens = tokenize(file.read())
+        data = file.read()
+        tokens = tokenize(data)
 
-    print(tokens)
+    list(tokens)
+    #print(list(tokens))
 
     #tree = parse(tokens)
-    #c_source = transpile(tree)
+    #c_source = emit(tree)
 
     #with open('./out.c') as out:
     #    out.write(c_source)
@@ -22,5 +25,5 @@ def parse(tokens):
 def transpile(tree):
     """Transpile AST into C source code"""
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()

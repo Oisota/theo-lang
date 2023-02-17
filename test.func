@@ -1,6 +1,6 @@
 let io = import("io")
 
-fun main() {
+fun main(): int {
 	let x = 5 * 8
 	let hello = "Hello, World!"
 	let result = scope x {

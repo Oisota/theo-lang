@@ -3,6 +3,8 @@ from enum import Enum, auto
 from dataclasses import dataclass
 from collections import namedtuple
 
+from .keywords import KEYWORDS, OPERATORS
+
 class TokenType(Enum):
     VAR_NAME = auto()
     PAREN_OPEN = auto()
@@ -20,11 +22,30 @@ class TokenType(Enum):
 
 @dataclass
 class Token:
-    token_type: TokenType
+    type: TokenType
     value: str
+    start_line: int = 0
+    end_line: int = 0
+    start_column: int = 0
+    end_column: int = 0
 
     def __repr__(self):
-        return "Token({}, '{}')".format(self.token_type.name, self.value)
+        return "Token({}, '{}', line: {}-{}, cols: {}-{})".format(self.type.name, self.value, self.start_line, self.end_line, self.start_column, self.end_column)
+
+@dataclass
+class Context:
+    """Hold various context data to be passed to lexing functions"""
+    input: list # the input data
+    _current: int = 0 # current position in input
+    line: int = 1 # current line
+
+    @property
+    def current(self):
+        return self._current
+
+    @current.setter
+    def set_current(self, value):
+        self._current = value
 
 @dataclass
 class TokenizeResult:
@@ -138,14 +159,14 @@ def lex_string(input, current):
         return TokenizeResult(consumed + 1, Token(TokenType.STRING, value))
     return TokenizeResult(0, None)
 
-def build_keyword_lambda(token_type, keyword):
-    return lambda i, c: lex_keyword(token_type, keyword, i, c)
+def build_keyword_lambda(type, keyword):
+    return lambda i, c: lex_keyword(type, keyword, i, c)
 
-def build_string_tokenizers(strings, token_type):
+def build_string_tokenizers(strings, type):
     tokenizers = []
 
     for s in strings:
-        fn = build_keyword_lambda(token_type, s) # needed to properly capture variables in loop
+        fn = build_keyword_lambda(type, s) # needed to properly capture variables in loop
         tokenizers.append(fn)
 
     return tokenizers
@@ -165,60 +186,38 @@ def tokenize(input):
         lex_colon,
         lex_comma,
     ]
-    # match keywords before indentifiers
-    keywords = ['fun', 'if', 'else', 'case', 'struct', 'interface', 'type', 'impl', 'enum', 'let', 'while', 'for', 'import', 'scope']
-    tokenizers += build_string_tokenizers(keywords, TokenType.KEYWORD)
-    operators = [
-        'and',
-        'or',
-        'not',
-        '=>',
-        '+=',
-        '-=',
-        '*=',
-        '/='
-        '==',
-        '!=',
-        '<=',
-        '>=',
-        '+',
-        '-',
-        '*',
-        '/',
-        '=',
-        '.',
-        '<',
-        '>',
-        ]
-    tokenizers += build_string_tokenizers(operators, TokenType.OPERATOR)
+    tokenizers += build_string_tokenizers(KEYWORDS, TokenType.KEYWORD)
+    tokenizers += build_string_tokenizers(OPERATORS, TokenType.OPERATOR)
     tokenizers += [
         lex_identifier,
         lex_number,
         lex_string,
     ]
 
-    tokens = []
-
     current = 0
-    while current < len(input):
+    len_input = len(input)
+    while current < len_input:
         tokenized = False
-        for tokenizer in tokenizers:
+        for lex_function in tokenizers:
             token = None
             if tokenized:
                 break
         
-            result = tokenizer(input, current)
+            result = lex_function(input, current)
             consumed_chars = result.consumed_chars
             token = result.token
+            # Need something like
+            #consumed_lines = result.consumed_lines
+            #consumed_cols = result.consumed_cols
 
-            if consumed_chars != 0:
-                tokenized = True
+            if consumed_chars:
                 current += consumed_chars
+                tokenized = True
+
 
             if token:
-                tokens.append(token)
-        
+                print(token)
+                yield token
+
         if not tokenized:
             raise Exception('Character not recognized: {}'.format(input[current]))
-
-    return tokens
