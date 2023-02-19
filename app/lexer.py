@@ -1,7 +1,6 @@
 import re
 from enum import Enum, auto
 from dataclasses import dataclass
-from collections import namedtuple
 
 from .keywords import KEYWORDS, OPERATORS
 
@@ -30,22 +29,7 @@ class Token:
     end_column: int = 0
 
     def __repr__(self):
-        return "Token({}, '{}', line: {}-{}, cols: {}-{})".format(self.type.name, self.value, self.start_line, self.end_line, self.start_column, self.end_column)
-
-@dataclass
-class Context:
-    """Hold various context data to be passed to lexing functions"""
-    input: list # the input data
-    _current: int = 0 # current position in input
-    line: int = 1 # current line
-
-    @property
-    def current(self):
-        return self._current
-
-    @current.setter
-    def set_current(self, value):
-        self._current = value
+        return "Token({}, '{}', line: {}-{}, column: {}-{})".format(self.type.name, self.value, self.start_line, self.end_line, self.start_column, self.end_column)
 
 @dataclass
 class TokenizeResult:
@@ -139,10 +123,21 @@ def lex_identifier(input, current):
     return lex_pattern(TokenType.IDENTIFIER, pattern, input, current)
 
 def lex_skip_whitespace(input, current):
+    # NOTE this func and a few others may be the only ones that need to
+    # count new lines, since only certain tokens may span a newline
     pattern = re.compile('\s')
-    if pattern.match(input[current]):
-        return TokenizeResult(1, None)
-    return TokenizeResult(0, None)
+    consumed = 0
+    try:
+        char = input[current + consumed]
+    except IndexError:
+        return TokenizeResult(consumed, None)
+    while pattern.match(char):
+        consumed += 1
+        try:
+            char = input[current + consumed]
+        except IndexError:
+            break
+    return TokenizeResult(consumed, None)
 
 def lex_string(input, current):
     if input[current] == '"':
@@ -196,6 +191,8 @@ def tokenize(input):
 
     current = 0
     len_input = len(input)
+    current_line = 1
+    current_column = 1
     while current < len_input:
         tokenized = False
         for lex_function in tokenizers:
@@ -206,9 +203,16 @@ def tokenize(input):
             result = lex_function(input, current)
             consumed_chars = result.consumed_chars
             token = result.token
-            # Need something like
-            #consumed_lines = result.consumed_lines
-            #consumed_cols = result.consumed_cols
+            if token:
+                token.start_line = current_line
+                token.start_column = current_column
+
+            #calculate consumed lines/columns
+            for i in range(current, current + consumed_chars):
+                current_column += 1
+                if input[i] == '\n':
+                    current_line += 1
+                    current_column = 1
 
             if consumed_chars:
                 current += consumed_chars
@@ -216,6 +220,8 @@ def tokenize(input):
 
 
             if token:
+                token.end_line = current_line
+                token.end_column = current_column - 1
                 print(token)
                 yield token
 

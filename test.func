@@ -10,7 +10,7 @@ fun main(): int {
 	0
 }
 fun loop_test() {
-	let i = Ref<int>()
+	let i = Mut<int>()
 	while i < 10 {
 		i += 1
 	}
