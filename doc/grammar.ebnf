@@ -25,9 +25,9 @@ number = [ "~" ] , ( int | float ) ;
 string = ( '"' , { char } , '"' ) 
        | ( "'" , { char } , "'" ) ;
 
-collection_access = expr , "[" , value , "]" ;
+literal = int | float | string;
 
-type_annotation = ":" , white_space , id ;
+collection_access = expr , "[" , expr , "]" ;
 
 expr_block = "{" , { expr } , "}";
 
@@ -45,11 +45,12 @@ with_expr = "with", space , id , "=", id , white_space , expr_block  ;
 if_expr = "if", space , id , "=", id , white_space , expr_block , "else" , white_space , expr_block ;
 
 (* case expression *)
-case_pattern =; (* TODO define this *)
+case_pattern = id , white_space , "(" , id_list , ")"; (* TODO define this *)
 case_list = { case_pattern , "=>" , expr };
 case_expr = "case", space , expr , white_space , "{" , case_list , "}" ;
 
 (* assignment expression *)
+type_annotation = ":" , white_space , id ;
 assign_expr = "let" id , white_space , type_annotation , white_space , "=" , white_space , expr ;
 
 (* interfaces *)
@@ -68,12 +69,18 @@ impl = "impl" , [ white_space , id ] , white_space , "for" , white_space , id , 
 enum_body = { id , [ "(" , param_list , ")" ] };
 enum = "enum" , white_space , id , "{" white_space , enum_body , white_space ,"}";
 
+(* type alias*)
+type_alias = "type" , white_space , id , white_space , "=" , white_space , id;
+
+type_definition = interface | struct | impl | enum | type_alias;
+
 (* Loops *)
-for_loop = "for" , white_space , expr , white_space , expr_block;
+id_list = { id , white_space }; 
+for_loop = "for" , white_space , id_list , white_space , "in" , white_space , expr , white_space , expr_block;
 while_loop = "while" , white_space , expr , white_space , expr_block;
 loop_expr = for_loop | while_loop ;
 
-(* == != < > <= >= && || ! *)
+(* operators *)
 binary_operator = "==" 
 	| "!=" 
 	| "<" 
@@ -91,16 +98,15 @@ binary_operator = "=="
 
 unary_operator = "not" ;
 
-(* TODO need to just defin *)
+(* grand unifying expression *)
 expr = expr , operator , expr
 	| unary_operator , expr
 	| if_expr
 	| case_expr
+	| with_expr
 	| assign_expr
-	| func_expr 
+	| func_def 
 	| func_call
-	| struct
-	| impl
-	| interface
-	| enum
+	| type_definition
 	| loop
+	| collection_access
