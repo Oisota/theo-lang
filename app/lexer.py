@@ -10,10 +10,13 @@ class TokenType(Enum):
     PAREN_CLOSE = auto()
     CURLY_OPEN = auto()
     CURLY_CLOSE = auto()
+    SQUARE_OPEN = auto()
+    SQUARE_CLOSE = auto()
     COLON = auto()
     COMMA = auto()
     KEYWORD = auto()
-    NUMBER = auto()
+    INTEGER = auto()
+    FLOAT = auto()
     STRING = auto()
     OPERATOR = auto()
     IDENTIFIER = auto()
@@ -52,7 +55,10 @@ def lex_pattern(type, pattern, input, current):
         while char and pattern.match(char):
             consumed_chars += 1
             value += char
-            char = input[current + consumed_chars]
+            try:
+                char = input[current + consumed_chars]
+            except IndexError:
+                break
 
         return TokenizeResult(consumed_chars, Token(type, value))
     return TokenizeResult(0, None)
@@ -108,6 +114,12 @@ def lex_curly_open(input, current):
 def lex_curly_close(input, current):
     return lex_char(TokenType.CURLY_CLOSE, '}', input, current)
 
+def lex_square_open(input, current):
+    return lex_char(TokenType.SQUARE_OPEN, '[', input, current)
+
+def lex_square_close(input, current):
+    return lex_char(TokenType.SQUARE_CLOSE, ']', input, current)
+
 def lex_colon(input, current):
     return lex_char(TokenType.COLON, ':', input, current)
 
@@ -115,12 +127,45 @@ def lex_comma(input, current):
     return lex_char(TokenType.COMMA, ',', input, current)
 
 def lex_number(input, current):
-    pattern = re.compile('[0-9]')
-    return lex_pattern(TokenType.NUMBER, pattern, input, current)
+    pattern = re.compile('[0-9]|(\.)|(_)')
+    #return lex_pattern(TokenType.NUMBER, pattern, input, current)
+    consumed_chars = 0
+    value = ''
+    char = input[current]
+    if pattern.match(char):
+        while char and pattern.match(char):
+            consumed_chars += 1
+            value += char
+            try:
+                char = input[current + consumed_chars]
+            except IndexError:
+                break
+
+        value = value.replace('_', '')
+        # check if int or float literal
+        token_type = TokenType.INTEGER
+        if '.' in value:
+            token_type = TokenType.FLOAT
+        return TokenizeResult(consumed_chars, Token(token_type, value))
+    return TokenizeResult(0, None)
 
 def lex_identifier(input, current):
-    pattern = re.compile('^[^\d\W]\w*\Z')
-    return lex_pattern(TokenType.IDENTIFIER, pattern, input, current)
+    pattern = re.compile('([A-Z]|[a-z]|_|[0-9])+')
+    initial_pattern = re.compile('([A-Z]|[a-z]|_)+')
+    consumed_chars = 0
+    value = ''
+    char = input[current]
+    if initial_pattern.match(char):
+        while char and pattern.match(char):
+            consumed_chars += 1
+            value += char
+            try:
+                char = input[current + consumed_chars]
+            except IndexError:
+                break
+
+        return TokenizeResult(consumed_chars, Token(TokenType.IDENTIFIER, value))
+    return TokenizeResult(0, None)
 
 def lex_skip_whitespace(input, current):
     # NOTE this func and a few others may be the only ones that need to
@@ -140,11 +185,13 @@ def lex_skip_whitespace(input, current):
     return TokenizeResult(consumed, None)
 
 def lex_string(input, current):
-    if input[current] == '"':
+    char = input[current]
+    if char == '"' or char == "'":
         value = ''
         consumed = 1
+        closing_quote = char
         char = input[current + consumed]
-        while char != '"':
+        while char != closing_quote:
             if char is None:
                 raise Exception('unterminated string')
             value += char
@@ -178,6 +225,8 @@ def tokenize(input):
         lex_paren_close,
         lex_curly_open,
         lex_curly_close,
+        lex_square_open,
+        lex_square_close,
         lex_colon,
         lex_comma,
     ]

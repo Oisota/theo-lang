@@ -88,7 +88,7 @@ fun foo a b c {
 		// can also have empty scope that returns a value
 	}
 
-	// should also support something like
+	// should also support something like (probably not needed)
 	let q = scope var1 as var2 {
 		// reassign var1 as var2 inside the scope
 	}
@@ -227,5 +227,15 @@ let opt = Option::Some 5
 let result = case opt {
 	Option::Some value => value,
 	Option::None => 0
+}
+```
+
+### Alias
+Might want to be able to alias types
+```text
+type foo = string
+
+struct Foo {
+	bar: foo
 }
 ```

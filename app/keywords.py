@@ -1,6 +1,7 @@
 """Language keywords, operators, etc"""
 KEYWORDS = [
     'fun',
+    'fn',
     'if',
     'else',
     'case',
@@ -13,8 +14,11 @@ KEYWORDS = [
     'while',
     'for',
     'import',
+    'as',
     'scope',
-    'with'
+    'with',
+    'for',
+    'while',
     ]
 
 OPERATORS = [

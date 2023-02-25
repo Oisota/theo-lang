@@ -18,8 +18,6 @@ If a feature isn't present, implementing it yourself should be straightforward.
 ### Specification
 The grammar for the language will be formally specified using E.B.N.F.
 This should be no more than 1-2 pages in length.
-A skilled programmer should be able to reimplement the language at will, without much effort.
-This will allow the language to be easily ported to other platforms.
 
 ### Problem Domains
 The language will most likely be best suited towards scripting and applications programming.
@@ -56,6 +54,12 @@ Function signatures must always be specified.
 Programs won't compile unless they type check.
 
 See [Types](types.markdown) and [Core Modules](core_modules.markdown) for more detail.
+
+Should there be a distinction between primitives and other types? (structs/funcs/collections/etc).
+Need to think about how high level the language should be.
+Could be like python where everything is an object, in this case a struct.
+This might make low level stuff harder to implement.
+Need to think on this...
 
 ### Enumerations
 Algebraic data types will be able to be defined as so:
@@ -109,10 +113,9 @@ Although the name binding may be immutable, changes to a mutable data structure 
 
 Variable declaration will look like:
 ```text
-let x:string = 'Hello, World' //with type annotation
+let x: string = 'Hello, World' //with type annotation
 let a = 5
 ```
-
 
 ### Case Expressions
 Case expressions will be used to pattern match over data types and other data structures.
@@ -192,3 +195,18 @@ Would also need to overload the curly brackets to mean several different things:
 Probably best to leave them out to make things more regular.
 
 This could most likely be added later and we shouldn't worry about this for the initial implementation.
+
+### Generics
+Should generics use angle brackets like Java/C++/C# or square brackets?
+```text
+enum Option[A] {
+	Some(A)
+	None
+}
+
+enum Option<A> {
+	Some(A)
+	None
+}
+```
+Kinda like square brackets.

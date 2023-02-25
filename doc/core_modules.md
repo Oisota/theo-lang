@@ -8,18 +8,18 @@ These are the core modules that will be available:
 - Bool
 - Char
 - String
-- List
-- Vector
-- Dict
-- Tuple
-- Set
+- Collections
+	- List
+	- Vector
+	- Dict
+	- Tuple
+	- Set
 - Ref
 - Option
 - Result
 
 ### Other Modules
 - Math
-- Util
 - IO
 - Regex
 - File
@@ -28,4 +28,3 @@ These are the core modules that will be available:
 - Crypto
 - HTTP
 - Concurrency
-- Regex

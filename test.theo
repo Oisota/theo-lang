@@ -1,0 +1,61 @@
+import (
+	"std/io"
+	"std/math" *
+	"std/crypto" foo
+)
+
+fun main() int {
+	let x = 5 * 8
+	let hello = "Hello, World!"
+	let result = scope x {
+		x + 10
+	}
+	io.print(hello)
+	io.print('Hello Again!')
+
+	let l1 = List[int]()
+	let el = l1[0]
+
+	let l2 = l1.map(fun(a int) { a * 2 })
+	let l2 = l1.map(fn a => a * 2 ) // still playing around with lambda syntax, this relies on inferring types from the list type
+
+	// need to figure out how to lex different literals, may not be needed for initial implementation
+	let u2 = 0xFF
+	let u3 = 0b0101
+
+	0
+}
+fun loop_test() {
+	let i = Mut[int]()
+	let j = 23.32
+	let k = 10_000
+	while i < 10 {
+		i += 1
+	}
+}
+// this is a comment
+fun add(a int, b int) int { // looks a little cleaner without colons in function signature
+	a+ b
+}
+fun fib(n int) int {
+	case n {
+		0 => 0
+		1 => 1
+		n => fib(n-1) + fib(n-2)
+	}
+}
+/*
+This is a multiline
+comment
+*/
+
+struct Point {
+	x float
+	y float
+}
+
+interface Shape {
+	fun area() int
+}
+
+enum Bool { True False}
