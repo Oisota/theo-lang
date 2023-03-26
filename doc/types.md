@@ -17,16 +17,20 @@ let x = 5
 let y = 5.6
 ```
 
-**Should we also provide other types like i8, i16, u8, u16, u32, etc. for ints and floats?**
+**Should we also provide other types like i8, i16, u8, u16, u32, etc. for ints and floats?** (probably yes)
 
 ### Char
 Single character value.
 Denoted using single quotes: `'a'`
 
+Not sure if there should be literal syntax for this.
+Want the language to be high level and not sure a char literal will be used very often.
+
 ### Key
 The key type will be like a constant string that is replaced at compile time.
 It will take the place of using strings as keys.
 Still deciding on a notation. (#foo :foo $foo @foo)
+Leaning towards `#foo` as the symbol is already called `hash` and the symbols will likely turn into hashes at compile time anyway.
 
 ```text
 x[#foo] = 5
@@ -69,7 +73,7 @@ It will also make it easy to break the block out into a separate function of nec
 The **scope** expression is basically an immediately invoked anonymous function without access to the outer scope.
 
 ```text
-fun foo a b c {
+fun foo(a int, b string, c Foo) Option[Foo] {
     let x = 5, y = 'hello'
 
     let j = scope a c {
@@ -132,7 +136,7 @@ io.print(if 5 > 9 {
 
 Collections
 -----------
-Func will have **lists**, **vectors**, **sets**, and **dictionaries** as collection types.
+Theo will have **lists**, **vectors**, **sets**, and **dictionaries** as collection types.
 Lists, vectors, and sets will all behave similarly due to them being all types of sequential data.
 Strings will be implemented as char vectors.
 Dictionaries will be separate due to their nature.

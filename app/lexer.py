@@ -128,12 +128,13 @@ def lex_comma(input, current):
 
 def lex_number(input, current):
     pattern = re.compile('[0-9]|(\.)|(_)')
+    end_pattern = re.compile('x|b|[A-F]|[a-f]|[0-9]|(\.)|(_)')
     #return lex_pattern(TokenType.NUMBER, pattern, input, current)
     consumed_chars = 0
     value = ''
     char = input[current]
     if pattern.match(char):
-        while char and pattern.match(char):
+        while char and end_pattern.match(char):
             consumed_chars += 1
             value += char
             try:
