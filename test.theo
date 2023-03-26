@@ -1,7 +1,14 @@
+/*
+ * Main Test File for Theo
+ */
+
 import (
-	"std/io"
-	"std/math" *
-	"std/crypto" foo
+	"std/io" // standard library imort
+	"std/math" * // import everything into current namespace
+	"std/crypto" foo // import alias
+	"cinclude/stdio" // include a c lib
+	"app/models" // top level app namespace
+	"./util" // relative import
 )
 
 fun main() int {
@@ -22,6 +29,10 @@ fun main() int {
 	// need to figure out how to lex different literals, may not be needed for initial implementation
 	let u2 = 0xFF
 	let u3 = 0b0101
+
+	with foo = open('file.txt') {
+		// do stuff with foo here
+	}
 
 	0
 }
@@ -50,8 +61,17 @@ comment
 */
 
 struct Point {
-	x float
-	y float
+	x float = 0
+	y float = 0
+}
+
+let p1 = Point(x=5, y=6)
+let p2 = Point(x=5, y=6)
+
+fun distance(p1 Point, p2 Point) float {
+	let a = math.abs(p1.x - p2.x)
+	let b = math.abs(p1.y - p2.y)
+	math.sqrt(math.pow(a, 2), math.pow(b, 2))
 }
 
 interface Shape {
