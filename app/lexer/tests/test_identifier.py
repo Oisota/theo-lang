@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from app.lexer import Token, TokenType, TokenizeResult, lex_identifier
+from app.lexer.token import Token, TokenType, TokenizeResult
+from app.lexer.lexer import lex_identifier
 
 class TestLexIdentifier(TestCase):
     """Test lexing identifiers"""

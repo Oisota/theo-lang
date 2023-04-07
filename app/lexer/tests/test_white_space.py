@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.lexer import lex_skip_whitespace
+from app.lexer.lexer import lex_skip_whitespace
 
 class TestLexWhiteSpace(TestCase):
 

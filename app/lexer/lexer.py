@@ -1,43 +1,7 @@
 import re
-from enum import Enum, auto
-from dataclasses import dataclass
 
 from .keywords import KEYWORDS, OPERATORS
-
-class TokenType(Enum):
-    VAR_NAME = auto()
-    PAREN_OPEN = auto()
-    PAREN_CLOSE = auto()
-    CURLY_OPEN = auto()
-    CURLY_CLOSE = auto()
-    SQUARE_OPEN = auto()
-    SQUARE_CLOSE = auto()
-    COLON = auto()
-    COMMA = auto()
-    KEYWORD = auto()
-    INTEGER = auto()
-    FLOAT = auto()
-    STRING = auto()
-    OPERATOR = auto()
-    IDENTIFIER = auto()
-    COMMENT = auto()
-
-@dataclass
-class Token:
-    type: TokenType
-    value: str
-    start_line: int = 0
-    end_line: int = 0
-    start_column: int = 0
-    end_column: int = 0
-
-    def __repr__(self):
-        return "Token({}, '{}', line: {}-{}, column: {}-{})".format(self.type.name, self.value, self.start_line, self.end_line, self.start_column, self.end_column)
-
-@dataclass
-class TokenizeResult:
-    consumed_chars: int
-    token: Token
+from .token import TokenType, Token, TokenizeResult
 
 # generic lexing functions
 def lex_char(type, value, input, current):
@@ -93,11 +57,12 @@ def lex_multiline_comment(input, current):
     if input[current] == '/' and input[current + 1] == '*':
         char = input[current + consumed]
         next_char = input[current + consumed + 1]
-        while char != '*' and next_char != '/':
+        while not (char == '*' and next_char == '/'):
             value += char
             consumed += 1
             char = input[current + consumed]
             next_char = input[current + consumed + 1]
+        consumed += 2
         return TokenizeResult(consumed, None) # currently just ignoring comments
     return TokenizeResult(0, None)
 
