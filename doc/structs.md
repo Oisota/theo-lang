@@ -66,3 +66,28 @@ impl Shape for Rect {
 let rect = Rect { x1 = 4, y1 = 0, x2 = 10, y2 = 20 }
 let area = rect.area()
 ```
+
+## Mutability
+Should structs be mutable or immutable by default?
+Maybe make them function the same as `let` variable binding.
+You can't reassign the field to a new value but the value may be a mutable data structure that can be changed.
+
+Another possibility could be a keyword indicating that a field can be reassigned.
+
+```text
+// normal struct
+struct Foo {
+	a: int
+}
+
+let foo = Foo(5)
+foo.a = 6 // compile time error
+
+// mutable field struct
+struct Bar {
+	a: Mut[int]
+}
+
+let bar = Bar(5)
+bar.a = 6
+```

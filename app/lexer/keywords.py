@@ -10,16 +10,21 @@ KEYWORDS = [
     'type',
     'impl',
     'enum',
+    'union',
     'let',
     'while',
     'for',
     'import',
-    'as',
     'scope',
     'with',
     'for',
     'while',
     ]
+RESERVED = [ # reserve words for possible future use
+    'class'
+    'as',
+]
+KEYWORDS += RESERVED
 
 OPERATORS = [
     'and',
@@ -39,6 +44,7 @@ OPERATORS = [
     '*',
     '/',
     '=',
+    ':=',
     '.',
     '<',
     '>',

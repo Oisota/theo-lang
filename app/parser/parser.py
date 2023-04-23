@@ -12,15 +12,28 @@ def match(expected_token_type, expected_token, current_token):
 
 def parse(tokens):
     """Parse tokens into AST"""
-    tree = program(tokens)
+    tree = parse_program(tokens)
     return tree
 
-def program(tokens):
+def parse_program(tokens):
     """Parse tokens into AST"""
     tree = ast.Program()
-    tree = parse_import(tree, tokens)
+    import_tree = parse_imports(tree, tokens)
+    tree.imports = import_tree
     return tree
 
-def parse_import(tree, tokens):
-    """Parse import expression"""
-    #if match(TokenType.KEYWORD, 'import')
+def parse_imports(current, tokens):
+    """Parse import list"""
+    imports = []
+    consumed = 0
+    current_token = tokens[current]
+    if match(TokenType.KEYWORD, 'import', current_token):
+        consumed += 1
+        current_token = tokens[current + consumed]
+        if match(TokenType.PAREN_OPEN, '(', current_token):
+            pass
+            #while match(TokenType.)
+            #= ast.Import()
+
+def parse_import(current, tokens):
+    """Parse a single import"""

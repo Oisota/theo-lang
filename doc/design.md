@@ -64,9 +64,9 @@ Need to think on this...
 ### Enumerations
 Algebraic data types will be able to be defined as so:
 ```text
-enum List<A> {
-    Cons (A, List<A>),
-    Nil
+enum List[A] {
+    Cons (A, List[A]),
+    Nil,
 }
 
 enum Bool { True, False }
@@ -80,16 +80,38 @@ let mylist = List.Cons (5, List.Cons (6, List.Cons (7, List.Nil)))
 let card = (Rank.Three, Suit.Spade)
 ```
 
+Am thinking `union` might be a better keyword for creating enums that are really tagged unions.
+The `enum` keyword could then be reserved solely for enumerations and not also tagged unions.
+This should help clarify intent and make parsing easier.
 
-### Type Synonyms/Named Tuples
+```text
+union Option[T] {
+	Some(T),
+	None
+}
 ```
-type Point = (int, int)
+
+
+### Type Synonyms
+```
+type Point = Coord[int, int]
 type Name = string
 type MoneyAmount = (int, int)
 
-let p = Point (5, 6)
-let n:name = 'Derek'
-let d = MoneyAmount (5, 75)
+let p = Point(5, 6)
+let n:name = "Derek"
+let d = MoneyAmount(5, 75)
+```
+
+### Variables
+The `let` keyword will be used to bind a name to a value.
+The bindings will be not be able to be changed once assigned and primitive values will be immutable.
+Although the name binding may be immutable, changes to a mutable data structure will still be possible.
+
+Variable declaration will look like:
+```text
+let x: string = 'Hello, World' //with type annotation
+let a = 5
 ```
 
 ### If Else Expressions
@@ -106,16 +128,22 @@ else if y == 9 { 'Bar' }
 else { 'Bat' }
 ```
 
-### Variables
-The `let` keyword will be used to bind a name to a value.
-The bindings will be not be able to be changed once assigned and primitive values will be immutable.
-Although the name binding may be immutable, changes to a mutable data structure will still be possible.
+*Idea:* This may be best implemented as syntax sugar over case expressions.
+This would simplify things since every if else can just be translated to its corresponding case expressions.
+The above example would be translated to a nested case expression:
 
-Variable declaration will look like:
 ```text
-let x: string = 'Hello, World' //with type annotation
-let a = 5
+case x == 10 {
+	True => 'Foo',
+	False => case y == 9 {
+		True => 'Bar',
+		False => 'Bat
+	}
+}
 ```
+
+This would make sense since booleans wouldn't necessarily need to be built into the language.
+They could just be a simple enum.
 
 ### Case Expressions
 Case expressions will be used to pattern match over data types and other data structures.
@@ -194,6 +222,14 @@ It also adds mental tax having to remember what each symbol means.
 Would also need to overload the curly brackets to mean several different things: (blocks, dicts, sets).
 Probably best to leave them out to make things more regular.
 
+The only argument against removal of literals would be sequence access with square brackets being so ubiquitous it would hinder adoption since people are so used to it.
+This could be alleviated somewhat with helper methods on sequences like `.first()`, `.second()`, `.last()`, etc methods for common use cases.
+Removal of bracket notation could help incentiveise using map/filter/reduce and using a different structure if non sequential access is needed.
+Could also just provide a simple `.get(n: int)` or `.at(n: int)` method for indexed access.
+
+Could also make all sequences callable such that you can just use parens where brackets are normally used.
+
+
 This could most likely be added later and we shouldn't worry about this for the initial implementation.
 
 ### Generics
@@ -209,4 +245,4 @@ enum Option<A> {
 	None
 }
 ```
-Kinda like square brackets.
+Leaning heavily towards square brackets.

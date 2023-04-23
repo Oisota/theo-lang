@@ -3,7 +3,7 @@
  */
 
 import (
-	"std/io" // standard library imort
+	"std/io" // standard library import
 	"std/math" * // import everything into current namespace
 	"std/crypto" foo // import alias
 	"cinclude/stdio" // include a c lib
@@ -26,7 +26,7 @@ fun main() int {
 	let l2 = l1.map(fun(a int) { a * 2 })
 	let l2 = l1.map(fn a => a * 2 ) // still playing around with lambda syntax, this relies on inferring types from the list type
 
-	// need to figure out how to lex different literals, may not be needed for initial implementation
+	// need to figure out how to lex different literals, may not be needed for initial implementation (should be working)
 	let u2 = 0xFF
 	let u3 = 0b0101
 
@@ -41,7 +41,7 @@ fun loop_test() {
 	let j = 23.32
 	let k = 10_000
 	while i < 10 {
-		i += 1
+		i := i + 1 // make mutation require a special operator?
 	}
 }
 // this is a comment
@@ -79,3 +79,8 @@ interface Shape {
 }
 
 enum Bool { True False}
+
+union Option[T] {
+	Some(T),
+	None
+}

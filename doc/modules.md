@@ -9,7 +9,9 @@ Under the hood, modules and packages will be transformed into structs with the t
 Libraries/Code can be imported like so:
 ```text
 import (
-	std.io
+	"std/io"
+	"lib/httpserver"
+	"app/routes"
 )
 
 fun main() int {
@@ -19,24 +21,6 @@ fun main() int {
 All standard library code will be under the `std` name space.
 Maybe also have `lib` namespace for all third party code and `app` namespace for app code.
 This might be hard to enforce.
-
-I kinda like this idea, keeps them all together and alleviates having to type `import` every time.
-```text
-import (
-	std.io
-	lib.httpserver
-	app.routes
-)
-```
-
-Should imports be string file paths to enforce the idea that imports are based on file structure?
-```text
-import (
-	"std/io"
-	"lib/httpserver"
-	"app/routes"
-)
-```
 
 May need an easy way to import C libraries so as to piggyback off its std-lib during initial implementation.
 Something like:
