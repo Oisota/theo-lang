@@ -5,26 +5,26 @@ These are the core modules that will be available:
 - Function
 - Int
 - Float
-- Bool
+- bool
 - Char
 - String
 - Collections
 	- List
 	- Vector
 	- Dict
-	- Tuple
 	- Set
-- Ref
+- Mut
 - Option
 - Result
 
 ### Other Modules
-- Math
-- IO
-- Regex
-- File
-- OS
-- Sys
-- Crypto
-- HTTP
-- Concurrency
+- math
+- io
+- regex
+- file
+- os
+- sys
+- crypto
+- socket
+- http
+- concurrency

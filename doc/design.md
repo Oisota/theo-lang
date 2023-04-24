@@ -33,6 +33,7 @@ This should be considered when building the standard library and how built-in da
 ### Implementation
 I'm thinking that it will be easiest to have the language compile to C source code similar to how Nim works.
 This will make it easy to generate a standalone executable and will allow the language to run anywhere that has a C compiler.
+Can also piggy-back off C libraries easily.
 
 Design
 ------
@@ -61,40 +62,11 @@ Could be like python where everything is an object, in this case a struct.
 This might make low level stuff harder to implement.
 Need to think on this...
 
-### Enumerations
-Algebraic data types will be able to be defined as so:
-```text
-enum List[A] {
-    Cons (A, List[A]),
-    Nil,
-}
-
-enum Bool { True, False }
-
-enum Suit { Spade, Club, Heart, Diamond }
-enum Rank { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King }
-
-//used like so
-let mylist = List.Cons (5, List.Cons (6, List.Cons (7, List.Nil)))
-
-let card = (Rank.Three, Suit.Spade)
 ```
-
-Am thinking `union` might be a better keyword for creating enums that are really tagged unions.
-The `enum` keyword could then be reserved solely for enumerations and not also tagged unions.
-This should help clarify intent and make parsing easier.
-
-```text
-union Option[T] {
-	Some(T),
-	None
-}
-```
-
 
 ### Type Synonyms
 ```
-type Point = Coord[int, int]
+type Point = Coord[int, int] // instantiate a generic type with concrete types
 type Name = string
 type MoneyAmount = (int, int)
 

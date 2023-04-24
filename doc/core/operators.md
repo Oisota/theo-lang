@@ -1,6 +1,6 @@
 # Operators
 
-# Overloading
+## Overloading
 Operator overloading will be supported through implementing special interfaces provided by the language/stdlib.
 Each operator will have a corresponding interface that any type can implement to be able to be used with the operator.
 Probably best to mimic python's dunder method naming scheme to prevent naming collisions.

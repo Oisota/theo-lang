@@ -1,7 +1,5 @@
 # Collections
 
-*To Do: update doc to remove literal notations where applicable*
-
 Theo will have **lists**, **vectors**, **sets**, and **dictionaries** as collection types.
 Lists, vectors, and sets will all behave similarly due to them being all types of sequential data.
 Strings will be implemented as char vectors.

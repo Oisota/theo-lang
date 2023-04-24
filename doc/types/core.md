@@ -1,10 +1,8 @@
-Types
-=====
+# Types
 
 *To Do: update doc to remove literal notations where applicable*
 
-Primitives
-----------
+## Primitives
 The primitive types will be built into the language and not implemented as syntax sugar or as code.
 
 ### Integer
@@ -38,29 +36,6 @@ Leaning towards `#foo` as the symbol is already called `hash` and the symbols wi
 x.at(#foo) = 5
 ```
 
-### Function
-All execution/computation will be done using functions.
-There will be **No Classes** or classical oop.
-Functions will be first class and can be treated as any other value.
-Tail calls will be optimized.
-Functions will also be automatically curried.
-Functions will return whatever value their last expression evaluates to.
-
-Functions defined like so will be curried.
-```text
-fun add x y = x + y 
-```
-This will be equivalent to:
-```text
-let add = fn x { 
-    fn y { 
-        x + y
-    }
-}
-```
-Functions should work like ML functions in that they only take one value.
-See [Example](../samples/blah.func) for more detail.
-**May change this**
 
 ## Non-Primitive Types
 Non-primitive types will be types that will be implemented in the standard library and will not be available by default.
