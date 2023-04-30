@@ -4,7 +4,6 @@ from enum import Enum, auto
 from dataclasses import dataclass
 
 class TokenType(Enum):
-    VAR_NAME = auto()
     PAREN_OPEN = auto()
     PAREN_CLOSE = auto()
     CURLY_OPEN = auto()
@@ -20,6 +19,7 @@ class TokenType(Enum):
     OPERATOR = auto()
     IDENTIFIER = auto()
     COMMENT = auto()
+    RESERVED = auto()
 
 @dataclass
 class Token:

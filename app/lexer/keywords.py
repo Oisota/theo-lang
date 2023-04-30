@@ -1,51 +1,61 @@
 """Language keywords, operators, etc"""
+
 KEYWORDS = [
-    'fun',
-    'fn',
-    'if',
-    'else',
-    'case',
-    'struct',
-    'interface',
-    'type',
-    'impl',
-    'enum',
-    'union',
-    'let',
-    'while',
-    'for',
+    # imports
     'import',
-    'scope',
-    'with',
-    'for',
-    'while',
+
+    # vars
+    'let',
+
+    # functions
+    'fun', 'fn', 'end',
+
+    # types
+    'interface', 'type', 'struct', 'enum', 'union', 'impl', 'prop',
+
+    # logical
+    'if', 'else', 'case',
+
+    # loops
+    'while', 'for', 'break', 'continue',
+
+    # misc
+    'scope', 'with',
     ]
-RESERVED = [ # reserve words for possible future use
+
+# reserved words for possible future use
+RESERVED_WORDS = [
     'class'
     'as',
-]
-KEYWORDS += RESERVED
+    'private',
+    'public',
+    'pub',
+    'export',
+    'module',
+    'mod',
+    'namespace',
+    'loop',
+    ]
 
 OPERATORS = [
-    'and',
-    'or',
-    'not',
+    # logical
+    'and', 'or', 'not', '==', '!=', '<=', '>=', '<', '>',
+
+    # pattern match
     '=>',
-    '+=',
-    '-=',
-    '*=',
-    '/='
-    '==',
-    '!=',
-    '<=',
-    '>=',
-    '+',
-    '-',
-    '*',
-    '/',
+
+    # math assignment might not be needed
+    # '+=', '-=', '*=', '/='
+
+    # math
+    '+', '-', '*', '/', '%',
+
+    # bitwise
+    '&', '|', '^', '<<', '>>', '~',
+
+    # assignment
     '=',
-    ':=',
+
+    # field access
     '.',
-    '<',
-    '>',
     ]

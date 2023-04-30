@@ -1,6 +1,6 @@
 import re
 
-from .keywords import KEYWORDS, OPERATORS
+from .keywords import KEYWORDS, OPERATORS, RESERVED_WORDS
 from .token import TokenType, Token, TokenizeResult
 
 # generic lexing functions
@@ -196,6 +196,7 @@ def tokenize(input):
         lex_colon,
         lex_comma,
     ]
+    tokenizers += build_string_tokenizers(RESERVED_WORDS, TokenType.RESERVED)
     tokenizers += build_string_tokenizers(KEYWORDS, TokenType.KEYWORD)
     tokenizers += build_string_tokenizers(OPERATORS, TokenType.OPERATOR)
     tokenizers += [
