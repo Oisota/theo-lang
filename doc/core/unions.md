@@ -1,8 +1,9 @@
 # Unions
-Algebraic data types will be able to be defined as so:
+Sum types (tagged unions) will be able to be defined as so:
+
 ```text
 union List[A] {
-    Cons (A, List[A]),
+    Cons(A, List[A]),
     Nil,
 }
 

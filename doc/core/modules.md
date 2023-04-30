@@ -1,6 +1,5 @@
 # Modules
 
-### Module System
 The module system will be file and directory based similar to how Python and Node.js do things.
 A single file will be considered a "module" and a directory with a special index file (`package.theo`) will be considered a package.
 The index file will mark a directory as a package and allow importing any submodules into its namespace.
@@ -34,6 +33,7 @@ import (
 - don't allow top level mutable variables
 - modules should require "exporting" whatever should be made public
 - maybe leave out access modifiers until language is implemented
+- python has everything public by default, seems to work ok
 
 Ideas:
 ```text

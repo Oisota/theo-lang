@@ -2,7 +2,7 @@
 
 Structures provide grouping of related data in a single type with named fields.
 
-```
+```text
 struct Point {
 	x float,
 	y float
@@ -38,7 +38,7 @@ let card = Card(
 
 ## Fields
 Fields may have an optional default value like so:
-```
+```text
 struct Bar {
 	my_field string = "BOOM!"
 	other_field int
@@ -72,7 +72,8 @@ bar.a = 6
 ## Methods
 Structs can have methods defined in `impl` blocks.
 An `impl` block of the form `impl <struct-name>` will define methods on the struct whereas the form `impl <interface-name> for <struct-name>` will define an implementation of an interface for a given struct.
-```
+
+```text
 struct Rect {
 	x1: int,
 	y1: int,
@@ -120,3 +121,48 @@ let p5 = Point(y=3, x=3) // ok
 let p6 = Point(y=3, x) // compile time error
 let p7 = Point() // compile time error
 ```
+
+## Properties
+I'm thinking it would be nice to have computed properties on structs to make accessing computed values easier.
+This would also help with preserving a struct's API in calling code.
+I.E. a field on the struct is removed but it's value can still be calculated from existing fields.
+In the below example, the `Foo` struct may have had a single name field but later the `first`/`last` fields were added to support some other use case but we still want to be able to access `Foo.name`.
+This could also help in supporting interface implementations if the interface specifies a certain field name be present, simple prop definition might only provide an existing field under a different name.
+
+```text
+struct Foo {
+	first string
+	last string
+}
+
+impl Foo {
+	prop name(self Foo) string {
+		self.first + ' ' + self.last
+	}
+}
+
+let f = Foo('Theo', 'Morey')
+let name = f.name // 'Theo Morey'
+
+
+interface Bar {
+	full_name string
+}
+
+impl Bar for Foo {
+	prop full_name(self Foo) string {
+		self.first + ' ' + self.last
+	}
+}
+```
+
+A potential downside here is that the prop syntax hides the function call and computation the field.
+This could make things harder to understand since the prop calculation could be expensive and it would be not obvious that a function is even being called.
+It does seem like the benefit of allowing interfaces to be easily implementable might outweigh this potential risk.
+
+I'm thinking implementing an interface would become quite obtuse to deal with without this capability.
+It would require converting from one struct to another just to support the interface.
+Of course the interface could just specify everything as functions instead of fields.
+Could end up in an existential crisis deciding whether an interface definition should be a field/prop or a function
+
+We can probably leave props out for now and see how it affects things then possibly add later.

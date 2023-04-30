@@ -1,7 +1,5 @@
-Language Design
-===============
-Overview
---------
+# Language Design
+## Overview
 ### Small
 The language must be extremely small and easy to understand.
 The entire language and its inner workings must be able to be kept in one's head (For ex. 'C').
@@ -35,8 +33,7 @@ I'm thinking that it will be easiest to have the language compile to C source co
 This will make it easy to generate a standalone executable and will allow the language to run anywhere that has a C compiler.
 Can also piggy-back off C libraries easily.
 
-Design
-------
+## Design
 ### Types
 The language will be statically typed and have the following built-in primitive types:
 - Function (**fn**)
@@ -62,10 +59,8 @@ Could be like python where everything is an object, in this case a struct.
 This might make low level stuff harder to implement.
 Need to think on this...
 
-```
-
 ### Type Synonyms
-```
+```text
 type Point = Coord[int, int] // instantiate a generic type with concrete types
 type Name = string
 type MoneyAmount = (int, int)
@@ -156,11 +151,6 @@ let mysuit = case mycard {
 //above throws compiler error
 ```
 
-### Module System
-The module system will be file and directory based similar to how Python and Node.js do things.
-A single file will be considered a "module" and a directory with a special index file (name for this file TBD) will be considered a package.
-Under the hood, modules and packages will be transformed into structs with the top-level file contents being the members of the struct.
-
 ### Comments
 'C' style inline and block comments will be supported.
 ```text
@@ -196,10 +186,11 @@ Probably best to leave them out to make things more regular.
 
 The only argument against removal of literals would be sequence access with square brackets being so ubiquitous it would hinder adoption since people are so used to it.
 This could be alleviated somewhat with helper methods on sequences like `.first()`, `.second()`, `.last()`, etc methods for common use cases.
-Removal of bracket notation could help incentiveise using map/filter/reduce and using a different structure if non sequential access is needed.
+Removal of bracket notation could help incentivise using map/filter/reduce and using a different structure if non sequential access is needed.
 Could also just provide a simple `.get(n: int)` or `.at(n: int)` method for indexed access.
 
 Could also make all sequences callable such that you can just use parens where brackets are normally used.
+I like this idea.
 
 
 This could most likely be added later and we shouldn't worry about this for the initial implementation.

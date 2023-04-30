@@ -32,3 +32,37 @@ let add = fn (a, b) => a + b
 let l1 = List()
 l1.map(fn (a) => a * 2)
 ```
+
+## Early returns
+Can we support early returns from functions?
+Early returns greatly simplify error handling and read-ability of code.
+
+Ideas:
+```text
+// without early return
+fun foo(some_var string) Option[string] {
+	if some_var == 'boo' {
+		Option.None
+	} else {
+		// all remaining code inside else
+	}
+}
+
+// with early return
+fun foo(some_var string) Option[string] {
+	if some_var == 'boo' {
+		Option.None
+		end
+	}
+
+	if some_var == '' {
+		Option.None
+		end
+	}
+
+	// all remaining code outside if block
+}
+```
+
+Am thinking `end` would be a good keyword for this.
+Could use `return` but don't want to encourage useless `return` expressions at the end of functions unnecessarily.

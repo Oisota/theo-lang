@@ -4,10 +4,12 @@ Implement concurrency using "nurseries" as implemented in the [Trio](https://tri
 
 ```text
 fun bar {...}
+fun bat {...}
 
 fun foo {
-	with n = nursery {
+	with n = nursery() {
 		n.start_soon(bar)
+		n.start_soon(bat)
 	}
 }
 ```
