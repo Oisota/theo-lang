@@ -164,5 +164,6 @@ I'm thinking implementing an interface would become quite obtuse to deal with wi
 It would require converting from one struct to another just to support the interface.
 Of course the interface could just specify everything as functions instead of fields.
 Could end up in an existential crisis deciding whether an interface definition should be a field/prop or a function
+Might make sense to force interfaces to only be functions.
 
 We can probably leave props out for now and see how it affects things then possibly add later.

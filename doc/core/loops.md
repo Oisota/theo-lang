@@ -19,12 +19,14 @@ let result = for x in range(10) {
 ```
 
 Should they just return void or something?
+Probably should just return some kind of `unit` type.
 
 Do we even need loops?
 Should be able to take care of all iteration needs with map/filter/reduce.
 
 Also need to consider how loops will play with True/False being just another `enum` and not being intrinsic to the language.
 
+Maybe `for` and `while` desugar into a more primitive loop construct?
 ```text
 loop {
 	case x < 10 {
