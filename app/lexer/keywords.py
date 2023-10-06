@@ -20,7 +20,7 @@ KEYWORDS = [
     'while', 'for', 'break', 'continue',
 
     # misc
-    'scope', 'with',
+    'scope', 'with', # might not need 'with', could just use a built in function
     ]
 
 # reserved words for possible future use
@@ -41,10 +41,10 @@ OPERATORS = [
     # logical
     'and', 'or', 'not', '==', '!=', '<=', '>=', '<', '>',
 
-    # pattern match
+    # pattern match and lambda expressions
     '=>',
 
-    # math assignment might not be needed
+    # math assignment might not be needed, want mutation to have lots of ceremony
     # '+=', '-=', '*=', '/='
 
     # math

@@ -167,3 +167,4 @@ Could end up in an existential crisis deciding whether an interface definition s
 Might make sense to force interfaces to only be functions.
 
 We can probably leave props out for now and see how it affects things then possibly add later.
+(For reference: Golang interfaces only allow functions to be specified, not properties)

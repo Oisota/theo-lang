@@ -2,7 +2,7 @@
 Functions create their own scope.
 Inner functions can see the outer functions data, thus allowing closures.
 
-The **scope** expression creates a subscope *without* access to the enclosing scope.
+The **scope** expression creates a sub-scope *without* access to the enclosing scope.
 This is inspired by a video by Brian Will ([Brian Will: OOP is Bad](https://www.youtube.com/watch?v=QM1iUe6IofM#t=41m50s)).
 Variables from the enclosing scope must be passed to the **scope** expression in order to be used.
 This will be useful in breaking up long functions into subsections.

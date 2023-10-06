@@ -3,7 +3,7 @@
 Theo is a functional programming language that aims to be simple and easy to learn while still being powerful enough to do most things.
 Some high level goals are:
 - static typing and type inference
-- compile to static executables
+- compile to standalone executables
 - high level
 - simple, consistent, easy to learn
 

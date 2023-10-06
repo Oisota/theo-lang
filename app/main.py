@@ -16,6 +16,7 @@ def main():
     #print(list(tokens))
 
     #tree = parse(tokens)
+    #print(tree)
     #c_source = emit(tree)
 
     #with open('./out.c') as out:

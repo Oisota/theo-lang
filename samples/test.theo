@@ -30,9 +30,12 @@ fun main() int {
 	let u2 = 0xFF
 	let u3 = 0b0101
 
-	with foo = open('file.txt') {
+	with(open('file.txt'), fun(foo) {
 		// do stuff with foo here
-	}
+		let data = foo.read()
+		data.map(fn l => int(l) * 2)
+			.sum()
+	})
 
 	0
 }
