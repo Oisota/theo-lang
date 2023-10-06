@@ -2,8 +2,8 @@
 
 from unittest import TestCase
 
-from app.lexer.token import Token, TokenType, TokenizeResult
-from app.lexer.lexer import lex_line_comment, lex_multiline_comment
+from app.lexer.token import TokenizeResult
+from app.lexer.core import lex_line_comment, lex_multiline_comment
 
 class TestLexLineComment(TestCase):
     """Test lexing line comments"""

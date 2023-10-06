@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app.lexer.token import Token, TokenType, TokenizeResult
-from app.lexer.lexer import lex_string
+from app.lexer.lex_funcs import lex_string
 
 class TestLexString(TestCase):
 
