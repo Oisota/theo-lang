@@ -18,10 +18,10 @@ from .lex_funcs import (
     lex_string,
     )
 from .keywords import KEYWORDS, OPERATORS, RESERVED_WORDS
-from .token import TokenType
+from .token import TokenType, LexContext
 
 def build_keyword_lambda(type, keyword):
-    return lambda i, c: lex_keyword(type, keyword, i, c)
+    return lambda ctx: lex_keyword(type, keyword, ctx)
 
 def build_string_tokenizers(strings, type):
     tokenizers = []
@@ -48,28 +48,27 @@ def tokenize(input):
         lex_square_close,
         lex_colon,
         lex_comma,
-    ]
-    tokenizers += build_string_tokenizers(RESERVED_WORDS, TokenType.RESERVED)
-    tokenizers += build_string_tokenizers(KEYWORDS, TokenType.KEYWORD)
-    tokenizers += build_string_tokenizers(OPERATORS, TokenType.OPERATOR)
-    tokenizers += [
+        *build_string_tokenizers(RESERVED_WORDS, TokenType.RESERVED),
+        *build_string_tokenizers(KEYWORDS, TokenType.KEYWORD),
+        *build_string_tokenizers(OPERATORS, TokenType.OPERATOR),
         lex_identifier,
         lex_number,
         lex_string,
     ]
 
-    current = 0
+    ctx = LexContext(input, 0)
+    #current = 0
     len_input = len(input)
     current_line = 1
     current_column = 1
-    while current < len_input:
+    while ctx.index < len_input:
         tokenized = False
         for lex_function in tokenizers:
             token = None
             if tokenized:
                 break
         
-            result = lex_function(input, current)
+            result = lex_function(ctx)
             consumed_chars = result.consumed_chars
             token = result.token
             if token:
@@ -77,14 +76,15 @@ def tokenize(input):
                 token.start_column = current_column
 
             #calculate consumed lines/columns
-            for i in range(current, current + consumed_chars):
+            for i in range(ctx.index, ctx.index + consumed_chars):
                 current_column += 1
                 if input[i] == '\n':
                     current_line += 1
                     current_column = 1
 
             if consumed_chars:
-                current += consumed_chars
+                ctx.index += consumed_chars
+                #current += consumed_chars
                 tokenized = True
 
 
@@ -95,4 +95,4 @@ def tokenize(input):
                 yield token
 
         if not tokenized:
-            raise Exception('Character not recognized: {}'.format(input[current]))
+            raise Exception('Character not recognized: {}'.format(ctx.current))

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.lexer.token import Token, TokenType, TokenizeResult
+from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
 from app.lexer.lex_funcs import lex_string
 
 class TestLexString(TestCase):
@@ -10,8 +10,9 @@ class TestLexString(TestCase):
         input = '"Here is a test string"'
         token = Token(TokenType.STRING, 'Here is a test string')
         exp_result = TokenizeResult(len(input), token)
+        ctx = LexContext(input, 0)
 
-        result = lex_string(input, 0)
+        result = lex_string(ctx)
 
         self.assertEqual(result, exp_result)
         self.assertEqual(result.token, token)
@@ -21,8 +22,9 @@ class TestLexString(TestCase):
         input = "'Here is a test string'"
         token = Token(TokenType.STRING, 'Here is a test string')
         exp_result = TokenizeResult(len(input), token)
+        ctx = LexContext(input, 0)
 
-        result = lex_string(input, 0)
+        result = lex_string(ctx)
 
         self.assertEqual(result, exp_result)
         self.assertEqual(result.token, token)

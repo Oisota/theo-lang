@@ -25,7 +25,7 @@ KEYWORDS = [
 
 # reserved words for possible future use
 RESERVED_WORDS = [
-    'class'
+    'class',
     'as',
     'private',
     'public',

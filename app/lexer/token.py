@@ -37,3 +37,15 @@ class Token:
 class TokenizeResult:
     consumed_chars: int
     token: Token
+
+@dataclass
+class LexContext:
+    data: list[str]
+    index: int
+
+    @property
+    def current(self):
+        return self.data[self.index]
+
+    def char_at_offset(self, offset: int):
+        return self.data[self.index + offset]
