@@ -5,13 +5,13 @@ import re
 from .token import TokenType, Token, TokenizeResult, LexContext
 
 # generic lexing functions
-def lex_char(type, value, ctx: LexContext):
+def lex_char(type, value, ctx: LexContext) -> TokenizeResult:
     """Generic function for lexing a single character"""
     if value == ctx.current:
         return TokenizeResult(1, Token(type, value))
     return TokenizeResult(0, None)
 
-def lex_pattern(type, pattern, ctx: LexContext):
+def lex_pattern(type, pattern, ctx: LexContext) -> TokenizeResult:
     """Generic function for lexing a regexp pattern"""
     consumed_chars = 0
     value = ''
@@ -28,7 +28,7 @@ def lex_pattern(type, pattern, ctx: LexContext):
         return TokenizeResult(consumed_chars, Token(type, value))
     return TokenizeResult(0, None)
 
-def lex_keyword(type, keyword, ctx: LexContext):
+def lex_keyword(type, keyword, ctx: LexContext) -> TokenizeResult:
     """Generic function for lexing a keyword"""
     consumed_chars = 0
     while ctx.index + consumed_chars < len(ctx.data) and consumed_chars < len(keyword) and keyword[consumed_chars] == ctx.char_at_offset(consumed_chars):
@@ -38,7 +38,7 @@ def lex_keyword(type, keyword, ctx: LexContext):
         return TokenizeResult(consumed_chars, Token(type, keyword))
     return TokenizeResult(0, None)
 
-def lex_line_comment(ctx: LexContext):
+def lex_line_comment(ctx: LexContext) -> TokenizeResult:
     """Lex a single line comment"""
     consumed = 2
     value = ''
@@ -51,7 +51,7 @@ def lex_line_comment(ctx: LexContext):
         return TokenizeResult(consumed, None) # currently just ignoring comments
     return TokenizeResult(0, None)
 
-def lex_multiline_comment(ctx: LexContext):
+def lex_multiline_comment(ctx: LexContext) -> TokenizeResult:
     """Lex a multiline comment"""
     consumed = 2
     value = ''
@@ -68,31 +68,31 @@ def lex_multiline_comment(ctx: LexContext):
     return TokenizeResult(0, None)
 
 # concrete lexing functions
-def lex_paren_open(ctx: LexContext):
+def lex_paren_open(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.PAREN_OPEN, '(', ctx)
 
-def lex_paren_close(ctx: LexContext):
+def lex_paren_close(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.PAREN_CLOSE, ')', ctx)
 
-def lex_curly_open(ctx: LexContext):
+def lex_curly_open(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.CURLY_OPEN, '{', ctx)
 
-def lex_curly_close(ctx: LexContext):
+def lex_curly_close(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.CURLY_CLOSE, '}', ctx)
 
-def lex_square_open(ctx: LexContext):
+def lex_square_open(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.SQUARE_OPEN, '[', ctx)
 
-def lex_square_close(ctx: LexContext):
+def lex_square_close(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.SQUARE_CLOSE, ']', ctx)
 
-def lex_colon(ctx: LexContext):
+def lex_colon(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.COLON, ':', ctx)
 
-def lex_comma(ctx: LexContext):
+def lex_comma(ctx: LexContext) -> TokenizeResult:
     return lex_char(TokenType.COMMA, ',', ctx)
 
-def lex_number(ctx: LexContext):
+def lex_number(ctx: LexContext) -> TokenizeResult:
     pattern = re.compile('[0-9]|(\.)|(_)')
     end_pattern = re.compile('x|b|[A-F]|[a-f]|[0-9]|(\.)|(_)')
     #return lex_pattern(TokenType.NUMBER, pattern, input, current)
@@ -116,7 +116,7 @@ def lex_number(ctx: LexContext):
         return TokenizeResult(consumed_chars, Token(token_type, value))
     return TokenizeResult(0, None)
 
-def lex_identifier(ctx: LexContext):
+def lex_identifier(ctx: LexContext) -> TokenizeResult:
     pattern = re.compile('([A-Z]|[a-z]|_|[0-9])+')
     initial_pattern = re.compile('([A-Z]|[a-z]|_)+')
     consumed_chars = 0
@@ -134,7 +134,7 @@ def lex_identifier(ctx: LexContext):
         return TokenizeResult(consumed_chars, Token(TokenType.IDENTIFIER, value))
     return TokenizeResult(0, None)
 
-def lex_skip_whitespace(ctx: LexContext):
+def lex_skip_whitespace(ctx: LexContext) -> TokenizeResult:
     # NOTE this func and a few others may be the only ones that need to
     # count new lines, since only certain tokens may span a newline
     pattern = re.compile('\s')
@@ -151,7 +151,7 @@ def lex_skip_whitespace(ctx: LexContext):
             break
     return TokenizeResult(consumed, None)
 
-def lex_string(ctx: LexContext):
+def lex_string(ctx: LexContext) -> TokenizeResult:
     char = ctx.current
     if char == '"' or char == "'":
         value = ''
