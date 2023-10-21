@@ -78,7 +78,7 @@ Although the name binding may be immutable, changes to a mutable data structure 
 Variable declaration will look like:
 ```text
 let x: string = 'Hello, World' //with type annotation
-let a = 5
+let a = 5 // with type inference
 ```
 
 ### If Else Expressions
@@ -118,14 +118,14 @@ The compiler will check to ensure all cases of a pattern are handled by the expr
 
 ```text
 enum Option<a> {
-    Some a,
+    Some(a),
     None
 }
 
-let opt = Option.Some 5
+let opt = Option.Some(5)
 
 let result = case opt {
-    Option.Some value => value,
+    Option.Some(value) => value,
     Option.None => 0
 }
 
@@ -138,11 +138,11 @@ struct Card {
 }
 
 let mycard = (Rank.Ace, Suit.Spade)
-let c1 = Card { rank: Rank.Ace, suit: Suit.Spade }
-let c1 = Card {
-	rank = Rank.Ace,
-	suit = Suit.Spade
-}
+let c1 = Card(rank=Rank.Ace, suit=Suit.Spade)
+let c1 = Card(
+	rank=Rank.Ace,
+	suit=Suit.Spade
+)
 
 let mysuit = case mycard {
     (Ace, Diamond) => 'Ace of Diamonds'

@@ -83,7 +83,7 @@ struct Rect {
 
 impl Rect {
 	fun area(self) {
-		(x2 - x1) * (y2 - y1)
+		(self.x2 - self.x1) * (self.y2 - self.y1)
 	}
 }
 
@@ -94,13 +94,22 @@ interface Shape {
 
 impl Shape for Rect {
 	fun area(self) {
-		(x2 - x1) * (y2 - y1)
+		(self.x2 - self.x1) * (self.y2 - self.y1)
 	}
 }
 
 let rect = Rect { x1 = 4, y1 = 0, x2 = 10, y2 = 20 }
 let area = rect.area()
 ```
+
+Should we allow adding `impl`s wherever?
+Rust only allows a bare `impl` in the same crate.
+Allowing anyone to add methods to an existing `struct` could be confusing with not knowing where something is defined or when its available to call.
+Would make things a bit harder to understand.
+Seems like it would be better to just create your own interface and use that if you need methods added to a struct.
+Rust allows implementing traits from anywhere.
+This allows extending a `struct` if you need to.
+
 
 ## Creation/Initialization
 Structs instances can be created by calling the struct name like a function.

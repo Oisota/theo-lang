@@ -30,7 +30,10 @@ Anonymous functions can be defined using the `fn` keyword like so:
 let add = fn (a, b) => a + b
 
 let l1 = List()
-l1.map(fn (a) => a * 2)
+l1.map(fn (a) => a * 2) // single expression
+	.filter(fn (a) => { // can use braces for multi-expression block
+		a > 10
+	})
 ```
 
 ## Early returns
