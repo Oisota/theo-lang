@@ -43,8 +43,18 @@ fun loop_test() {
 	let i = Mut[int]()
 	let j = 23.32
 	let k = 10_000
-	while i < 10 {
+	while i > 40 {
 		i := i + 1 // make mutation require a special operator?
+	}
+
+	for x in range(1, 100) {
+		print(x)
+	}
+
+	loop {
+		if (i > 40) {
+			break
+		}
 	}
 }
 // this is a comment

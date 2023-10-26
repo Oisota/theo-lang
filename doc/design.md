@@ -81,6 +81,11 @@ let x: string = 'Hello, World' //with type annotation
 let a = 5 // with type inference
 ```
 
+Should we add a `const` or `define` keyword for compile time constants that are simply inlined wherever used?
+```
+const FOO = 25
+```
+
 ### If Else Expressions
 Conditional branching will be expression based.
 Each `if` expression will evaluate to a value.
@@ -96,7 +101,7 @@ else { 'Bat' }
 ```
 
 *Idea:* This may be best implemented as syntax sugar over case expressions.
-This would simplify things since every if else can just be translated to its corresponding case expressions.
+This would simplify things since every if/else can just be translated to its corresponding case expressions.
 The above example would be translated to a nested case expression:
 
 ```text
@@ -117,7 +122,7 @@ Case expressions will be used to pattern match over data types and other data st
 The compiler will check to ensure all cases of a pattern are handled by the expressions.
 
 ```text
-enum Option<a> {
+enum Option[a] {
     Some(a),
     None
 }
@@ -137,7 +142,6 @@ struct Card {
 	suit: Suit
 }
 
-let mycard = (Rank.Ace, Suit.Spade)
 let c1 = Card(rank=Rank.Ace, suit=Suit.Spade)
 let c1 = Card(
 	rank=Rank.Ace,

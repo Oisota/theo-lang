@@ -7,11 +7,9 @@ Dictionaries will be separate due to their nature.
 
 ## Dictionary
 Dicts will be a set of key/value pairs.
-Dicts will map any key to any value.
-Dicts are created with syntax derived from JavaScript object literals.
 Arbitrary key/values mappings will be supported, i.e. mapping a number to a function, or a function to a string, etc.
 Dictionaries will map one type to another type and will be type checked based upon this.
-The dictionary, `x`, below would have the type `Dict[String, Int]` for example.
+The dictionary, `x`, below would have the type `Dict[string, int]` for example.
 
 ```text
 let x = Dict[string, int]()
@@ -48,9 +46,7 @@ l1.append(3)
 ```
 
 ### Set
-Sets will be created by placing '#{}' around a list of values.
-These values need be the same type.
-Sets will maintain the mathematical properties of sets
+Mathematical set type.
 ```text
 let s = Set[string]()
 s.add('Foo')

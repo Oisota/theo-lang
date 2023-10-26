@@ -56,6 +56,11 @@ assign_expr = "let" space , id , white_space , [ type_annotation ] , white_space
 (* with foo = open('file.txt') {...} *)
 with_expr = "with", space , id , "=", white_sapce , expr , white_space , expr_block  ;
 
+(* scope expression *)
+scope_param = id , white_space , [ "," ];
+scope_param_list = { param } ,;
+scope_expr = "scope", space ,  scope_param_list , expr_block
+
 (* if else expression*)
 (* if x == 5 {...} else {...} *)
 if_expr = "if", space , expr , white_space , expr_block , "else" , white_space , expr_block ;
@@ -72,6 +77,8 @@ func_sig = "fun", space , type_name , "(", param_list ")" , white_space , type_n
 func_def = func_sig , white_space , expr_block;
 func_call = expr , white_space , "(" , expr_list , ")" ;
 
+(* Type Definitions *)
+
 (* interfaces *)
 field_sig = id , white_space , type_name , [ "=" , expr ] ;
 interface_body = { field_sig | func_sig } ;
@@ -80,6 +87,10 @@ interface = "interface" , white_space , type_name , "{" white_space , interface_
 (* structs *)
 struct_body = { field_sig };
 struct = "struct" , white_space , type_name , "{" , white_space , struct_body , white_space ,"}";
+
+(* unions *)
+union_body = { field_sig };
+union = "union" , white_space , type_name , "{" , white_space , union_body , white_space ,"}";
 
 (* impl *)
 impl_body = { func_def } ;
@@ -92,7 +103,7 @@ enum = "enum" , white_space , type_name , "{" , white_space , enum_body , white_
 (* type alias*)
 type_alias = "type" , white_space , id , white_space , "=" , white_space , type_name;
 
-type_definition = interface | struct | impl | enum | type_alias;
+type_definition = interface | struct | union | impl | enum | type_alias;
 
 (* Loops *)
 id_list = { id , white_space }; 

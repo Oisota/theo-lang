@@ -41,38 +41,7 @@ x.at(#foo) = 5
 Non-primitive types will be types that will be implemented in the standard library and will not be available by default.
 They will be implemented in terms of the other primitives.
 
-### Boolean
-Booleans will be implemented as simple enum with `True` and `False` constructors as so:
-```text
-enum Bool { True, False }
 
-let my_bool = True
-
-io.print(if my_bool { 
-    'b is true'
-} else { 
-    'b is false'
-})
-
-io.print(if 5 > 9 {
-    'foo'
-} else {
-    'bar'
-});
-```
-
-Might also make sense to add some simple helper enums in a `std/bool` package:
-```text
-enum Toggle { On, Off }
-enum Answer { Yes, No}
-```
-I am thinking it might be nice to facilitate using booleans other than true/false depending on the context.
-Might make for more readable code.
-For example feature flags might make more sense as either `On` or `Off` instead of `True` and `False`.
-Will need to decide how this interacts with `if`/`else` expressions.
-Maybe if expressions can work with any enum that has only 2 choices and assumes the first choice is the "truthy" value.
-Need to think on this, could be abused.
-Maybe limit if expressions to only work with values defined in `std/bool`.
 
 ### Mutable
 Mutability can be achieved using the `Mut` type.
