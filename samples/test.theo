@@ -11,17 +11,17 @@ import (
 	"./util" // relative import
 )
 
-fun main() int {
+fun main(args List[string]) int {
 	let x = 5 * 8
 	let hello = "Hello, World!"
 	let result = scope x {
 		x + 10
 	}
 	io.print(hello)
-	io.print('Hello Again!')
+	io.print("Hello Again!")
 
 	let l1 = List[int]()
-	let el = l1[0]
+	let el = l1.at(0)
 
 	let l2 = l1.map(fun(a int) { a * 2 })
 	let l2 = l1.map(fn a => a * 2 ) // still playing around with lambda syntax, this relies on inferring types from the list type

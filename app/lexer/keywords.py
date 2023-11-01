@@ -17,10 +17,10 @@ KEYWORDS = [
     'if', 'else', 'case',
 
     # loops
-    'while', 'for', 'break', 'continue',
+    'loop', 'break', 'continue',
 
     # misc
-    'scope', 'with', # might not need 'with', could just use a built in function
+    'scope',
     ]
 
 # reserved words for possible future use
@@ -34,7 +34,12 @@ RESERVED_WORDS = [
     'module',
     'mod',
     'namespace',
-    'loop',
+    'const',
+    'with',
+    'while',
+    'do',
+    'for',
+    'in',
     ]
 
 OPERATORS = [
