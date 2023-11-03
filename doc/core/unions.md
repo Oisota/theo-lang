@@ -41,3 +41,4 @@ Choices are either both syntaxes are equivalent and the `enum` approached is pre
 I Am thinking that a `union` type must have at least one constructor that contains some data.
 `enum` types would then be strictly for an enumerated set of labeled values with the default being `int`s.
 Or we can allow a `union` with no data but then it must be constructed with parens after it like so `Foo.Zoo()` in order to indicate its a `union` and not an `enum`.
+I like the first option, forcing `union`s to have at least one field with data.

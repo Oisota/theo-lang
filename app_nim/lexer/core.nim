@@ -21,7 +21,6 @@ iterator tokenize*(input: seq[char]): Token {. closure .} =
   var
     tokenizers: seq[tokenize_func] = @[]
     ctx = LexContext(data: input, idx: 0)
-    len_input = len(input)
     current_line = 1
     current_column = 1
     tokenized = false
@@ -45,7 +44,7 @@ iterator tokenize*(input: seq[char]): Token {. closure .} =
   tokenizers.add(lex_string)
   tokenizers.add(build_string_tokenizers(RESERVED_WORDS, TokenType.RESERVED))
 
-  while ctx.idx < len_input:
+  while ctx.has_next():
     tokenized = false
     for lex_function in tokenizers:
       token = none(Token)
@@ -70,7 +69,7 @@ iterator tokenize*(input: seq[char]): Token {. closure .} =
           current_column = 1
 
       if consumed_chars > 0:
-        ctx.idx += consumed_chars
+        ctx.consume(consumed_chars)
         tokenized = true
 
       if token.isSome():

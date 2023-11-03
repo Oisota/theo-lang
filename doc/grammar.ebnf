@@ -13,12 +13,6 @@ id = ( letter | "_" ) , { letter | digit | "_" } ;
 
 program = [ import ] , expr ;
 
-(* imports *)
-import_lib = string
-		   | string , white_space , "*"
-		   | string , white_space , id ;
-import = "import" , white_space , "(" , white_space , { import_lib } , white_space , ")";
-
 (* type literals *)
 int_digit = digit | ( nonzero_digit , { digit } ) ;
 int = { int_digit | "_" };
@@ -32,12 +26,16 @@ float  = int , "." , int ;
 
 number = [ "-" ] , ( int | hex_int | binary_int | float ) ;
 
-string = ( '"' , { char } , '"' ) 
-       | ( "'" , { char } , "'" ) ;
+string = '"' , { char } , '"' ;
+char_lit = "'" , char , "'" ;
 
-literal = number | string;
+literal = number | string | char_lit ;
 
-collection_access = expr , "[" , expr , "]" ;
+(* imports *)
+import_lib = string
+		   | string , white_space , "*"
+		   | string , white_space , id ;
+import = "import" , white_space , "(" , white_space , { import_lib } , white_space , ")";
 
 (* List of expressions surrounded by {} *)
 expr_block = "{" , { expr } , "}";
@@ -52,29 +50,26 @@ type_name = id , [ generic_params ]; (* Option[T] , Foo , int , Result[T, E], et
 type_annotation = ":" , type_name ; (* This might not be needed *)
 assign_expr = "let" space , id , white_space , [ type_annotation ] , white_space , "=" , white_space , expr ;
 
-(* with expression *)
-(* with foo = open('file.txt') {...} *)
-with_expr = "with", space , id , "=", white_sapce , expr , white_space , expr_block  ;
-
 (* scope expression *)
 scope_param = id , white_space , [ "," ];
 scope_param_list = { param } ,;
-scope_expr = "scope", space ,  scope_param_list , expr_block
+scope_expr = "scope", space ,  scope_param_list , expr_block ;
 
-(* if else expression*)
+(* if else expression *)
 (* if x == 5 {...} else {...} *)
 if_expr = "if", space , expr , white_space , expr_block , "else" , white_space , expr_block ;
 
 (* case expression *)
-case_pattern = id , white_space , "(" , id_list , ")"; (* TODO define this *)
+case_pattern = id , white_space , "(" , id_list , ")";
 case_list = { case_pattern , "=>" , expr };
 case_expr = "case", space , expr , white_space , "{" , case_list , "}" ;
 
 (* functions *)
-param = id , white_space , id , [ "," ];
+param = id , space , id , [ "," ];
 param_list = { param } ,;
 func_sig = "fun", space , type_name , "(", param_list ")" , white_space , type_name ;
 func_def = func_sig , white_space , expr_block;
+expr_list = { expr , white_space , "," , white_space };
 func_call = expr , white_space , "(" , expr_list , ")" ;
 
 (* Type Definitions *)
@@ -94,14 +89,14 @@ union = "union" , white_space , type_name , "{" , white_space , union_body , whi
 
 (* impl *)
 impl_body = { func_def } ;
-impl = "impl" , [ white_space , type_name ] , white_space , "for" , white_space , type_name , "{" , impl_body , "}";
+impl = "impl" , space , [ type_name ] , space , "for" , space , type_name , white_space , "{" , impl_body , "}";
 
 (* enums *)
 enum_body = { id , [ "(" , param_list , ")" ] };
-enum = "enum" , white_space , type_name , "{" , white_space , enum_body , white_space ,"}";
+enum = "enum" , space , type_name , "{" , white_space , enum_body , white_space ,"}";
 
 (* type alias*)
-type_alias = "type" , white_space , id , white_space , "=" , white_space , type_name;
+type_alias = "type" , space , id , white_space , "=" , white_space , type_name;
 
 type_definition = interface | struct | union | impl | enum | type_alias;
 
@@ -109,7 +104,8 @@ type_definition = interface | struct | union | impl | enum | type_alias;
 id_list = { id , white_space }; 
 for_loop = "for" , white_space , id_list , white_space , "in" , white_space , expr , white_space , expr_block;
 while_loop = "while" , white_space , expr , white_space , expr_block;
-loop_expr = for_loop | while_loop ;
+base_loop = "loop" , white_space , expr_block ;
+loop_expr = for_loop | while_loop | base_loop ;
 
 (* operators *)
 binary_operator = "==" 
@@ -125,19 +121,22 @@ binary_operator = "=="
 	| "-"
 	| "*"
 	| "/"
-	| "." ;
+	| "."
+	| "&"
+	| "|"
+	| "^"
+	| "<<"
+	| ">>" ;
 
-unary_operator = "not" ;
+unary_operator = "not" | "~";
 
 (* grand unifying expression *)
 expr = expr , operator , expr
 	| unary_operator , expr
 	| if_expr
 	| case_expr
-	| with_expr
 	| assign_expr
 	| func_def 
 	| func_call
 	| type_definition
 	| loop
-	| collection_access

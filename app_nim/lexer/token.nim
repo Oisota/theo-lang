@@ -32,15 +32,20 @@ type
     consumed_chars*: int
     token*: Option[Token]
 
-  # might want a context type for easy of passing data around
-  LexContext* = object
+  # context type for easily passing data around
+  LexContext* = ref object
     data*: seq[char]
     idx*: int
+
+proc has_next*(ctx: LexContext): bool =
+  result = ctx.idx < len(ctx.data)
+proc consume*(ctx: LexContext, n: int): void =
+  ctx.idx = ctx.idx + n
 
 proc current*(ctx: LexContext): char =
   return ctx.data[ctx.idx]
 
-proc char_at_offset*(ctx: LexContext, offset: int): char =
+proc peek*(ctx: LexContext, offset: int): char =
   return ctx.data[ctx.idx + offset]
 
 proc `$`*(t: Token): string =

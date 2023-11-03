@@ -40,7 +40,7 @@ let card = Card(
 Fields may have an optional default value like so:
 ```text
 struct Bar {
-	my_field string = "BOOM!"
+	my_field string = "BOOM!",
 	other_field int
 }
 

@@ -24,15 +24,15 @@ func lex_keyword*(
   ctx: LexContext): TokenizeResult =
 
   var
-    consumed_chars = 0
+    consumed = 0
 
-  while ((ctx.idx + consumed_chars) < len(ctx.data)) and consumed_chars < len(keyword) and keyword[consumed_chars] == ctx.char_at_offset(consumed_chars):
-    consumed_chars += 1
+  while ((ctx.idx + consumed) < len(ctx.data)) and consumed < len(keyword) and keyword[consumed] == ctx.peek(consumed):
+    consumed += 1
 
   result = empty_result()
-  if len(keyword) == consumed_chars:
+  if len(keyword) == consumed:
     let tok = Token(tok_type: tok_type, value: keyword)
-    result = TokenizeResult(consumed_chars: consumed_chars, token: some(tok))
+    result = TokenizeResult(consumed_chars: consumed, token: some(tok))
 
 func lex_line_comment*(ctx: LexContext): TokenizeResult =
   var
@@ -40,12 +40,12 @@ func lex_line_comment*(ctx: LexContext): TokenizeResult =
     value = ""
   result = empty_result()
 
-  if ctx.current == '/' and ctx.char_at_offset(1) == '/':
-    var c = ctx.char_at_offset(consumed)
+  if ctx.current == '/' and ctx.peek(1) == '/':
+    var c = ctx.peek(consumed)
     while c != '\n':
       value.add(c)
       consumed += 1
-      c = ctx.char_at_offset(consumed)
+      c = ctx.peek(consumed)
     result = TokenizeResult(consumed_chars: consumed, token: none(Token))
 
 func lex_multiline_comment*(ctx: LexContext): TokenizeResult =
@@ -55,15 +55,15 @@ func lex_multiline_comment*(ctx: LexContext): TokenizeResult =
 
   result = empty_result()
 
-  if ctx.current == '/' and ctx.char_at_offset(1) == '*':
+  if ctx.current == '/' and ctx.peek(1) == '*':
     var
-      c = ctx.char_at_offset(consumed)
-      next_char = ctx.char_at_offset(consumed + 1)
+      c = ctx.peek(consumed)
+      next_char = ctx.peek(consumed + 1)
     while not (c == '*' and next_char == '/'):
       value.add(c)
       consumed += 1
-      c = ctx.char_at_offset(consumed)
-      next_char = ctx.char_at_offset(consumed + 1)
+      c = ctx.peek(consumed)
+      next_char = ctx.peek(consumed + 1)
     consumed += 2
     result = TokenizeResult(consumed_chars: consumed, token: none(Token))
 
@@ -106,7 +106,7 @@ func lex_number*(ctx: LexContext): TokenizeResult =
       consumed_chars += 1
       value.add(c)
       try:
-        c = ctx.char_at_offset(consumed_chars)
+        c = ctx.peek(consumed_chars)
       except IndexDefect:
         break
     
@@ -133,7 +133,7 @@ func lex_identifier*(ctx: LexContext): TokenizeResult =
       consumed_chars += 1
       value.add(c)
       try:
-        c = ctx.char_at_offset(consumed_chars)
+        c = ctx.peek(consumed_chars)
       except IndexDefect:
         break
     
@@ -147,14 +147,14 @@ func lex_skip_whitespace*(ctx: LexContext): TokenizeResult =
     c = ' '
 
   try:
-    c = ctx.char_at_offset(consumed)
+    c = ctx.peek(consumed)
   except IndexDefect:
     return TokenizeResult(consumed_chars: consumed, token: none(Token))
 
   while contains($c, pattern):
     consumed += 1
     try:
-      c = ctx.char_at_offset(consumed)
+      c = ctx.peek(consumed)
     except IndexDefect:
       break
   
@@ -169,11 +169,11 @@ func lex_string*(ctx: LexContext): TokenizeResult =
       value = ""
       consumed = 1
       closing_quote = c
-      c = ctx.char_at_offset(consumed)
+      c = ctx.peek(consumed)
     while c != closing_quote:
       value.add(c)
       consumed += 1
-      c = ctx.char_at_offset(consumed)
+      c = ctx.peek(consumed)
     
     let token = some(Token(tok_type: TokenType.STRING, value: value))
     result = TokenizeResult(consumed_chars: consumed + 1, token: token)

@@ -38,3 +38,18 @@ fun foo(a int, b string, c Foo) Option[Foo] {
     //final stuff
 }
 ```
+
+How should plain blocks work inside functions?
+I figure they can see outer variables but inner variables can't be seen outside the scope.
+I believe this is how most curly brace languages currently work.
+
+```
+fun foo(a string) int {
+	
+	let x = {
+		let f = (5 * 8).toString() + a // a is visible here
+	}
+
+	let b = f // compile error, f is not defined
+}
+```
