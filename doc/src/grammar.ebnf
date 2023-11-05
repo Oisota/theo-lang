@@ -37,9 +37,6 @@ import_lib = string
 		   | string , white_space , id ;
 import = "import" , white_space , "(" , white_space , { import_lib } , white_space , ")";
 
-(* List of expressions surrounded by {} *)
-expr_block = "{" , { expr } , "}";
-
 (* generics - [F] , [T, K] *)
 generic_params = "[" , white_space , id , { white_space , "," , white_space , id } , white_space "]";
 
@@ -139,4 +136,7 @@ expr = expr , operator , expr
 	| func_def 
 	| func_call
 	| type_definition
-	| loop
+	| loop ;
+
+(* List of expressions surrounded by {} *)
+expr_block = "{" , white_space , { expr } , white_sapce , "}" ;

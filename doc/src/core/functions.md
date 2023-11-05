@@ -160,3 +160,18 @@ This probably isn't necessary to worry about now.
 Writing a simple struct should be more than fine if named params are needed.
 
 This would be a good case for a macro that would take a function and write the corresponding param struct
+
+## Recursion keyword
+Should a `recur` keyword be added?
+This would be a nice to have so you don't have to repeat the function name and would make renaming a recursive function simpler.
+Might make it easier to identify recursive functions vs non-recursive.
+
+```
+fun fib(n int) {
+	case n {
+		0 => 0,
+		1 => 1,
+		n => recur(n-1) + recur(n-2) 
+	}
+}
+```

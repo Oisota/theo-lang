@@ -1,5 +1,5 @@
-Core Modules
-============
+# Core Modules
+
 These are the core modules that will be available:
 ### Core Data Type Modules
 - Function

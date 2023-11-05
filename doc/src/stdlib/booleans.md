@@ -1,3 +1,5 @@
+# Booleans
+
 Might make sense to not implement booleans in the language as primitives since they can just created as enums:
 
 ```text

@@ -131,6 +131,15 @@ let p6 = Point(y=3, x) // compile time error
 let p7 = Point() // compile time error
 ```
 
+## Updates
+Since struct fields are immutable by default, it might be nice to have a simple way of updating struct fields by creating a new struct with the new data.
+```
+let p = Point(x = 5, y = 6)
+let j = p.update(x=10) // simple method present on all structs? (Don't have keyword args so this wouldn't work)
+let j = Point(base=p, x=10) // use a special base arg to specify data to inherit (This seems like the best option)
+let j = Point(**p, x=10) // some kind of splat operator that expands collections?
+```
+
 ## Properties
 I'm thinking it would be nice to have computed properties on structs to make accessing computed values easier.
 This would also help with preserving a struct's API in calling code.
