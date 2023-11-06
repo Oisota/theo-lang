@@ -86,74 +86,7 @@ Should we add a `const` or `define` keyword for compile time constants that are 
 const FOO = 25
 ```
 
-### If Else Expressions
-Conditional branching will be expression based.
-Each `if` expression will evaluate to a value.
-Every `if` must have a corresponding `else`.
 
-```text
-let x = 5
-let y = 8
-
-if x == 10 { 'Foo' }
-else if y == 9 { 'Bar' }
-else { 'Bat' }
-```
-
-*Idea:* This may be best implemented as syntax sugar over case expressions.
-This would simplify things since every if/else can just be translated to its corresponding case expressions.
-The above example would be translated to a nested case expression:
-
-```text
-case x == 10 {
-	True => 'Foo',
-	False => case y == 9 {
-		True => 'Bar',
-		False => 'Bat
-	}
-}
-```
-
-This would make sense since booleans wouldn't necessarily need to be built into the language.
-They could just be a simple enum.
-
-### Case Expressions
-Case expressions will be used to pattern match over data types and other data structures.
-The compiler will check to ensure all cases of a pattern are handled by the expressions.
-
-```text
-enum Option[a] {
-    Some(a),
-    None
-}
-
-let opt = Option.Some(5)
-
-let result = case opt {
-    Option.Some(value) => value,
-    Option.None => 0
-}
-
-enum Suit { Diamonds, Spade, Club, Heart }
-enum Rank { Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King }
-
-struct Card {
-	rank: Rank,
-	suit: Suit
-}
-
-let c1 = Card(rank=Rank.Ace, suit=Suit.Spade)
-let c1 = Card(
-	rank=Rank.Ace,
-	suit=Suit.Spade
-)
-
-let mysuit = case mycard {
-    (Ace, Diamond) => 'Ace of Diamonds'
-    (Ace, Spade) => 'Ace of Spades'
-}
-//above throws compiler error
-```
 
 ### Comments
 'C' style inline and block comments will be supported.
