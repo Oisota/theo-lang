@@ -28,3 +28,6 @@ case x == 10 {
 
 This would make sense since booleans wouldn't necessarily need to be built into the language.
 They could just be a simple enum.
+
+Noting that [Gleam](https://gleam.run/book/tour/case-expressions.html) *only* has case expressions.
+Could possible simplify the language and do away with if/else all together.

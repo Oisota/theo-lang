@@ -1,6 +1,10 @@
 # Language Design
-## Overview
-### Small
+
+*Note: A lot of these docs are incomplete and contain my thoughts (ramblings) on how things could or should work.*
+*There's a range of some things being set in stone and some things being still decided upon.*
+*Just wanted to emphasize the rough draft status of the docs.*
+
+## Small
 The language must be extremely small and easy to understand.
 The entire language and its inner workings must be able to be kept in one's head (For ex. 'C').
 It should have slightly more syntax than lisp.
@@ -8,141 +12,39 @@ The language should be completely separate from its standard library.
 Nothing is baked in from the start.
 Extra functionality is added as needed.
 
-### Extensible
+## Extensible
 The language must be able to be easily extended, ideally using its own features, but new features and libs should be able to be written in any language.
 The language should easily communicate with other languages.
 If a feature isn't present, implementing it yourself should be straightforward.
 
-### Specification
+## Specification
 The grammar for the language will be formally specified using E.B.N.F.
 This should be no more than 1-2 pages in length.
 
-### Problem Domains
+## Problem Domains
 The language will most likely be best suited towards scripting and applications programming.
 Systems programming would be fairly difficult, although, an extension library may alleviate this.
 The language should be fairly general purpose. 
 Extensions and Libraries should be able to be added to the language in order to tackle most problem domains.
 
-### Programming Paradigms
+## Programming Paradigms
 The language will be an expression based language.
 It will support mainly a mix of functional and procedural/imperative programming, favoring the functional approach.
 This should be considered when building the standard library and how built-in data structures should operate.
 
-### Implementation
+## Implementation
 I'm thinking that it will be easiest to have the language compile to C source code similar to how Nim works.
 This will make it easy to generate a standalone executable and will allow the language to run anywhere that has a C compiler.
 Can also piggy-back off C libraries easily.
-
-## Design
-### Types
-The language will be statically typed and have the following built-in primitive types:
-- Function (**fn**)
-- Integer (**int**)
-- Float (**float**)
-- Char (**char**)
-- Tuple (**tuple**)
-
-**TODO:**
-- figure which types will be primitives and which will be collections
-- figure out how unsigned ints will be added and if different sizes should be supported like `i32`, `u8`, etc.
 
 The types of expressions will be inferred and will rarely need to be stated explicitly.
 Type annotations may be used if the user feels they make the code clearer or if the compiler can't infer the type.
 Function signatures must always be specified.
 Programs won't compile unless they type check.
 
-See [Types](types.markdown) and [Core Modules](core_modules.markdown) for more detail.
-
 Should there be a distinction between primitives and other types? (structs/funcs/collections/etc).
 Need to think about how high level the language should be.
 Could be like python where everything is an object, in this case a struct.
 This might make low level stuff harder to implement.
 Need to think on this...
-
-### Type Synonyms
-```text
-type Point = Coord[int, int] // instantiate a generic type with concrete types
-type Name = string
-type MoneyAmount = (int, int)
-
-let p = Point(5, 6)
-let n:name = "Derek"
-let d = MoneyAmount(5, 75)
-```
-
-### Variables
-The `let` keyword will be used to bind a name to a value.
-The bindings will be not be able to be changed once assigned and primitive values will be immutable.
-Although the name binding may be immutable, changes to a mutable data structure will still be possible.
-
-Variable declaration will look like:
-```text
-let x: string = 'Hello, World' //with type annotation
-let a = 5 // with type inference
-```
-
-Should we add a `const` or `define` keyword for compile time constants that are simply inlined wherever used?
-```
-const FOO = 25
-```
-
-
-
-### Comments
-'C' style inline and block comments will be supported.
-```text
-/*
-    This is a comment
-*/
-
-//This is an inline comment
-```
-
-### Macros
-Should the language have macros?
-I'm debating on whether there should even be literal notation for dicts/lists/etc.
-It might be easier from a grammar definition standpoint to have macros that would expand to create lists.
-For example:
-```text
-let l1 = @list[1,2,3,4,5]
-```
-Would expand to:
-```text
-let l1 = list()
-l1.add(1)
-l1.add(2)
-l1.add(4)
-l1.add(4)
-l1.add(5)
-```
-Having literal notation for data structures complicates the grammar needing special cases for various data
-structures.
-It also adds mental tax having to remember what each symbol means.
-Would also need to overload the curly brackets to mean several different things: (blocks, dicts, sets).
-Probably best to leave them out to make things more regular.
-
-The only argument against removal of literals would be sequence access with square brackets being so ubiquitous it would hinder adoption since people are so used to it.
-This could be alleviated somewhat with helper methods on sequences like `.first()`, `.second()`, `.last()`, etc methods for common use cases.
-Removal of bracket notation could help incentivise using map/filter/reduce and using a different structure if non sequential access is needed.
-Could also just provide a simple `.get(n: int)` or `.at(n: int)` method for indexed access.
-
-Could also make all sequences callable such that you can just use parens where brackets are normally used.
-I like this idea.
-
-
-This could most likely be added later and we shouldn't worry about this for the initial implementation.
-
-### Generics
-Should generics use angle brackets like Java/C++/C# or square brackets?
-```text
-enum Option[A] {
-	Some(A)
-	None
-}
-
-enum Option<A> {
-	Some(A)
-	None
-}
-```
-Leaning heavily towards square brackets.
+Currently leaning towards have a some primitive types that all of literal syntax and everything else being a higher level data structure.

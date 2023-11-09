@@ -7,11 +7,11 @@ Tail calls will be optimized.
 Functions will return whatever value their last expression evaluates to.
 
 ```text
-fun add(a int, b int) {
+fun add(a int, b int) int {
 	a + b
 }
 
-fun fib(n int) {
+fun fib(n int) int {
 	case n {
 		0 => 0,
 		1 => 1,
@@ -167,7 +167,7 @@ This would be a nice to have so you don't have to repeat the function name and w
 Might make it easier to identify recursive functions vs non-recursive.
 
 ```
-fun fib(n int) {
+fun fib(n int) int {
 	case n {
 		0 => 0,
 		1 => 1,

@@ -5,7 +5,7 @@ These are the core modules that will be available:
 - Function
 - Int
 - Float
-- bool
+- Bool
 - Char
 - String
 - Collections
