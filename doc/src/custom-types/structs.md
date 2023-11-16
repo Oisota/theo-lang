@@ -66,7 +66,7 @@ struct Bar {
 }
 
 let bar = Bar(5)
-bar.a = 6
+bar.a := 6
 ```
 
 ## Methods
@@ -101,6 +101,7 @@ impl Shape for Rect {
 let rect = Rect { x1 = 4, y1 = 0, x2 = 10, y2 = 20 }
 let area = rect.area()
 ```
+Should `self` be a keyword or just convention?
 
 Should we allow adding `impl`s wherever?
 Rust only allows a bare `impl` in the same crate.

@@ -9,10 +9,10 @@ let
     "let",
 
     # functions
-    "fun", "fn", "done",
+    "fun", "fn", "done", "recur",
 
     # types
-    "interface", "type", "struct", "enum", "union", "impl", "prop",
+    "interface", "type", "struct", "enum", "union", "impl", "distinct",
 
     # logical
     "if", "else", "case",
@@ -40,6 +40,7 @@ let
     "do",
     "for",
     "in",
+    "prop",
   ]
 
   OPERATORS* = @[
@@ -55,9 +56,12 @@ let
     # bitwise
     "&", "|", "^", "<<", ">>", "~",
 
-    # assignment
-    "=",
+    # assignment/mutation
+    "=", ":=",
 
     # field access
     ".",
+
+    # type annotation
+    ":",
     ]

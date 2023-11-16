@@ -43,13 +43,12 @@ fun loop_test() {
 	let i = Mut[int]()
 	let j = 23.32
 	let k = 10_000
-	while i > 40 {
-		i := i + 1 // make mutation require a special operator?
-	}
 
-	for x in range(1, 100) {
+	i := i + 1 // make mutation require a special operator?
+
+	range(1, 100).each(fn (x) {
 		print(x)
-	}
+	})
 
 	loop {
 		if (i > 40) {
@@ -65,7 +64,7 @@ fun fib(n int) int {
 	case n {
 		0 => 0
 		1 => 1
-		n => fib(n-1) + fib(n-2)
+		n => recur(n-1) + recur(n-2)
 	}
 }
 /*

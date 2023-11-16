@@ -53,3 +53,5 @@ fun foo(a string) int {
 	let b = f // compile error, f is not defined
 }
 ```
+
+We should most likely discourage use of plain blocks in favor of `scope` expressions but still allow them if wanted by the user.

@@ -1,8 +1,7 @@
 # Macros
 
 Should the language have macros?
-I'm debating on whether there should even be literal notation for dicts/lists/etc.
-It might be easier from a grammar definition standpoint to have macros that would expand to create lists.
+Since we're ditching literal notation for collections (dicts/lists/sets/etc), it would make sense to have macros to do things that are cumbersome otherwise.
 For example:
 ```text
 let l1 = @list[1,2,3,4,5]
@@ -31,4 +30,4 @@ Could also make all sequences callable such that you can just use parens where b
 I like this idea.
 
 
-This could most likely be added later and we shouldn't worry about this for the initial implementation.
+Macros can most likely be added later and we shouldn't worry about them for the initial implementation.

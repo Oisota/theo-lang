@@ -1,5 +1,7 @@
 # Loops
 
+Am thinking that the only looping construct we need is a simple `loop` keyword
+
 How should looping work?
 Not sure how loops will work since everything is an expression.
 
@@ -51,3 +53,31 @@ Not sure how that would work.
 Might be easiest to just have the single `loop` construct to create an infinite loop when necessary. (IE system daemon, game engine, anything that needs to run indefinitely)
 This way we don't have to think about how `for` and `while` interact with booleans just being enums and not built in.
 Just loop and break out if you need to in the loop body.
+
+Can the loop keyword be replaced by a function?
+
+```
+// loop sentinel
+enum Loop {
+	Break,
+	Continue
+}
+
+fun loop(loop_fn Function) void {
+	case loop_fn() {
+		Break => done,
+		Continue => recur(loop_fn)
+	}
+}
+
+loop(fn () {
+	plugins.each(fn (p) {
+		p.tick()
+	})
+
+	case plugins.empty() {
+		True => Break,
+		False => Continue
+	}
+})
+```

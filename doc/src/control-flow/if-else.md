@@ -31,3 +31,29 @@ They could just be a simple enum.
 
 Noting that [Gleam](https://gleam.run/book/tour/case-expressions.html) *only* has case expressions.
 Could possible simplify the language and do away with if/else all together.
+
+Fibonacci function example:
+```
+fun fib(n int) int {
+	if n == 0 or n == 1 {
+		n
+	} else {
+		recur(n - 1) + recur(n - 2)
+	}
+}
+
+fun fib(n int) int {
+
+	case n {
+		0 => 0,
+		1 => 1,
+		n => recur(n - 1) + recur(n - 2)
+	}
+
+	// alternate way of writing it, slightly shorter
+	case n == 0 or n == 1 {
+		True => n,
+		False => recur(n - 1) + recur(n - 2)
+	}
+}
+```

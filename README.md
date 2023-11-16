@@ -1,15 +1,18 @@
 # Theo
 
-Theo is a functional programming language that aims to be simple and easy to learn while still being powerful enough to do most things.
-Some high level goals are:
+Theo is a general purpose, statically typed, functional programming language that aims to be simple and easy to learn while still being powerful enough to do most things.
+
+Design goals include:
 - static typing and type inference
 - compile to standalone executables
 - high level
 - simple, consistent, easy to learn
 
-Mainly influenced by Python, Rust, Nim, and Go
+Influenced by:
+- Python (simplicity, module system)
+- Rust (curly brace syntax, struct/enum type syntax, ADTs, expression based)
+- Nim (compile to C source code)
+- Go (import syntax, compile to standalone binaries)
+- Gleam (pub access modifier syntax, only case expressions, expression based)
 
-- [TODO](/doc/TODO.md)
-- [Core Modules](/doc/core_modules.md)
-- [Design](/doc/design.md)
-- [Types](/doc/types.md)
+Docs are all under `./doc` directory and can be built  with [mdbook](https://github.com/rust-lang/mdBook).
