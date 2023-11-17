@@ -164,3 +164,39 @@ This will make implementing interfaces easier since you'll have access to all st
 Otherwise it could be very tricky to implementing an interface for a struct with some private fields.
 So if we do add access modifiers they should be only allowed at the top level of the module.
 So either the whole struct is public or its completely private, no fine grained access control.
+
+
+How should `package.theo` work for re-exporting types?
+
+Say we have this directory structure:
+```
+bat/
+|- package.theo
+|- foo.theo
+|- bar.theo
+|- bam.theo
+```
+
+And each file `foo.theo`, `bar.theo`, and `bam.theo` have public types `Foo`, `Bar`, and `Bam` respectively.
+Then re-exporting those types to the `bat` package would look like:
+
+`package.theo`:
+```
+import (
+	"./foo"
+	"./bar"
+	"./bam"
+)
+```
+
+```
+import (
+	"bat"
+)
+
+let f = bat.Foo(a=5)
+let b = bat.Bar(x=5)
+let j = bat.Bam(y=5)
+```
+
+This seems to make sense.

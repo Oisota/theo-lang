@@ -27,3 +27,10 @@ let p1 = Point(0, 0)
 let p2 = Point(5, 4)
 let p3 = p1 + p2
 ```
+
+I'm thinking that all usage of operators should translate to the corresponding method calls.
+```
+let r = p1 + p2
+// this would become
+let r = p1.__add__(p2)
+```
