@@ -187,6 +187,11 @@ import (
 	"./bar"
 	"./bam"
 )
+
+// explicit republish types
+pub foo.Foo
+pub bar.Bar
+pub bam.Bam
 ```
 
 ```
