@@ -7,4 +7,4 @@
     - focus on core features then implement the module system.
 3. Write Standard Library (piggyback off C stdlib?)
 4. Make syntax files for popular editors (VS Code, vim)
-e5. Organize design docs to be more cohesive (in progress)
+5. Organize design docs to be more cohesive (in progress)
