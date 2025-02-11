@@ -47,4 +47,4 @@ Need to think about how high level the language should be.
 Could be like python where everything is an object, in this case a struct.
 This might make low level stuff harder to implement.
 Need to think on this...
-Currently leaning towards have a some primitive types that all of literal syntax and everything else being a higher level data structure.
+Currently leaning towards have a some primitive types that all have a literal syntax and everything else being a higher level data structure.

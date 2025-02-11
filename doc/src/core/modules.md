@@ -1,7 +1,7 @@
 # Modules
 
 The module system will be file and directory based similar to how Python and Node.js do things.
-A single file will be considered a "module" and a directory with a special index file (`package.theo`) will be considered a package.
+A single file will be considered a "module" and a directory with a special index file (`package.theo`/`index.theo`/etc) will be considered a package.
 The index file will mark a directory as a package and allow importing any submodules into its namespace.
 Under the hood, modules and packages will be transformed into structs with the top-level file contents being the members of the struct.
 
@@ -189,6 +189,11 @@ import (
 	"./bar"
 	"./bam"
 )
+
+// explicit republish types
+pub foo.Foo
+pub bar.Bar
+pub bam.Bam
 ```
 
 ```

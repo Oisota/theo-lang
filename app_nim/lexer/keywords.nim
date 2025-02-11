@@ -2,8 +2,9 @@ discard """Language keywords, operators, etc"""
 
 let 
   KEYWORDS* = @[
-    # imports
+    # module stuff
     "import",
+    "pub",
 
     # vars
     "let",
@@ -29,7 +30,6 @@ let
     "as",
     "private",
     "public",
-    "pub",
     "export",
     "module",
     "mod",
