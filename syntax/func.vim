@@ -24,14 +24,15 @@ syn match   javaScriptNumber	       "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
 syn match	javaScriptBraces	   "[{}\[\]<>#]"
 syn match	javaScriptParens	   "[()]"
 
-syn keyword javaScriptType	float int string char bool list vector set dict unit
-syn keyword javaScriptConditional	if else and or xor not
-syn keyword javaScriptOperator		exception raise case use 
-syn keyword javaScriptStatement		interface namespace
-syn keyword javaScriptBoolean		true false
-syn keyword javaScriptNull		nil _
-syn keyword javaScriptIdentifier	let type ref struct enum
-syn keyword javaScriptFunction	fun fn import
+syn keyword javaScriptReserved	class as private public pub export module mod namespace const while do in prop
+syn keyword javaScriptType	float int string char void uint byte ubyte int8 int16 int32 int64 uint8 uint16 uint32 uint64
+syn keyword javaScriptConditional	case if else loop break continue for
+syn keyword javaScriptOperator		and or xor not
+syn keyword javaScriptStatement		type struct enum union interface impl
+"syn keyword javaScriptBoolean		true false
+"syn keyword javaScriptNull		nil _
+syn keyword javaScriptIdentifier	let scope distinct
+syn keyword javaScriptFunction	fun fn done recur import
 
 highlight link javaScriptComment		Comment
 highlight link javaScriptLineComment		Comment

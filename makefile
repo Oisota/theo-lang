@@ -9,3 +9,7 @@ run:
 .PHONY: test
 test:
 	$(PYTHON) -m unittest
+
+.PHONY: doc
+doc:
+	mdbook serve doc

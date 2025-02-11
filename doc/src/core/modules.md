@@ -34,6 +34,8 @@ import (
 - modules should require "exporting" whatever should be made public
 - maybe leave out access modifiers until language is implemented
 - python has everything public by default, seems to work ok
+- Can we allow multiple different versions of a library? (One module needs Foo==1.0.0 and another modules needs Foo=1.5.0)
+	- maybe wait to implement this behavior
 
 Ideas:
 ```text

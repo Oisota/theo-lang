@@ -3,6 +3,7 @@
  */
 
 import (
+	"std/common"
 	"std/io" // standard library import
 	"std/math" * // import everything into current namespace
 	"std/crypto" foo // import alias
@@ -11,7 +12,7 @@ import (
 	"./util" // relative import
 )
 
-fun main(args List[string]) int {
+pub fun main(args List[string]) int {
 	let x = 5 * 8
 	let hello = "Hello, World!"
 	let result = scope x {
@@ -23,14 +24,13 @@ fun main(args List[string]) int {
 	let l1 = List[int]()
 	let el = l1.at(0)
 
-	let l2 = l1.map(fun(a int) { a * 2 })
-	let l2 = l1.map(fn a => a * 2 ) // still playing around with lambda syntax, this relies on inferring types from the list type
+	let l2 = l1.map(fn(a int) { a * 2 })
 
 	// need to figure out how to lex different literals, may not be needed for initial implementation (should be working)
 	let u2 = 0xFF
 	let u3 = 0b0101
 
-	with(open('file.txt'), fun(foo) {
+	with(open('file.txt'), fn(foo) {
 		// do stuff with foo here
 		let data = foo.read()
 		data.map(fn l => int(l) * 2)
@@ -54,6 +54,7 @@ fun loop_test() {
 		if (i > 40) {
 			break
 		}
+		i.set(i.get() + 1) // or just have mutation use methods?
 	}
 }
 // this is a comment
@@ -64,7 +65,7 @@ fun fib(n int) int {
 	case n {
 		0 => 0
 		1 => 1
-		n => recur(n-1) + recur(n-2)
+		x => recur(x-1) + recur(x-2)
 	}
 }
 /*
@@ -87,7 +88,20 @@ fun distance(p1 Point, p2 Point) float {
 }
 
 interface Shape {
-	fun area() int
+	fun area(self Shape) int
+}
+
+struct Rect {
+	p1 Point
+	p2 Point
+}
+
+impl Shape for Rect {
+	fun area(self Rect) float {
+		let w = math.abs(self.p1.x - self.p2.x)
+		let h = math.abs(self.p1.y - self.p2.y)
+		h * w
+	}
 }
 
 enum Bool { True False}
@@ -95,4 +109,14 @@ enum Bool { True False}
 union Option[T] {
 	Some(T),
 	None
+}
+
+type Transform = Function[Option[T] -> Option[T]]
+impl Option[T] {
+	fun map(self Option[T], transform Transform) Option[T] {
+		case self {
+			Some(v) => Some(transform(v)),
+			None => None
+		}
+	}
 }
