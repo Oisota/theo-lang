@@ -5,6 +5,8 @@ There will be **No Classes** or classical oop.
 Functions will be first class and can be treated as any other value.
 Tail calls will be optimized.
 Functions will return whatever value their last expression evaluates to.
+Functions create their own scope.
+Inner functions can see the outer functions data, thus allowing closures.
 
 ```text
 fun add(a int, b int) int {
@@ -160,6 +162,18 @@ This probably isn't necessary to worry about now.
 Writing a simple struct should be more than fine if named params are needed.
 
 This would be a good case for a macro that would take a function and write the corresponding param struct
+
+Another option could be something like:
+```
+fun send_request({
+	url string,
+	method Method,
+	timeout int,
+	follow_redirects Bool
+	body string
+}) {
+}
+```
 
 ## Recursion keyword
 Should a `recur` keyword be added?

@@ -1,4 +1,9 @@
 # If Else Expressions
+
+*See Notes Below: If/Else really aren't needed.
+Case expressions handle everything that if/else do in a more concise manner*
+
+
 Conditional branching will be expression based.
 Each `if` expression will evaluate to a value.
 Every `if` must have a corresponding `else`.

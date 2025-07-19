@@ -3,7 +3,7 @@ Case expressions will be used to pattern match over data types and other data st
 The compiler will check to ensure all cases of a pattern are handled by the expressions.
 
 ```text
-enum Option[a] {
+union Option[a] {
     Some(a),
     None
 }

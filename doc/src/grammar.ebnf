@@ -47,14 +47,13 @@ type_name = id , [ generic_params ]; (* Option[T] , Foo , int , Result[T, E], et
 type_annotation = ":" , type_name ; (* This might not be needed *)
 assign_expr = "let" space , id , white_space , [ type_annotation ] , white_space , "=" , white_space , expr ;
 
+(* block expression *)
+block_expr = "{" , white_space , { expr } , white_sapce , "}" ;
+
 (* scope expression *)
 scope_param = id , white_space , [ "," ];
 scope_param_list = { param } ,;
-scope_expr = "scope", space ,  scope_param_list , expr_block ;
-
-(* if else expression *)
-(* if x == 5 {...} else {...} *)
-if_expr = "if", space , expr , white_space , expr_block , "else" , white_space , expr_block ;
+scope_expr = "scope", space ,  scope_param_list , block_expr ;
 
 (* case expression *)
 case_pattern = id , white_space , "(" , id_list , ")";
@@ -65,7 +64,7 @@ case_expr = "case", space , expr , white_space , "{" , case_list , "}" ;
 param = id , space , id , [ "," ];
 param_list = { param } ,;
 func_sig = "fun", space , type_name , "(", param_list ")" , white_space , type_name ;
-func_def = func_sig , white_space , expr_block;
+func_def = func_sig , white_space , block_expr;
 expr_list = { expr , white_space , "," , white_space };
 func_call = expr , white_space , "(" , expr_list , ")" ;
 
@@ -130,13 +129,10 @@ unary_operator = "not" | "~";
 (* grand unifying expression *)
 expr = expr , operator , expr
 	| unary_operator , expr
-	| if_expr
+	| block_expr
 	| case_expr
 	| assign_expr
 	| func_def 
 	| func_call
 	| type_definition
 	| loop ;
-
-(* List of expressions surrounded by {} *)
-expr_block = "{" , white_space , { expr } , white_sapce , "}" ;

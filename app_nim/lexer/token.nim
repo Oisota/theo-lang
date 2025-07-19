@@ -39,6 +39,7 @@ type
 
 proc has_next*(ctx: LexContext): bool =
   result = ctx.idx < len(ctx.data)
+
 proc consume*(ctx: LexContext, n: int): void =
   ctx.idx = ctx.idx + n
 

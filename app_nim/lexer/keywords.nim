@@ -13,34 +13,34 @@ let
     "fun", "fn", "done", "recur",
 
     # types
-    "interface", "type", "struct", "enum", "union", "impl", "distinct",
+    "class", "interface", "type", "struct", "enum", "union", "impl", "distinct",
 
     # logical
-    "if", "else", "case",
+    "case",
 
     # loops
     "loop", "break", "continue",
 
-    # misc
-    "scope",
+    # scoping
+    "scope", "static"
   ]
 
+# Things we might want to use in the future, still deciding on these
   RESERVED_WORDS* = @[
-    "class",
-    "as",
-    "private",
-    "public",
-    "export",
-    "module",
-    "mod",
-    "namespace",
+    # module stuff
+    "private", "public", "export", "module", "mod", "as",
+
+    # variables
     "const",
-    "with",
-    "while",
-    "do",
-    "for",
-    "in",
-    "prop",
+
+    # loops 
+    "while", "do", "for", "in",
+
+    # logical 
+    "if", "else",
+
+    # misc
+    "with", "prop",
   ]
 
   OPERATORS* = @[
@@ -57,7 +57,7 @@ let
     "&", "|", "^", "<<", ">>", "~",
 
     # assignment/mutation
-    "=", ":=",
+    "=",
 
     # field access
     ".",
