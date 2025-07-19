@@ -44,17 +44,18 @@ fun loop_test() {
 	let j = 23.32
 	let k = 10_000
 
-	i := i + 1 // make mutation require a special operator?
+	i.set(i.get() + 1) // mutation should be noisy
 
 	range(1, 100).each(fn (x) {
 		print(x)
 	})
 
 	loop {
-		if (i > 40) {
-			break
+		case i > 40 {
+			True => break,
+			False => {} // not sure how to do nothing here
 		}
-		i.set(i.get() + 1) // or just have mutation use methods?
+		i.set(i.get() + 1) 
 	}
 }
 // this is a comment
