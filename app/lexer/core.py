@@ -67,7 +67,7 @@ def tokenize(input):
             token = None
             if tokenized:
                 break
-        
+
             result = lex_function(ctx)
             consumed_chars = result.consumed_chars
             token = result.token

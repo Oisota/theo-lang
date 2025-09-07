@@ -2,34 +2,32 @@
 
 KEYWORDS = [
     # imports
-    'import',
+    'import', 'pub',
 
     # vars
     'let',
 
     # functions
-    'fun', 'fn', 'end',
+    'fun', 'fn', 'done', 'recur',
 
     # types
-    'interface', 'type', 'struct', 'enum', 'union', 'impl', 'prop',
+    'class', 'interface', 'type', 'struct', 'enum', 'union', 'impl', 'distinct',
 
     # logical
-    'if', 'else', 'case',
+    'case',
 
     # loops
     'loop', 'break', 'continue',
 
     # misc
-    'scope',
+    'scope', 'static',
     ]
 
 # reserved words for possible future use
 RESERVED_WORDS = [
-    'class',
     'as',
     'private',
     'public',
-    'pub',
     'export',
     'module',
     'mod',
@@ -49,9 +47,6 @@ OPERATORS = [
     # pattern match and lambda expressions
     '=>',
 
-    # math assignment might not be needed, want mutation to have lots of ceremony
-    # '+=', '-=', '*=', '/='
-
     # math
     '+', '-', '*', '/', '%',
 
@@ -63,4 +58,7 @@ OPERATORS = [
 
     # field access
     '.',
+
+    # type annotation
+    ':',
     ]

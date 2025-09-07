@@ -121,3 +121,8 @@ impl Option[T] {
 		}
 	}
 }
+
+class Rect {
+    p1 Point
+    p2 Point
+}

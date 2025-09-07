@@ -31,12 +31,24 @@ class Token:
     end_column: int = 0
 
     def __repr__(self):
-        return "Token({}, '{}', line: {}-{}, column: {}-{})".format(self.type.name, self.value, self.start_line, self.end_line, self.start_column, self.end_column)
+        return (
+            "Token({}, '{}', line: {}-{}, column: {}-{})".format(
+                self.type.name,
+                self.value,
+                self.start_line,
+                self.end_line,
+                self.start_column,
+                self.end_column
+            )
+        )
 
 @dataclass
 class TokenizeResult:
     consumed_chars: int
     token: Token
+
+    def __repr__(self):
+        return f'TokenizeResult({self.consumed_chars}, {self.token})'
 
 @dataclass
 class LexContext:

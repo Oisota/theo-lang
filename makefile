@@ -8,7 +8,7 @@ run:
 
 .PHONY: test
 test:
-	$(PYTHON) -m unittest
+	$(PYTHON) -m unittest -v
 
 .PHONY: doc
 doc:

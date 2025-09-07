@@ -7,24 +7,14 @@ class TestLexString(TestCase):
 
     def test_lex_string_double_quotes(self):
 
-        input = '"Here is a test string"'
-        token = Token(TokenType.STRING, 'Here is a test string')
-        exp_result = TokenizeResult(len(input), token)
-        ctx = LexContext(input, 0)
+        tests = [
+            ('"Here is a test string"', TokenizeResult(23, Token(TokenType.STRING, 'Here is a test string'))),
+            ("'Here is a test string'", TokenizeResult(23, Token(TokenType.STRING, 'Here is a test string'))),
+        ]
 
-        result = lex_string(ctx)
-
-        self.assertEqual(result, exp_result)
-        self.assertEqual(result.token, token)
-
-    def test_lex_string_single_quotes(self):
-
-        input = "'Here is a test string'"
-        token = Token(TokenType.STRING, 'Here is a test string')
-        exp_result = TokenizeResult(len(input), token)
-        ctx = LexContext(input, 0)
-
-        result = lex_string(ctx)
-
-        self.assertEqual(result, exp_result)
-        self.assertEqual(result.token, token)
+        for text, expected in tests:
+            with self.subTest(text=text):
+                ctx = LexContext(text, 0)
+                result = lex_string(ctx)
+                self.assertEqual(result, expected)
+                self.assertEqual(result.token, expected.token)

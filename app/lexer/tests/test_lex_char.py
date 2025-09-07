@@ -3,16 +3,18 @@ from unittest import TestCase
 from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
 from app.lexer.lex_funcs import lex_char
 
-class TestLexString(TestCase):
+class TestLexChar(TestCase):
 
-    def test_lex_string_double_quotes(self):
+    def test_lex_char(self):
 
-        input = '{'
-        token = Token(TokenType.CURLY_OPEN, '{')
-        exp_result = TokenizeResult(len(input), token)
-        ctx = LexContext(input, 0)
+        tests = [
+            ('{', TokenizeResult(1, Token(TokenType.CURLY_OPEN, '{'))),
+            ('}', TokenizeResult(1, Token(TokenType.CURLY_CLOSE, '}'))),
+        ]
 
-        result = lex_char(TokenType.CURLY_OPEN, '{', ctx)
-
-        self.assertEqual(result, exp_result)
-        self.assertEqual(result.token, token)
+        for char, expected in tests:
+            with self.subTest(char=char):
+                ctx = LexContext(char, 0)
+                result = lex_char(expected.token.type, char, ctx)
+                self.assertEqual(result, expected)
+                self.assertEqual(result.token, expected.token)
