@@ -1,4 +1,4 @@
-(* func EBNF Grammar *)
+(* theo-lang EBNF Grammar *)
 white_space   = { " " | "\t" | "\n" | "\r" } ;
 space         = { " " | "\t" | "\n" | "\r" }+ ;
 nonzero_digit = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ; 

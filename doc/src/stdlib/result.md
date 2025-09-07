@@ -2,7 +2,7 @@
 
 Result type similar to Rust's result type.
 ```text
-enum Result[T, E] {
+union Result[T, E] {
 	Ok(T),
 	Err(E)
 }

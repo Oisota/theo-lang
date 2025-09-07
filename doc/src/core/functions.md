@@ -5,8 +5,6 @@ There will be **No Classes** or classical oop.
 Functions will be first class and can be treated as any other value.
 Tail calls will be optimized.
 Functions will return whatever value their last expression evaluates to.
-Functions create their own scope.
-Inner functions can see the outer functions data, thus allowing closures.
 
 ```text
 fun add(a int, b int) int {
@@ -33,13 +31,12 @@ let add = fn (a, b) { a + b }
 
 let l1 = List()
 l1.map(fn (a) { a * 2 }) // single expression
-	.filter(fn (a) { // can use braces for multi-expression block
+	.filter(fn (a) { // multiple expressions
 		let x = a * 25
 		let z = a - 34
 		x > z
 	})
 ```
-I like this better as it avoids needing to reuse `=>` which is already used in case expressions.
 
 ## Early returns
 Can we support early returns from functions?
