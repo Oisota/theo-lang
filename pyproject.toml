@@ -1,0 +1,9 @@
+[project]
+name = "theo-lang"
+version = "0.1.0"
+description = "A programming language that does stuff"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "coverage>=7.10.6",
+]
