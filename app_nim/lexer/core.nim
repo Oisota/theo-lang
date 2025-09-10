@@ -80,4 +80,3 @@ iterator tokenize*(input: seq[char]): Token {. closure .} =
 
     if not tokenized:
       raise newException(Exception, &"Character not recognized: {ctx.current}")
-      
