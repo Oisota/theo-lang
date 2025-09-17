@@ -110,7 +110,7 @@ Not sure how this would work, Golang has struct embedding which might be a possi
 ???
 ```
 
-I think my general worries are that classes can be used to create over engineerd and over abstracted code that is difficult to use and maintain.
+I think my general worries are that classes can be used to create over engineered and over abstracted code that is difficult to use and maintain.
 The solution would be to remove classes and only use structs and functions.
 This then makes things more complex when a problem is encountered that lends itself to OOP.
 I guess this is the age old problem of simple language making problem solving more complex vs a more complex language that makes problem solving easier.
@@ -122,3 +122,10 @@ The other thing that must be considered is if we add classes, then what should s
 Seems superfluous to have both since they have significant overlap in functionality.
 I guess structs could be reworked to be a lightweight alternative to a class.
 A struct would only hold data and have no other built in functionality whereas classes/objects would all inherit from a base class and would have some basic functionality built in.
+
+If we add OOP/classes then we will also need to consider how the class hierarchy and type system interact with other types like enums and unions.
+Do we go full OOP and everything is an object with enums/unions being special cases of objects?
+Are they their own thing?
+I like the idea of everything being unified.
+
+I guess we could just figure out what a class should like syntax wise and add the approprite keywords to the lexer and make sure we can lex/parse the class even if we don't do anything with it.

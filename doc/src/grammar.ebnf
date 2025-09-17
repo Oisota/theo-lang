@@ -79,6 +79,10 @@ interface = "interface" , white_space , type_name , "{" white_space , interface_
 struct_body = { field_sig };
 struct = "struct" , white_space , type_name , "{" , white_space , struct_body , white_space ,"}";
 
+(* classes *)
+class_body = { field_sig } , { func_sig };
+class = "class" , white_space , type_name , "{" , white_space , class_body , white_space ,"}";
+
 (* unions *)
 union_body = { field_sig };
 union = "union" , white_space , type_name , "{" , white_space , union_body , white_space ,"}";
@@ -94,14 +98,11 @@ enum = "enum" , space , type_name , "{" , white_space , enum_body , white_space 
 (* type alias*)
 type_alias = "type" , space , id , white_space , "=" , white_space , type_name;
 
-type_definition = interface | struct | union | impl | enum | type_alias;
+type_definition = interface | class | struct | union | impl | enum | type_alias;
 
 (* Loops *)
 id_list = { id , white_space }; 
-for_loop = "for" , white_space , id_list , white_space , "in" , white_space , expr , white_space , expr_block;
-while_loop = "while" , white_space , expr , white_space , expr_block;
-base_loop = "loop" , white_space , expr_block ;
-loop_expr = for_loop | while_loop | base_loop ;
+loop_expr = "loop" , white_space , expr_block ;
 
 (* operators *)
 binary_operator = "==" 
@@ -135,4 +136,4 @@ expr = expr , operator , expr
 	| func_def 
 	| func_call
 	| type_definition
-	| loop ;
+	| loop_expr ;
