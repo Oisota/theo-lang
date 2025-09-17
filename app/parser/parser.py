@@ -41,12 +41,14 @@ def parse_imports(current: int, tokens: list):
                     consumed += 1
                     current_token = tokens[current + consumed]
 
-                if current_token.type in (TokenType.OPERATOR, TokenType.IDENTIFIER):
-                    imp.qualifier = current_token.value
-                    consumed += 1
-                    current_token = tokens[current + consumed]
+                    if current_token.type in (TokenType.OPERATOR, TokenType.IDENTIFIER):
+                        imp.qualifier = current_token.value
+                        consumed += 1
+                        current_token = tokens[current + consumed]
 
-                imports.append(imp)
+                    imports.append(imp)
+                else:
+                    break
 
             consumed += 1
 
