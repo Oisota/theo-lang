@@ -5,54 +5,59 @@ Parse the token stream into an AST
 from app.parser.ast import Import
 from app.lexer.token import Token, TokenType
 
-def match(expected_token, current_token):
-    return (
-        (expected_token.type == current_token.type) and
-        (expected_token.value == current_token.value)
-        )
+class Parser:
+    """Class responsible for parsing token list into program AST"""
+    def __init__(self, tokens: list):
+        self.tokens = tokens
+        self.consumed = 0
 
-def parse(tokens: list):
-    """Parse tokens into AST"""
-    tree = parse_program(tokens)
-    return tree
+    @property
+    def current(self):
+        return self.tokens[self.consumed]
 
-def parse_program(tokens: list):
-    """Parse tokens into AST"""
-    tree = ast.Program()
-    imports, consumed = parse_imports(tree, tokens)
-    tree.imports = imports
-    return tree
+    def parse(self):
+        """Parse tokens into AST"""
+        tree = self.parse_program()
+        return tree
 
-def parse_imports(current: int, tokens: list):
-    """Parse import list"""
-    imports = []
-    consumed = 0
-    current_token = tokens[current]
-    if match(Token(TokenType.KEYWORD, 'import'), current_token):
-        consumed += 1
-        current_token = tokens[current + consumed]
-        if match(Token(TokenType.PAREN_OPEN, '('), current_token):
-            consumed += 1
-            current_token = tokens[current + consumed]
-            while current_token.type != TokenType.PAREN_CLOSE:
-                # parse import path
-                if current_token.type == TokenType.STRING:
-                    imp = Import(current_token.value)
-                    consumed += 1
-                    current_token = tokens[current + consumed]
+    def parse_program(self):
+        """Parse tokens into AST"""
+        tree = ast.Program()
+        tree.imports = self.parse_imports(tree, tokens)
+        return tree
 
-                    if current_token.type in (TokenType.OPERATOR, TokenType.IDENTIFIER):
-                        imp.qualifier = current_token.value
-                        consumed += 1
-                        current_token = tokens[current + consumed]
+    def parse_imports(self):
+        """Parse import list"""
+        imports = []
 
-                    imports.append(imp)
-                else:
-                    break
+        self.match(Token(TokenType.KEYWORD, 'import'))
+        self.match(Token(TokenType.PAREN_OPEN, '('))
 
-            consumed += 1
+        while self.current.type != TokenType.PAREN_CLOSE:
+            # parse import path
+            if self.current.type == TokenType.STRING:
+                imp = Import(self.current.value)
+                self.next()
 
-    return imports, consumed
+                if self.current.type in (TokenType.OPERATOR, TokenType.IDENTIFIER):
+                    imp.qualifier = self.current.value
+                    self.next()
 
-def parse_import(current, tokens):
-    """Parse a single import"""
+                imports.append(imp)
+            else:
+                # TODO probably need some kind of error message or exception
+                break
+
+        self.match(Token(TokenType.PAREN_CLOSE, ')'))
+
+        return imports
+
+    def match(self, expected: Token):
+        if (
+            (expected.type == self.current.type) and
+            (expected.value == self.current.value)
+            ):
+            self.next()
+
+    def next(self):
+        self.consumed += 1
