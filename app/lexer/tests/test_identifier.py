@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
-from app.lexer.lex_funcs import lex_identifier
+from app.lexer import Lexer
 
 class TestLexIdentifier(TestCase):
     """Test lexing identifiers"""
@@ -17,9 +17,9 @@ class TestLexIdentifier(TestCase):
         ]
         for (var, expected) in var_names:
             with self.subTest(var=var):
-                ctx = LexContext(var, 0)
+                lexer = Lexer(var)
 
-                result = lex_identifier(ctx)
+                result = lexer.lex_identifier()
 
                 self.assertEqual(result, expected)
                 self.assertEqual(result.token, expected.token)

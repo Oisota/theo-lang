@@ -1,7 +1,6 @@
 from unittest import TestCase
 
-from app.lexer.lex_funcs import lex_skip_whitespace
-from app.lexer.token import LexContext
+from app.lexer import Lexer
 
 class TestLexWhiteSpace(TestCase):
 
@@ -15,7 +14,7 @@ class TestLexWhiteSpace(TestCase):
 
         for text, expected in tests:
             with self.subTest(text=text):
-                ctx = LexContext(text, 0)
-                result = lex_skip_whitespace(ctx)
+                lexer = Lexer(text)
+                result = lexer.lex_skip_whitespace()
                 self.assertEqual(result.consumed_chars, expected)
                 self.assertEqual(result.token, None)

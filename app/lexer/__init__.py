@@ -1,1 +1,1 @@
-from .core import tokenize
+from .lexer import Lexer

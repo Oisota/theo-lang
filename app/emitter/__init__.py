@@ -1,1 +1,1 @@
-from .emitter import emit
+from .emitter import Emitter

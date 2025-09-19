@@ -1,8 +1,8 @@
 import sys
 
-from .lexer import tokenize
-from .parser import parse
-from .emitter import emit
+from .lexer import Lexer
+from .parser import Parser
+from .emitter import Emitter
 
 def main():
     """Main entry point for the compiler"""
@@ -10,14 +10,15 @@ def main():
     tokens = []
     with open(input_file) as file:
         data = file.read()
-        tokens = tokenize(data)
+        lexer = Lexer(data)
+        tokens = lexer.lex()
 
     list(tokens)
-    #print(list(tokens))
+    #parser = Parser(tokens)
+    #tree = parser.parse()
 
-    #tree = parse(tokens)
-    #print(tree)
-    #c_source = emit(tree)
+    #emitter = Emitter(tree)
+    #c_source = emitter.emit()
 
     #with open('./out.c') as out:
         #out.write(c_source)

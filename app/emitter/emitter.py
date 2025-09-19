@@ -3,6 +3,10 @@
 Turn the AST into valid C source code
 """
 
-def emit(tree):
-    """Transpile AST into C source code"""
-    return tree
+class Emitter:
+    def __init___(self, tree):
+        self.tree = tree
+
+    def emit(self):
+        """Transpile AST into C source code"""
+        return ''

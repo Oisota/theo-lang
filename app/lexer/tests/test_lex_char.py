@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
-from app.lexer.lex_funcs import lex_char
+from app.lexer import Lexer
 
 class TestLexChar(TestCase):
 
@@ -14,7 +14,7 @@ class TestLexChar(TestCase):
 
         for char, expected in tests:
             with self.subTest(char=char):
-                ctx = LexContext(char, 0)
-                result = lex_char(expected.token.type, char, ctx)
+                lexer = Lexer(char)
+                result = lexer.lex_char(expected.token.type, char)
                 self.assertEqual(result, expected)
                 self.assertEqual(result.token, expected.token)
