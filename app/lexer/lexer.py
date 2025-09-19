@@ -71,7 +71,6 @@ class Lexer:
                     #current += consumed_chars
                     tokenized = True
 
-
                 if token:
                     token.end_line = current_line
                     token.end_column = current_column - 1
@@ -109,7 +108,11 @@ class Lexer:
     def lex_keyword(self, type, keyword) -> TokenizeResult:
         """Generic function for lexing a keyword"""
         consumed_chars = 0
-        while self.index + consumed_chars < len(self.data) and consumed_chars < len(keyword) and keyword[consumed_chars] == self.char_at_offset(consumed_chars):
+        while (
+            self.index + consumed_chars < len(self.data) and
+            consumed_chars < len(keyword) and
+            keyword[consumed_chars] == self.char_at_offset(consumed_chars)
+        ):
             consumed_chars += 1
 
         if len(keyword) == consumed_chars:
@@ -246,11 +249,14 @@ class Lexer:
             return TokenizeResult(consumed + 1, Token(TokenType.STRING, value))
         return TokenizeResult(0, None)
 
+    def build_keyword_lambda(self, type, keyword):
+        return lambda: self.lex_keyword(type, keyword)
+
     def build_string_tokenizers(self, strings, type):
         tokenizers = []
 
         for s in strings:
-            fn = lambda: self.lex_keyword(type, s) # needed to properly capture variables in loop
+            fn = self.build_keyword_lambda(type, s) # needed to properly capture variables in loop
             tokenizers.append(fn)
 
         return tokenizers
