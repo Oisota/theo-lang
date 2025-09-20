@@ -6,6 +6,10 @@ from .emitter import Emitter
 
 def main():
     """Main entry point for the compiler"""
+    # TODO build out argument parsing
+    # EX: theo build f1.theo f2.theo (etc)
+    # theo --version
+    # theo <sub-command>
     input_file = sys.argv[1]
     tokens = []
     with open(input_file) as file:

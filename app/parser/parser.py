@@ -4,6 +4,7 @@ Parse the token stream into an AST
 """
 from app.parser.ast import Import
 from app.lexer.token import Token, TokenType
+from app.tokens import Keywords, Syntax
 
 class Parser:
     """Class responsible for parsing token list into program AST"""
@@ -30,8 +31,8 @@ class Parser:
         """Parse import list"""
         imports = []
 
-        self.match(Token(TokenType.KEYWORD, 'import'))
-        self.match(Token(TokenType.PAREN_OPEN, '('))
+        self.match(Keywords.IMPORT)
+        self.match(Syntax.PAREN_OPEN)
 
         while self.current.type != TokenType.PAREN_CLOSE:
             # parse import path
@@ -48,15 +49,12 @@ class Parser:
                 # TODO probably need some kind of error message or exception
                 break
 
-        self.match(Token(TokenType.PAREN_CLOSE, ')'))
+        self.match(Syntax.PAREN_CLOSE)
 
         return imports
 
     def match(self, expected: Token):
-        if (
-            (expected.type == self.current.type) and
-            (expected.value == self.current.value)
-            ):
+        if self.current.matches(expected):
             self.next()
 
     def next(self):

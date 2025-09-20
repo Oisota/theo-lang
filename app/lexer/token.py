@@ -30,6 +30,13 @@ class Token:
     start_column: int = 0
     end_column: int = 0
 
+    def matches(self, other):
+        """Check if another token matches this one"""
+        return (
+            (other.type == self.type) and
+            (other.value == self.value)
+        )
+
     def __repr__(self):
         return (
             "Token({}, '{}', line: {}-{}, column: {}-{})".format(

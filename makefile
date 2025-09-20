@@ -1,14 +1,14 @@
-PYTHON := python3
+PYTHON := python
 TEST_FILE := ./samples/test.theo
 APP := app
 
 .PHONY: run
 run:
-	$(PYTHON) -m $(APP) $(TEST_FILE)
+	uv run $(PYTHON) -m $(APP) $(TEST_FILE)
 
 .PHONY: test
 test:
-	$(PYTHON) -m unittest -v
+	uv run $(PYTHON) -m unittest -v
 
 .PHONY: doc
 doc:
