@@ -8,7 +8,12 @@ run:
 
 .PHONY: test
 test:
-	uv run $(PYTHON) -m unittest -v
+	uv run coverage run
+	uv run coverage html
+
+.PHONY: serve_coverage
+serve_coverage:
+	uv run python -m http.server -d htmlcov 9000
 
 .PHONY: doc
 doc:

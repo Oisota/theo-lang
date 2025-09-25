@@ -131,6 +131,7 @@ unary_operator = "not" | "~";
 expr = expr , operator , expr
 	| unary_operator , expr
 	| block_expr
+	| scope_expr
 	| case_expr
 	| assign_expr
 	| func_def 
