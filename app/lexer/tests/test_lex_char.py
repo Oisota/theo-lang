@@ -1,20 +1,15 @@
-from unittest import TestCase
+import pytest
 
 from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
 from app.lexer import Lexer
 
-class TestLexChar(TestCase):
 
-    def test_lex_char(self):
-
-        tests = [
-            ('{', TokenizeResult(1, Token(TokenType.CURLY_OPEN, '{'))),
-            ('}', TokenizeResult(1, Token(TokenType.CURLY_CLOSE, '}'))),
-        ]
-
-        for char, expected in tests:
-            with self.subTest(char=char):
-                lexer = Lexer(char)
-                result = lexer.lex_char(expected.token.type, char)
-                self.assertEqual(result, expected)
-                self.assertEqual(result.token, expected.token)
+@pytest.mark.parametrize('char, expected', [
+    ('{', TokenizeResult(1, Token(TokenType.CURLY_OPEN, '{'))),
+    ('}', TokenizeResult(1, Token(TokenType.CURLY_CLOSE, '}'))),
+])
+def test_lex_char(char, expected):
+    lexer = Lexer(char)
+    result = lexer.lex_char(expected.token.type, char)
+    assert result == expected
+    assert result.token == expected.token

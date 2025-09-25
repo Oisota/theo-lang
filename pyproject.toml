@@ -11,12 +11,13 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage>=7.10.6",
+    "pytest>=8.4.2",
     "toml>=0.10.2",
 ]
 
 [tool.coverage.run]
 branch = true
-command_line = "-m unittest -v"
+command_line = "-m pytest -v"
 source = ["app"]
 
 [tool.coverage.report]
