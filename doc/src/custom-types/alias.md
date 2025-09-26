@@ -29,7 +29,7 @@ For Ex:
 ```
 type Name = distinct string
 
-fun newName(n str) {
+fun newName(n str) Name {
 	Name(n)
 }
 
@@ -39,7 +39,8 @@ struct Name {
 	last: string
 }
 
-fun newName(n str) {
+// function signature stays the same
+fun newName(n str) Name {
 	let parts = n.split(" ")
 	Name(
 		first=parts(0)
