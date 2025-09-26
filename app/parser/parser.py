@@ -37,12 +37,18 @@ class Parser:
         while self.current.type != TokenType.PAREN_CLOSE:
             # parse import path
             if self.current.type == TokenType.STRING:
-                imp = Import(self.current.value)
+                imp = Import(self.current.value, self.current.value.split('/')[-1])
                 self.next()
 
-                if self.current.type in (TokenType.OPERATOR, TokenType.IDENTIFIER):
-                    imp.qualifier = self.current.value
+                if self.current.type == TokenType.IDENTIFIER:
+                    imp.name = self.current.value
                     self.next()
+                elif self.current.type == TokenType.PAREN_OPEN:
+                    self.match(Syntax.PAREN_OPEN)
+                    while self.current.type == TokenType.IDENTIFIER:
+                        imp.items.append(self.current.value)
+                        self.next()
+                    self.match(Syntax.PAREN_CLOSE)
 
                 imports.append(imp)
             else:

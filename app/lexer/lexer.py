@@ -88,6 +88,7 @@ class Lexer:
             return TokenizeResult(1, Token(type, value))
         return TokenizeResult(0, None)
 
+    # TODO this doesn't appear to be used anywhere
     def lex_pattern(self, type, pattern) -> TokenizeResult:
         """Generic function for lexing a regexp pattern"""
         consumed_chars = 0

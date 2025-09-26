@@ -8,7 +8,8 @@ class Program:
 @dataclass
 class Import:
     path: str = ''
-    qualifier: str = ''
+    name: str = '' # package name, or alias if given
+    items: list = field(default_factory=list) # specific items to import if any
 
 @dataclass
 class Expr:

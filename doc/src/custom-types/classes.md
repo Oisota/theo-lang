@@ -5,7 +5,7 @@
 Rough concept of what a class might look like
 ```
 class Person {
-    // instance vars
+    // instance fields
     name string
     age int
 
@@ -27,6 +27,11 @@ class Person {
     }
 
     static fun do_stuff() {...}
+
+    // property syntax?
+    prop greeting(self) {
+        "My name is {}, I am {} years old".format(self.name, self.age)
+    }
 }
 ```
 
@@ -129,3 +134,18 @@ Are they their own thing?
 I like the idea of everything being unified.
 
 I guess we could just figure out what a class should like syntax wise and add the approprite keywords to the lexer and make sure we can lex/parse the class even if we don't do anything with it.
+
+# Constructors
+```
+class Foo {
+    fun __init__(...) {...} // dunder init like python
+    construct(...) {...} // special keyword (construct/init/build/etc)
+    Foo(...) {...} // repeat class name like java? Don't like this but may need something like this if we want multiple constructors like java which seems usefull
+}
+
+// construct like struct syntax?
+let foo = Foo(
+    bar = 4
+)
+// this seems inconsistent with the rest of the language since it doesn't have named parameters
+```

@@ -10,6 +10,10 @@ import (
 	"cinclude/stdio" // include a c lib
 	"app/models" // top level app namespace
 	"./util" // relative import
+    "./views" (
+        FooView
+        BarView
+    )
 )
 
 pub fun main(args List[string]) int {

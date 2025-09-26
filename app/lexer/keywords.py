@@ -31,13 +31,13 @@ RESERVED_WORDS = [
     'export',
     'module',
     'mod',
-    'namespace',
     'const',
     'with',
     'while',
     'do',
     'for',
     'in',
+    'prop',
     ]
 
 OPERATORS = [
