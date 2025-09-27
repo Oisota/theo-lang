@@ -2,7 +2,7 @@
 
 import pytest
 
-from app.lexer.token import TokenizeResult, LexContext
+from app.token import TokenizeResult, LexContext
 from app.lexer import Lexer
 
 @pytest.mark.parametrize('text, expected, func', [

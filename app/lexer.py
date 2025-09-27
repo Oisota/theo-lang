@@ -88,24 +88,6 @@ class Lexer:
             return TokenizeResult(1, Token(type, value))
         return TokenizeResult(0, None)
 
-    # TODO this doesn't appear to be used anywhere
-    def lex_pattern(self, type, pattern) -> TokenizeResult:
-        """Generic function for lexing a regexp pattern"""
-        consumed_chars = 0
-        value = ''
-        char = self.current
-        if pattern.match(char):
-            while char and pattern.match(char):
-                consumed_chars += 1
-                value += char
-                try:
-                    char = self.char_at_offset(consumed_chars)
-                except IndexError:
-                    break
-
-            return TokenizeResult(consumed_chars, Token(type, value))
-        return TokenizeResult(0, None)
-
     def lex_keyword(self, type, keyword) -> TokenizeResult:
         """Generic function for lexing a keyword"""
         consumed_chars = 0

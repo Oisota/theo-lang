@@ -5,8 +5,8 @@ reference in lexing/parsing code. For Ex: Keywords.IMPORT vs having
 to construct Token(TokenType.KEYWORD, 'import')
 """
 
-from app.lexer.keywords import KEYWORDS, RESERVED_WORDS, OPERATORS
-from app.lexer.token import Token, TokenType
+from .keywords import KEYWORDS, RESERVED_WORDS, OPERATORS
+from .token import Token, TokenType
 
 def set_tokens(cls):
     """Set static token instances on a class"""

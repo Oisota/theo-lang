@@ -1,6 +1,6 @@
 import pytest
 
-from app.lexer.token import Token, TokenType, TokenizeResult, LexContext
+from app.token import Token, TokenType, TokenizeResult, LexContext
 from app.lexer import Lexer
 
 

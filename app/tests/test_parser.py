@@ -1,8 +1,8 @@
 import pytest
 
-from app.lexer.token import Token, TokenType
-from app.parser.parser import Parser
-from app.parser.ast import Import
+from app.token import Token, TokenType
+from app.parser import Parser
+from app.ast import Import
 
 @pytest.mark.parametrize('t1, t2, consumed', [
     pytest.param(

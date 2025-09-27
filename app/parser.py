@@ -2,9 +2,9 @@
 
 Parse the token stream into an AST
 """
-from app.parser.ast import Import
-from app.lexer.token import Token, TokenType
-from app.tokens import Keywords, Syntax
+from .ast import Import
+from .token import Token, TokenType
+from .tokens import Keywords, Syntax
 
 class Parser:
     """Class responsible for parsing token list into program AST"""

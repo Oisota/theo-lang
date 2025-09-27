@@ -11,7 +11,10 @@ KEYWORDS = [
     'fun', 'fn', 'done', 'recur',
 
     # types
-    'class', 'interface', 'type', 'struct', 'enum', 'union', 'impl', 'distinct',
+    'class', 'interface', 'type', 'struct', 'enum', 'union', 'distinct',
+
+    # OOP stuff
+    'abstract', 'static', 'implements', 'prop',
 
     # logical
     'case',
@@ -20,7 +23,7 @@ KEYWORDS = [
     'loop', 'break', 'continue',
 
     # misc
-    'scope', 'static',
+    'scope',
     ]
 
 # reserved words for possible future use
@@ -37,7 +40,6 @@ RESERVED_WORDS = [
     'do',
     'for',
     'in',
-    'prop',
     ]
 
 OPERATORS = [
