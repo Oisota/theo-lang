@@ -27,13 +27,13 @@ from app.ast import Import
 def test_match(t1, t2, consumed):
     p = Parser([t2])
     p.match(t1)
-    assert consumed == p.consumed
+    assert consumed == p.index
 
 def test_next():
     p = Parser([])
-    assert p.consumed == 0
+    assert p.index == 0
     p.next()
-    assert p.consumed == 1
+    assert p.index == 1
 
 @pytest.mark.parametrize('tokens, imports, consumed', [
     pytest.param(
@@ -92,4 +92,4 @@ def test_parse_imports(tokens, imports, consumed):
     p = Parser(tokens)
     result = p.parse_imports()
     assert result == imports
-    assert consumed == p.consumed
+    assert consumed == p.index

@@ -2,19 +2,13 @@
 
 Parse the token stream into an AST
 """
+from .processor import Processor
 from .ast import Import
 from .token import Token, TokenType
 from .tokens import Keywords, Syntax
 
-class Parser:
+class Parser(Processor):
     """Class responsible for parsing token list into program AST"""
-    def __init__(self, tokens: list):
-        self.tokens = tokens
-        self.consumed = 0
-
-    @property
-    def current(self):
-        return self.tokens[self.consumed]
 
     def parse(self):
         """Parse tokens into AST"""
@@ -24,7 +18,7 @@ class Parser:
     def parse_program(self):
         """Parse tokens into AST"""
         tree = ast.Program()
-        tree.imports = self.parse_imports(tree, tokens)
+        tree.imports = self.parse_imports(tree, self.data)
         return tree
 
     def parse_imports(self):
@@ -62,6 +56,3 @@ class Parser:
     def match(self, expected: Token):
         if self.current.matches(expected):
             self.next()
-
-    def next(self):
-        self.consumed += 1

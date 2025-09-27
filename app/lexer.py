@@ -2,18 +2,12 @@
 
 import re
 
+from .processor import Processor
 from .token import TokenType, Token, TokenizeResult 
 from .keywords import RESERVED_WORDS, KEYWORDS, OPERATORS
 
 
-class Lexer:
-    def __init__(self, data):
-        self.data = data
-        self.index = 0
-
-    @property
-    def current(self):
-        return self.data[self.index]
+class Lexer(Processor):
 
     def char_at_offset(self, offset: int):
         return self.data[self.index + offset]
