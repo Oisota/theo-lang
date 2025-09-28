@@ -20,14 +20,14 @@ class Lexer(Processor):
             self.lex_skip_whitespace,
             self.lex_line_comment,
             self.lex_multiline_comment,
-            self.lex_paren_open,
-            self.lex_paren_close,
-            self.lex_curly_open,
-            self.lex_curly_close,
-            self.lex_square_open,
-            self.lex_square_close,
-            self.lex_colon,
-            self.lex_comma,
+            self.create_char_lexer(TokenType.PAREN_OPEN, '('),
+            self.create_char_lexer(TokenType.PAREN_CLOSE, ')'),
+            self.create_char_lexer(TokenType.CURLY_OPEN, '{'),
+            self.create_char_lexer(TokenType.CURLY_CLOSE, '}'),
+            self.create_char_lexer(TokenType.SQUARE_OPEN, '['),
+            self.create_char_lexer(TokenType.SQUARE_CLOSE, ']'),
+            self.create_char_lexer(TokenType.COLON, ':'),
+            self.create_char_lexer(TokenType.COMMA, ','),
             *self.build_string_tokenizers(RESERVED_WORDS, TokenType.RESERVED),
             *self.build_string_tokenizers(KEYWORDS, TokenType.KEYWORD),
             *self.build_string_tokenizers(OPERATORS, TokenType.OPERATOR),
@@ -125,31 +125,6 @@ class Lexer(Processor):
             return TokenizeResult(consumed, None) # currently just ignoring comments
         return TokenizeResult(0, None)
 
-    # concrete lexing functions
-    def lex_paren_open(self) -> TokenizeResult:
-        return self.lex_char(TokenType.PAREN_OPEN, '(')
-
-    def lex_paren_close(self) -> TokenizeResult:
-        return self.lex_char(TokenType.PAREN_CLOSE, ')')
-
-    def lex_curly_open(self) -> TokenizeResult:
-        return self.lex_char(TokenType.CURLY_OPEN, '{')
-
-    def lex_curly_close(self) -> TokenizeResult:
-        return self.lex_char(TokenType.CURLY_CLOSE, '}')
-
-    def lex_square_open(self) -> TokenizeResult:
-        return self.lex_char(TokenType.SQUARE_OPEN, '[')
-
-    def lex_square_close(self) -> TokenizeResult:
-        return self.lex_char(TokenType.SQUARE_CLOSE, ']')
-
-    def lex_colon(self) -> TokenizeResult:
-        return self.lex_char(TokenType.COLON, ':')
-
-    def lex_comma(self) -> TokenizeResult:
-        return self.lex_char(TokenType.COMMA, ',')
-
     def lex_number(self) -> TokenizeResult:
         pattern = re.compile('[0-9]|(\.)|(_)')
         end_pattern = re.compile('x|b|[A-F]|[a-f]|[0-9]|(\.)|(_)')
@@ -237,3 +212,6 @@ class Lexer(Processor):
             tokenizers.append(fn)
 
         return tokenizers
+
+    def create_char_lexer(self, tok_type, char):
+        return lambda: self.lex_char(tok_type, char)

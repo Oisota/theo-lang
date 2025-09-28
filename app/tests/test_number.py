@@ -1,6 +1,6 @@
 import pytest
 
-from app.token import Token, TokenType, TokenizeResult, LexContext
+from app.token import Token, TokenType, TokenizeResult
 from app.lexer import Lexer
 
 @pytest.mark.parametrize('num, expected', [

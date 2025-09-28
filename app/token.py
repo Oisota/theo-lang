@@ -56,15 +56,3 @@ class TokenizeResult:
 
     def __repr__(self):
         return f'TokenizeResult({self.consumed_chars}, {self.token})'
-
-@dataclass
-class LexContext:
-    data: list[str]
-    index: int
-
-    @property
-    def current(self):
-        return self.data[self.index]
-
-    def char_at_offset(self, offset: int):
-        return self.data[self.index + offset]
