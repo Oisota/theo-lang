@@ -1,11 +1,13 @@
 package org.theolang.compiler.lexer;
 
 import java.lang.Character;
+import java.lang.Exception;
 import java.util.ArrayList;
 
 import org.theolang.compiler.token.TokenizeResult;
 import org.theolang.compiler.token.TokenType;
 import org.theolang.compiler.token.Token;
+import org.theolang.compiler.Keywords;
 
 import org.theolang.compiler.lexer.CharLexer;
 import org.theolang.compiler.lexer.IdentifierLexer;
@@ -16,7 +18,7 @@ import org.theolang.compiler.lexer.NumberLexer;
 import org.theolang.compiler.lexer.StringLexer;
 import org.theolang.compiler.lexer.WhitespaceLexer;
 
-class Lexer {
+public class Lexer {
 
 	private LexContext ctx;
 
@@ -28,15 +30,19 @@ class Lexer {
 		var tokens = new ArrayList<Token>();
 		var tokenizers = getLexCallables();
 
-		int dataLength = data.length();
 		int currentLine = 1;
 		int currentColumn = 1;
 
 		// TODO finish impl of this method
-		while (index < dataLength) {
+		while (ctx.hasNext()) {
 			boolean tokenized = false;
 			for (LexerCallable tokenizer : tokenizers) {
-				TokenizeResult result = tokenizer.call();
+                try {
+                    TokenizeResult result = tokenizer.call();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    break;
+                }
 			}
 		}
 

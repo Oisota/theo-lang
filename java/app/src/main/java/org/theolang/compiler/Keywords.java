@@ -2,7 +2,7 @@ package org.theolang.compiler;
 
 import java.util.Set;
 
-class Keywords {
+public class Keywords {
     public static final Set<String> KEYWORDS = Set.of(
 		// imports
 		"import",

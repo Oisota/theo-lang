@@ -11,7 +11,7 @@ class LexContext {
 	private ArrayList<Character> data;
 	private int index = 0;
 
-	public Lexer(ArrayList<Character> data) {
+	public LexContext(ArrayList<Character> data) {
 		this.data = data;
 	}
 
@@ -30,4 +30,16 @@ class LexContext {
 	public void consume(int n) {
 		index += n;
 	}
+
+    /*
+     * Check if we can consume the next n chars without
+     * going past the data length
+     */
+    public boolean checkConsume(int n) {
+        return (index + n) < data.size();
+    }
+
+    public boolean hasNext() {
+        return index < data.size();
+    }
 }

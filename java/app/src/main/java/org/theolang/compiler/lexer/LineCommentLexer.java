@@ -9,5 +9,6 @@ class LineCommentLexer extends LexerCallable {
 	}
 
 	public TokenizeResult call() {
+        return TokenizeResult.empty();
 	}
 }

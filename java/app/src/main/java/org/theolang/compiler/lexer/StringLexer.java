@@ -9,5 +9,6 @@ class StringLexer extends LexerCallable {
 	}
 
 	public TokenizeResult call() {
+        return TokenizeResult.empty();
 	}
 }

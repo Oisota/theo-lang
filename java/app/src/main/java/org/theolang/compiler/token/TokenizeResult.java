@@ -17,7 +17,7 @@ public class TokenizeResult {
     /*
      * Util method for creating an empty result
      */
-    static TokenizeResult empty() {
+    public static TokenizeResult empty() {
         return new TokenizeResult(0, null);
     }
 }

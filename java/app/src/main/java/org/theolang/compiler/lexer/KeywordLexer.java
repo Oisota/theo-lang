@@ -1,5 +1,7 @@
 package org.theolang.compiler.lexer;
 
+import org.theolang.compiler.token.Token;
+import org.theolang.compiler.token.TokenType;
 import org.theolang.compiler.token.TokenizeResult;
 
 class KeywordLexer extends LexerCallable {
@@ -16,7 +18,7 @@ class KeywordLexer extends LexerCallable {
 	public TokenizeResult call() {
 		int consumedChars = 0;
 		while (
-			(ctx.index + consumedChars < ctx.length()) &&
+			ctx.checkConsume(consumedChars) &&
 			(consumedChars < keyword.length()) &&
 			(keyword.codePointAt(consumedChars) == ctx.atOffset(consumedChars))
 		) {

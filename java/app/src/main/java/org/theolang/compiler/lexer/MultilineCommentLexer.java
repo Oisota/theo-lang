@@ -9,5 +9,6 @@ class MultilineCommentLexer extends LexerCallable {
 	}
 
 	public TokenizeResult call() {
+        return TokenizeResult.empty();
 	}
 }
