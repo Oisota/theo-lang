@@ -4,7 +4,7 @@
 
 Rough concept of what a class might look like
 ```
-class Person {
+class Person : SuperClass {
     // instance fields
     name string
     age int
@@ -22,8 +22,8 @@ class Person {
         self.age = age
     }
 
-    fun say_hi(self) { // should self be implicit?
-        print(self.name)
+    fun say_hi() { // should self be implicit? or use this?
+        print(this.name)
     }
 
     static fun do_stuff() {...}
@@ -53,11 +53,11 @@ class ModelForm {
     fun validate() {...}
 }
 
-class FooForm(Form) {
+class FooForm : Form {
     model = FooModel
 }
 
-class BarForm(Form) {
+class BarForm : Form {
     model = BarModel
 }
 ```
@@ -103,7 +103,7 @@ class Model {
    updated_at datetime
 }
 
-class FooModel(Model) {
+class FooModel : Model {
     user User = ForeignKey(...),
 }
 ```
@@ -127,6 +127,9 @@ The other thing that must be considered is if we add classes, then what should s
 Seems superfluous to have both since they have significant overlap in functionality.
 I guess structs could be reworked to be a lightweight alternative to a class.
 A struct would only hold data and have no other built in functionality whereas classes/objects would all inherit from a base class and would have some basic functionality built in.
+Removing structs in favor of classes would simplify other aspects of the language.
+The struct/impl mechanism is a bit clunky when compared to classes/methods.
+OOP is also well understood by most programmers so keeping with tradition may be better than trying to stay simple with just structs.
 
 If we add OOP/classes then we will also need to consider how the class hierarchy and type system interact with other types like enums and unions.
 Do we go full OOP and everything is an object with enums/unions being special cases of objects?
@@ -135,7 +138,8 @@ I like the idea of everything being unified.
 
 I guess we could just figure out what a class should like syntax wise and add the approprite keywords to the lexer and make sure we can lex/parse the class even if we don't do anything with it.
 
-# Constructors
+## Constructors
+Should have a default constructor that automatically takes all fields as parameters and assigns them to the instance.
 ```
 class Foo {
     fun __init__(...) {...} // dunder init like python
@@ -148,4 +152,23 @@ let foo = Foo(
     bar = 4
 )
 // this seems inconsistent with the rest of the language since it doesn't have named parameters
+```
+
+## Inheritance
+Can inherit using the `:` syntax.
+Can inherit from other classes, interfaces, or both.
+```
+class Point2D {
+    x int
+    y int
+}
+class Point3D : Point2D {
+    z int
+}
+
+interface Foo {
+}
+
+class Bar : Foo {
+}
 ```

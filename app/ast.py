@@ -13,7 +13,7 @@ class Import:
 
 @dataclass
 class Expr:
-    pass
+    """Base expression class"""
 
 @dataclass
 class UnaryExpr(Expr):
@@ -23,22 +23,28 @@ class UnaryExpr(Expr):
 @dataclass
 class BinaryExpr(Expr):
     operator: str
+    operand1: Expr
+    operand2: Expr 
+
+@dataclass
+class ExprList(Expr):
     expressions: list = field(default_factory=list)
 
 @dataclass
-class BlockExpr(Expr):
-    expressions: list = field(default_factory=list)
+class BlockExpr(ExprList):
+    pass
 
 @dataclass
-class Scope(Expr):
-    expressions: list = field(default_factory=list)
+class Scope(ExprList):
+    params: list = field(default_factory=list)
 
 @dataclass
 class FuncDef(Expr):
     name: str
     return_type: str
     params: list = field(default_factory=list)
-    expressions: list = field(default_factory=list)
+    block: BlockExpr
+    anonymous: bool
 
 @dataclass
 class FuncCall(Expr):

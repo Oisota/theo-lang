@@ -1,8 +1,8 @@
 """Language keywords, operators, etc"""
 
-KEYWORDS = [
+KEYWORDS = set([
     # imports
-    'import', 'pub',
+    'import',
 
     # vars
     'let',
@@ -11,10 +11,10 @@ KEYWORDS = [
     'fun', 'fn', 'done', 'recur',
 
     # types
-    'class', 'interface', 'type', 'struct', 'enum', 'union', 'distinct',
+    'class', 'interface', 'type', 'enum', 'union', 'distinct',
 
     # OOP stuff
-    'abstract', 'static', 'implements', 'prop',
+    'construct', 'abstract', 'static', 'prop',
 
     # logical
     'case',
@@ -24,13 +24,15 @@ KEYWORDS = [
 
     # misc
     'scope',
-    ]
+    ])
 
 # reserved words for possible future use
-RESERVED_WORDS = [
+RESERVED_WORDS = set([
     'as',
+    'pub',
     'private',
     'public',
+    'protected',
     'export',
     'module',
     'mod',
@@ -40,13 +42,16 @@ RESERVED_WORDS = [
     'do',
     'for',
     'in',
-    ]
+    'constructor',
+    'init',
+    'struct',
+    ])
 
-OPERATORS = [
+OPERATORS = set([
     # logical
     'and', 'or', 'not', '==', '!=', '<=', '>=', '<', '>',
 
-    # pattern match and lambda expressions
+    # pattern match
     '=>',
 
     # math
@@ -63,4 +68,4 @@ OPERATORS = [
 
     # type annotation
     ':',
-    ]
+    ])

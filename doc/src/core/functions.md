@@ -30,13 +30,14 @@ Anonymous functions can be defined using the `fn` keyword like so:
 let add = fn (a, b) { a + b }
 
 let l1 = List()
-l1.map(fn (a) { a * 2 }) // single expression
-	.filter(fn (a) { // multiple expressions
+l1.map(fn (a int) int { a * 2 }) // single expression
+	.filter(fn (a int) Bool { // can use braces for multi-expression block
 		let x = a * 25
 		let z = a - 34
 		x > z
 	})
 ```
+I like this better as it avoids needing to reuse `=>` which is already used in case expressions.
 
 ## Early returns
 Can we support early returns from functions?

@@ -8,18 +8,16 @@ Probably best to mimic python's dunder method naming scheme to prevent naming co
 
 Example for plus operator:
 ```text
-struct Point {
-	x: int
-	y: int
-}
-
 interface Add[T] {
-	fun __add__(self: T, other: T) T
+	fun __add__(other: T) T
 }
 
-impl Add for Point {
-	fun __add__(self: Point, other: Point) {
-		return Point(self.x + other.x, self.y + other.y)
+class Point : Add {
+	x int
+	y int
+
+	fun __add__(self Point, other Point) Point {
+		Point(this.x + other.x, this.y + other.y)
 	}
 }
 
@@ -28,7 +26,7 @@ let p2 = Point(5, 4)
 let p3 = p1 + p2
 ```
 
-I'm thinking that all usage of operators should translate to the corresponding method calls.
+I'm thinking that all usage of operators should translate to their corresponding method calls.
 ```
 let r = p1 + p2
 // this would become

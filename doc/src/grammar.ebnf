@@ -63,10 +63,14 @@ case_expr = "case", space , expr , white_space , "{" , case_list , "}" ;
 (* functions *)
 param = id , space , id , [ "," ];
 param_list = { param } ,;
-func_sig = "fun", space , type_name , "(", param_list ")" , white_space , type_name ;
+func_body = "(", param_list ")" , white_space , type_name ;
+func_sig = "fun", space , type_name , func_body ;
 func_def = func_sig , white_space , block_expr;
 expr_list = { expr , white_space , "," , white_space };
 func_call = expr , white_space , "(" , expr_list , ")" ;
+
+(* anonymous function *)
+anon_func = "fn", space , func_body ;
 
 (* Type Definitions *)
 
