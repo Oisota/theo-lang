@@ -1,0 +1,20 @@
+package org.theolang.compiler.token;
+
+public enum TokenType {
+	PAREN_OPEN,
+	PAREN_CLOSE,
+	CURLY_OPEN,
+	CURLY_CLOSE,
+	SQUARE_OPEN,
+	SQUARE_CLOSE,
+	COLON,
+	COMMA,
+	KEYWORD,
+	INTEGER,
+	FLOAT,
+	STRING,
+	OPERATOR,
+	IDENTIFIER,
+	COMMENT,
+	RESERVED,
+}
