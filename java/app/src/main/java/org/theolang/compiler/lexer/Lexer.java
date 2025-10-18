@@ -9,15 +9,6 @@ import org.theolang.compiler.token.TokenType;
 import org.theolang.compiler.token.Token;
 import org.theolang.compiler.Keywords;
 
-import org.theolang.compiler.lexer.CharLexer;
-import org.theolang.compiler.lexer.IdentifierLexer;
-import org.theolang.compiler.lexer.KeywordLexer;
-import org.theolang.compiler.lexer.LineCommentLexer;
-import org.theolang.compiler.lexer.MultilineCommentLexer;
-import org.theolang.compiler.lexer.NumberLexer;
-import org.theolang.compiler.lexer.StringLexer;
-import org.theolang.compiler.lexer.WhitespaceLexer;
-
 public class Lexer {
 
 	private LexContext ctx;
@@ -30,19 +21,43 @@ public class Lexer {
 		var tokens = new ArrayList<Token>();
 		var tokenizers = getLexCallables();
 
-		int currentLine = 1;
-		int currentColumn = 1;
-
 		// TODO finish impl of this method
 		while (ctx.hasNext()) {
 			boolean tokenized = false;
 			for (LexerCallable tokenizer : tokenizers) {
-                try {
-                    TokenizeResult result = tokenizer.call();
-                } catch (Exception e) {
-                    System.out.println(e);
-                    break;
-                }
+				if (tokenized) {
+					break;
+				}
+
+				Token token = null;
+				TokenizeResult result = null;
+					
+				try {
+					result = tokenizer.call();
+				} catch (Exception e) {
+					System.out.println(e);
+					break;
+				}
+
+				if (result.consumedChars > 0) {
+					tokenized = true;
+				}
+
+				token = result.token;
+				if (!(token == null)) {
+					token.startLine = ctx.getCurrentLine();
+					token.startColumn = ctx.getCurrentColumn();
+				}
+				ctx.consume(result.consumedChars);
+				if (!(token == null)) {
+					token.endLine = ctx.getCurrentLine();
+					token.endColumn = ctx.getCurrentColumn();
+					tokens.add(token);
+				}
+			}
+
+			if (!tokenized) {
+				throw new Exception("Character not recognized: " + ctx.current());
 			}
 		}
 

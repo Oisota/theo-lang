@@ -10,6 +10,8 @@ import java.util.ArrayList;
 class LexContext {
 	private ArrayList<Character> data;
 	private int index = 0;
+	private int currentLine = 1;
+	private int currentColumn = 1;
 
 	public LexContext(ArrayList<Character> data) {
 		this.data = data;
@@ -27,7 +29,27 @@ class LexContext {
 		return data.size();
 	}
 
+	public int getCurrentLine() {
+		return currentLine;
+	}
+
+	public int getCurrentColumn() {
+		return currentColumn;
+	}
+
+	/*
+	 * Calculate current line/column position and update index
+	 */
 	public void consume(int n) {
+		// update current line/column 
+		for (int i=index; i<(index+n); i++) {
+			currentColumn += 1;
+			if (data.get(i) == '\n') {
+				currentLine += 1;
+				currentColumn = 1;
+			}
+		}
+		// bump index indicating the new current position
 		index += n;
 	}
 
@@ -39,7 +61,10 @@ class LexContext {
         return (index + n) < data.size();
     }
 
+	/*
+	 * Check if there are more tokens to consume
+	 */
     public boolean hasNext() {
-        return index < data.size();
+        return index + 1 < data.size();
     }
 }

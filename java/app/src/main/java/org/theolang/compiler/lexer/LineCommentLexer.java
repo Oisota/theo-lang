@@ -9,6 +9,17 @@ class LineCommentLexer extends LexerCallable {
 	}
 
 	public TokenizeResult call() {
-        return TokenizeResult.empty();
+		int consumed = 2;
+		String value = "";
+		if (ctx.current() == '/' && ctx.atOffset(1) == '/') {
+			char current = ctx.atOffset(consumed);
+			while (!(current == '\n')) {
+				value += current;
+				consumed += 1;
+				current = ctx.atOffset(consumed);
+			}
+			return new TokenizeResult(consumed, null);
+		}
+		return TokenizeResult.empty();
 	}
 }
