@@ -172,3 +172,27 @@ interface Foo {
 class Bar : Foo {
 }
 ```
+
+## Field Access
+We should consider making all class fields *protected* by default.
+This will mean that they can not be accessed outside of class methods.
+They can also be accessed by inheriting classes.
+This would enforce encapsulation by default which I think could be a good thing.
+Public access would be granted through a property.
+This should be a good compromise between needing to add all the access modifiers that java has while still providing roughly similar functionality.
+Will need to continue to think this through but I like the idea so far.
+Using properties to make things public also gives us flexibility if the underlying field changes since the public api of class won't change.
+Properties are also more verbose than just having access modifiers so this will discourage exposing fields from the get go.
+```
+class User {
+    name string
+    age int
+
+
+    prop name() { name }
+}
+
+let u = User("joe", 30)
+print(u.name) // prints joe
+print(u.age) // compilation error since age is not public
+```

@@ -18,3 +18,7 @@ serve_coverage:
 .PHONY: doc
 doc:
 	mdbook serve doc
+
+.PHONY: java_serve_coverage
+java_serve_coverage:
+	uv run python -m http.server -d java/app/build/reports 9000

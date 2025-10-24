@@ -1,7 +1,7 @@
 package org.theolang.compiler.lexer;
 
 import java.lang.Character;
-import java.lang.Exception;
+import java.lang.RuntimeException;
 import java.util.ArrayList;
 
 import org.theolang.compiler.token.TokenizeResult;
@@ -39,6 +39,8 @@ public class Lexer {
 					break;
 				}
 
+				System.out.println(result);
+
 				if (result.consumedChars > 0) {
 					tokenized = true;
 				}
@@ -54,10 +56,11 @@ public class Lexer {
 					token.endColumn = ctx.getCurrentColumn();
 					tokens.add(token);
 				}
+				System.out.println(token);
 			}
 
 			if (!tokenized) {
-				throw new Exception("Character not recognized: " + ctx.current());
+				throw new RuntimeException("Character not recognized: " + ctx.current());
 			}
 		}
 

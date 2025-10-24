@@ -37,7 +37,7 @@ public class Token {
 	}
 
 	public String toString() {
-		return "Token({}, '{}', line: {}-{}, column: {}-{})".formatted(
+		return "Token(%s, '%s', line: %d-%d, column: %d-%d)".formatted(
 			type.name(),
 			value,
 			startLine,

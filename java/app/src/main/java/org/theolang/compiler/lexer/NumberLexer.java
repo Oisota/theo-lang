@@ -10,8 +10,8 @@ import org.theolang.compiler.token.Token;
 
 class NumberLexer extends LexerCallable {
 
-	private Pattern pattern = Pattern.compile("[0-9]|(.)|(_)");
-	private Pattern endPattern = Pattern.compile("x|b|[A-F]|[a-f]|[0-9]|(.)|(_)");
+	private Pattern pattern = Pattern.compile("[0-9]|(\\.)|(_)");
+	private Pattern endPattern = Pattern.compile("x|b|[A-F]|[a-f]|[0-9]|(\\.)|(_)");
 
 	public NumberLexer(LexContext ctx) {
 		super(ctx);
