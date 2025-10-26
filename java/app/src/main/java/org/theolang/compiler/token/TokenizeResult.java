@@ -9,6 +9,11 @@ public class TokenizeResult {
 		this.token = token;
 	}
 
+	public TokenizeResult(int consumedChars) {
+		this.consumedChars = consumedChars;
+		this.token = null;
+	}
+
 	public String toString() {
 		return "TokenizeResult(%d, %s)"
 			.formatted(consumedChars, token);
