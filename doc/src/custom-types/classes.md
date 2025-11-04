@@ -196,3 +196,8 @@ let u = User("joe", 30)
 print(u.name) // prints joe
 print(u.age) // compilation error since age is not public
 ```
+
+I think we could make use of the `struct` syntax by making it equivalent to classes except that struct fields are all public by default.
+This mimics how C++ does things.
+This way structs can be used for more simple data containers and classes can be used for more advanced functionality.
+Everything else to do with structs should function the same as classes (inheritance, interfaces, methods, etc) except the field visibility difference.

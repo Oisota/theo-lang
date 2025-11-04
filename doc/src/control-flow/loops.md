@@ -81,3 +81,9 @@ loop(fn () {
 	}
 })
 ```
+
+I really like the idea of having a `loop()` function.
+This allows us to remove another construct from the language and deal with just functions.
+The above will require tail call optimization for it to work properly or maybe we just implement it in C as a built-in function.
+Either way I like this bettern than a `loop` keyword.
+We could potentially remove `loop`, `break`, and `continue` keywords which would futher simplify things.

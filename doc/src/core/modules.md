@@ -208,6 +208,16 @@ pub bar.Bar
 pub bam.Bam
 ```
 
+We could also just do explicit imports like so:
+```
+import (
+	"./foo" ( Foo )
+	"./bar" ( Bar )
+	"./bam" ( Bam )
+)
+```
+Then we wouldn't need the `pub` keyword at all.
+
 ```
 import (
 	"bat"
