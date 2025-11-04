@@ -21,7 +21,6 @@ public class Lexer {
 		var tokens = new ArrayList<Token>();
 		var tokenizers = getLexCallables();
 
-		// TODO finish impl of this method
 		while (ctx.hasNext()) {
 			boolean tokenized = false;
 			for (LexerCallable tokenizer : tokenizers) {

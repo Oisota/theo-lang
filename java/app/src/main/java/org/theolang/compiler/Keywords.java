@@ -3,7 +3,7 @@ package org.theolang.compiler;
 import java.util.Set;
 
 public class Keywords {
-    public static final Set<String> KEYWORDS = Set.of(
+	public static final Set<String> KEYWORDS = Set.of(
 		// imports
 		"import",
 
@@ -18,6 +18,7 @@ public class Keywords {
 
 		// types
 		"class",
+		"struct",
 		"interface",
 		"type",
 		"enum",
@@ -33,16 +34,11 @@ public class Keywords {
 		// logical
 		"case",
 
-		// loops
-		"loop",
-		"break",
-		"continue",
-
 		// misc
 		"scope"
 	);
 
-    public static final Set<String> RESERVED = Set.of(
+	public static final Set<String> RESERVED = Set.of(
 		"pub",
 		"as",
 		"private",
@@ -56,10 +52,12 @@ public class Keywords {
 		"do",
 		"for",
 		"in",
-		"struct"
+		"loop",
+		"break",
+		"continue",
 	);
 
-    public static final Set<String> OPERATORS = Set.of(
+	public static final Set<String> OPERATORS = Set.of(
 		// logical
 		"and",
 		"or",
