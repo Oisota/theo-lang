@@ -8,23 +8,19 @@ interface Shape {
 	fun area() float
 }
 
-struct Rect {
+struct Rect : Shape {
 	length float,
 	width float
-}
 
-impl Shape for Rect {
-	fun area(self Rect) {
+	fun area() {
 		length * width
 	}
 }
 
-struct Circle {
+struct Circle : Shape {
 	radius float
-}
 
-impl Shape for Circle {
-	fun area(self Circle) {
+	fun area() {
 		r * Math.pow(Math.PI, 2)
 	}
 }

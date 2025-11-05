@@ -1,5 +1,46 @@
 # Structs
 
+Structs will be equivalent to classes except that their fields will be public by default rather than protected as is with classes.
+This difference will be implemented as syntax sugar over classes with props that expose the protected fields.
+For example, this struct:
+```
+struct Point {
+    x float
+    y float
+
+    construct(x float, y float) {
+        self.x = x
+        self.y = y
+    }
+}
+```
+Will be equivalent to this class:
+```
+class Point {
+    x float
+    y float
+
+    construct(x float, y float) {
+        self.x = x
+        self.y = y
+    }
+
+    prop x() {
+        self.x
+    }
+
+    prop y() {
+        self.y
+    }
+}
+```
+
+The use case here is for when you want a simple data container that won't need accessor methods defined.
+It will still have all the functionality of a class but just with the convenience of public fields.
+If the struct becomes complex and warrants more information hiding, it can easily be converted to a class.
+
+*TODO: translate the following doc for classes and move into the classes doc.*
+
 Structures provide grouping of related data in a single type with named fields.
 
 ```text
@@ -66,7 +107,7 @@ struct Bar {
 }
 
 let bar = Bar(5)
-bar.a := 6
+bar.a.set(6)
 ```
 
 ## Methods

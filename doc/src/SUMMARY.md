@@ -22,7 +22,7 @@
 	- [Unions](./custom-types/unions.md)
 	- [Enums](./custom-types/enums.md)
 	- [Interfaces](./custom-types/interfaces.md)
-	- [Type Alias](./custom-types/alias.md)
+	- [Alias](./custom-types/alias.md)
 	- [Generics](./custom-types/generics.md)
 - [Control Flow](./control-flow/README.md)
 	- [Case Expression](./control-flow/case.md)

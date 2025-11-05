@@ -154,6 +154,27 @@ let foo = Foo(
 // this seems inconsistent with the rest of the language since it doesn't have named parameters
 ```
 
+## Field Access
+Class members will be *protected* by default.
+They can only be accessed by methods of the class and in methods of inheriting classes.
+This enforces encapsulation by default which I think is a good thing.
+Public access can be granted through properties.
+Using properties to make things public also gives us flexibility if the underlying field changes since the public api of class won't change.
+Properties are also more verbose than just having access modifiers so this will discourage exposing fields from the get go.
+```
+class User {
+    name string
+    age int
+
+
+    prop name() { name }
+}
+
+let u = User("joe", 30)
+print(u.name) // prints joe
+print(u.age) // compilation error since age is not public
+```
+
 ## Inheritance
 Can inherit using the `:` syntax.
 Can inherit from other classes, interfaces, or both.
@@ -172,32 +193,3 @@ interface Foo {
 class Bar : Foo {
 }
 ```
-
-## Field Access
-We should consider making all class fields *protected* by default.
-This will mean that they can not be accessed outside of class methods.
-They can also be accessed by inheriting classes.
-This would enforce encapsulation by default which I think could be a good thing.
-Public access would be granted through a property.
-This should be a good compromise between needing to add all the access modifiers that java has while still providing roughly similar functionality.
-Will need to continue to think this through but I like the idea so far.
-Using properties to make things public also gives us flexibility if the underlying field changes since the public api of class won't change.
-Properties are also more verbose than just having access modifiers so this will discourage exposing fields from the get go.
-```
-class User {
-    name string
-    age int
-
-
-    prop name() { name }
-}
-
-let u = User("joe", 30)
-print(u.name) // prints joe
-print(u.age) // compilation error since age is not public
-```
-
-I think we could make use of the `struct` syntax by making it equivalent to classes except that struct fields are all public by default.
-This mimics how C++ does things.
-This way structs can be used for more simple data containers and classes can be used for more advanced functionality.
-Everything else to do with structs should function the same as classes (inheritance, interfaces, methods, etc) except the field visibility difference.

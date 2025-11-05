@@ -8,7 +8,7 @@ They can access outer variables but inner variables can't be seen outside the bl
 fun foo(a string) int {
 	
 	let x = {
-		let f = (5 * 8).toString() + a // a is visible here
+		let f = {5 * 8}.toString() + a // a is visible here
 	}
 
 	let b = f // compile error, f is not defined
@@ -26,7 +26,7 @@ This is inspired by a video by Brian Will ([Brian Will: OOP is Bad](https://www.
 Variables from the enclosing scope must be passed to the **scope** expression in order to be used.
 This will be useful in breaking up long functions into subsections.
 It will clearly indicate which values are used by the expression.
-It will also make it easy to break the block out into a separate function of necessary.
+It will also make it easy to break the block out into a separate function if necessary.
 The **scope** expression is basically an immediately invoked anonymous function without access to the outer scope.
 
 ```text
@@ -52,3 +52,7 @@ fun foo(a int, b string, c Foo) Option[Foo] {
     //final stuff
 }
 ```
+
+The main benifit here is that you can create encapsulated chunks of code that behave very similarly to functions but still read linearly.
+This is in contrast to having to chase down function definitions throughout the file or in other files.
+This makes long functions perfectly fine to write and maintain without the drawbacks of needing many small functions that disrupt the flow of logic.

@@ -21,6 +21,24 @@ let mylist = Node(5, Node(6, Node(7, Nil)))
 let result = Option[string].Some("foo")
 ```
 
+Unions can also have methods defined on them:
+```
+union Option[T] {
+	Some(T),
+	None
+
+    fun map(func Function) {
+        case self {
+            Some(v) => Some(func(v))
+            None => None
+        }
+    }
+}
+
+let o = Some(5)
+let o1 = o.map(fn (v int) { v * v }) // -> o1 == Some(25)
+```
+
 TODO: need to figure out if the following are equivalent or not and if so, how are they different:
 ```
 union Foo {

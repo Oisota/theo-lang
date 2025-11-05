@@ -50,3 +50,5 @@ Seems like the usual approach here is to have a 'prelude' module that gets impor
 It would contain all the commonly used types already exported to the top level scope.
 
 I think the `common` module might be a good middle ground in that you still are being explicit with what is imported while still getting all the basic types imported easily.
+We should not worry about this at the start.
+It's easy enough to add in later if necessary.
