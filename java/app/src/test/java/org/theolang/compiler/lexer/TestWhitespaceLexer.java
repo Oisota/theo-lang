@@ -37,7 +37,8 @@ class TestWhitespaceLexer {
 			Arguments.of("\t", 1),
 			Arguments.of("\n", 1),
 			Arguments.of("\t    \n", 6),
-			Arguments.of("abcd", 0)
+			Arguments.of("abcd", 0),
+			Arguments.of("    abcd", 4)
 		);
 	}
 }

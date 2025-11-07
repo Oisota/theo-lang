@@ -23,7 +23,6 @@ class TestNumberLexer {
 		var ctx = new LexContext(arr);
 		var lexer = new NumberLexer(ctx);
 		var result = lexer.call();
-		System.out.println(result);
 		assertEquals(consumed, result.consumedChars);
 		if (output == null) {
 			assertEquals(null, result.token);

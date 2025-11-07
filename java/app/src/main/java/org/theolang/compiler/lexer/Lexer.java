@@ -55,7 +55,7 @@ public class Lexer {
 					token.endColumn = ctx.getCurrentColumn();
 					tokens.add(token);
 				}
-				System.out.println(token);
+				//System.out.println(token);
 			}
 
 			if (!tokenized) {

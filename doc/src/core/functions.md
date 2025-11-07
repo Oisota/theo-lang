@@ -1,7 +1,5 @@
 # Functions
 
-All execution/computation will be done using functions.
-There will be **No Classes** or classical oop.
 Functions will be first class and can be treated as any other value.
 Tail calls will be optimized.
 Functions will return whatever value their last expression evaluates to.
@@ -22,7 +20,7 @@ fun fib(n int) int {
 
 Types must be specified for function definitions to aid readability.
 
-## Anonymous Functions (Lambdas)
+## Anonymous Functions
 
 Anonymous functions can be defined using the `fn` keyword like so:
 
@@ -30,8 +28,8 @@ Anonymous functions can be defined using the `fn` keyword like so:
 let add = fn (a, b) { a + b }
 
 let l1 = List()
-l1.map(fn (a int) int { a * 2 }) // single expression
-	.filter(fn (a int) Bool { // can use braces for multi-expression block
+l1.map(fn (a) { a * 2 }) // single expression
+	.filter(fn (a) { // can use braces for multi-expression block
 		let x = a * 25
 		let z = a - 34
 		x > z
@@ -40,50 +38,38 @@ l1.map(fn (a int) int { a * 2 }) // single expression
 I like this better as it avoids needing to reuse `=>` which is already used in case expressions.
 
 ## Early returns
-Can we support early returns from functions?
-Early returns greatly simplify error handling and read-ability of code.
+Returning early from a function can be accomplished with the `done` keyword.
+This allows exiting from a block early rather than always returning the last expression in the block.
+This can greatly simplify error handling and read-ability of code.
 
 Ideas:
 ```text
 // without early return
 fun foo(some_var string) Option[string] {
-	if some_var == 'boo' {
-		Option.None
-	} else {
-		// all remaining code inside else
+	case some_var == 'boo' {
+		True => Option.None
+        False => {
+            // all remaining code inside else
+        }
 	}
 }
 
 // with early return
 fun foo(some_var string) Option[string] {
-	if some_var == 'boo' {
-		Option.None
-		done
-	}
-	
-	case some_var == "boo" {
-		True => { 
-			Option.None
-			done
-		}
-	}
-
-	if some_var == '' {
-		Option.None
-		done
+	case some_var == 'boo' {
+		True => {
+            Option.None
+            done
+        }
 	}
 
 	// all remaining code outside if block
 }
 ```
 
-Am thinking `done` would be a good keyword for this.
-Could use `return` but don't want to encourage useless `return` expressions at the end of functions unnecessarily.
-
-This would cause problems with `if`/`else` and case expressions.
-Since everything is an expression and `if`/`else` will be sugar for case expressions, an `if` with no `else` will compile to a `case` expression that is non-exhaustive in its pattern matching.
+This could cause problems with case expressions since this will allow a `case` expression that is non-exhaustive in its pattern matching.
 This will be a compiler error.
-Maybe we can get around this with the `done` keyword since we'll know  that we're exiting the function and don't need to handle the other possible cases.
+Maybe we can get around this with the since we'll know that we're exiting the function and don't need to handle the other possible cases.
 Will need to see how this plays out but I'm thinking the `done` keyword should be enough to make this work.
 Early returns are very useful it would be annoying to have to implement a function using chained `Option.map()`/`Option.flatMap()`
 

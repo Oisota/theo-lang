@@ -54,7 +54,7 @@ public class Keywords {
 		"in",
 		"loop",
 		"break",
-		"continue",
+		"continue"
 	);
 
 	public static final Set<String> OPERATORS = Set.of(

@@ -22,9 +22,9 @@ public class Compiler {
 			//var parser = new Parser(tokens):
 			//var ast = parser.parse()
 
-			for (Token t : tokens) {
-				System.out.println(t);
-			}
+			// for (Token t : tokens) {
+			// 	System.out.println(t);
+			// }
 		}
 	}
 

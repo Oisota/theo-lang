@@ -20,10 +20,11 @@ class WhitespaceLexer extends LexerCallable {
 		Matcher matcher = pattern.matcher(String.valueOf(current));
 		while (matcher.matches()) {
 			consumed += 1;
-			matcher = pattern.matcher(String.valueOf(current));
 			if (!ctx.checkConsume(consumed)) {
 				break;
 			}
+			current = ctx.atOffset(consumed);
+			matcher = pattern.matcher(String.valueOf(current));
 		}
 		return new TokenizeResult(consumed);
 	}
