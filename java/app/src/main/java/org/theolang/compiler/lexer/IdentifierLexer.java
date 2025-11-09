@@ -31,6 +31,7 @@ class IdentifierLexer extends LexerCallable {
 				} catch (IndexOutOfBoundsException e) {
 					break;
 				}
+				matcher = pattern.matcher(String.valueOf(current));
 			}
 			return new TokenizeResult(consumed, new Token(TokenType.IDENTIFIER, value));
 		}

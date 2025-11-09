@@ -32,6 +32,7 @@ class NumberLexer extends LexerCallable {
 				} catch (IndexOutOfBoundsException e) {
 					break;
 				}
+				endMatcher = endPattern.matcher(String.valueOf(current));
 			}
 
 			value = value.replace("_", "");

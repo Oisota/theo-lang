@@ -39,7 +39,8 @@ class TestNumberLexer {
 			Arguments.of("0b1010", "0b1010", 6, TokenType.INTEGER),
 			Arguments.of("0xFF", "0xFF", 4, TokenType.INTEGER),
 			Arguments.of("lmnop", null, 0, TokenType.INTEGER),
-			Arguments.of("52.4", "52.4", 4, TokenType.FLOAT)
+			Arguments.of("52.4", "52.4", 4, TokenType.FLOAT),
+			Arguments.of("52.4  ", "52.4", 4, TokenType.FLOAT)
 			// TODO this should fail but its parsing since the individual chars are allowed as a number but it should fail since its not a hex number
 			//Arguments.of("_abc", null, 0) 
 		);

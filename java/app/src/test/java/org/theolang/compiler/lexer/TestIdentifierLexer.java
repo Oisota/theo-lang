@@ -23,12 +23,12 @@ class TestIdentifierLexer {
 		var ctx = new LexContext(arr);
 		var lexer = new IdentifierLexer(ctx);
 		var result = lexer.call();
-		assertEquals(result.consumedChars, consumed);
+		assertEquals(consumed, result.consumedChars);
 		if (output == null) {
-			assertEquals(result.token, null);
+			assertEquals(null, result.token);
 		} else {
-			assertEquals(result.token.type, TokenType.IDENTIFIER);
-			assertEquals(result.token.value, output);
+			assertEquals(TokenType.IDENTIFIER, result.token.type);
+			assertEquals(output, result.token.value);
 		}
 	}
 
@@ -39,7 +39,8 @@ class TestIdentifierLexer {
 			Arguments.of("foo_123", "foo_123", 7),
 			Arguments.of("1234", null, 0), // invalid var name
 			Arguments.of("a", "a", 1),
-			Arguments.of("1", null, 0)
+			Arguments.of("1", null, 0),
+			Arguments.of("abc?", "abc", 3) // TODO fix failing test
 		);
 	}
 }

@@ -20,16 +20,17 @@ public class Lexer {
 	public ArrayList<Token> lex() {
 		var tokens = new ArrayList<Token>();
 		var tokenizers = getLexCallables();
+		boolean tokenized = false;
 
 		while (ctx.hasNext()) {
-			boolean tokenized = false;
+			tokenized = false;
 			for (LexerCallable tokenizer : tokenizers) {
+				Token token = null;
+				TokenizeResult result = null;
+
 				if (tokenized) {
 					break;
 				}
-
-				Token token = null;
-				TokenizeResult result = null;
 					
 				try {
 					result = tokenizer.call();
@@ -37,8 +38,6 @@ public class Lexer {
 					System.out.println(e);
 					break;
 				}
-
-				System.out.println(result);
 
 				if (result.consumedChars > 0) {
 					tokenized = true;
@@ -54,6 +53,7 @@ public class Lexer {
 					token.endLine = ctx.getCurrentLine();
 					token.endColumn = ctx.getCurrentColumn();
 					tokens.add(token);
+					System.out.println(result);
 				}
 				//System.out.println(token);
 			}

@@ -14,6 +14,11 @@ public class TokenizeResult {
 		this.token = null;
 	}
 
+	public TokenizeResult() {
+		this.consumedChars = 0;
+		this.token = null;
+	}
+
 	public String toString() {
 		return "TokenizeResult(%d, %s)"
 			.formatted(consumedChars, token);
@@ -23,6 +28,6 @@ public class TokenizeResult {
      * Util method for creating an empty result
      */
     public static TokenizeResult empty() {
-        return new TokenizeResult(0, null);
+        return new TokenizeResult();
     }
 }
