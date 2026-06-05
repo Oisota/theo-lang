@@ -10,7 +10,7 @@ public class Keywords {
 		// vars
 		"let",
 
-		// functions
+		// functions/methods
 		"fun",
 		"fn",
 		"done",
@@ -38,6 +38,7 @@ public class Keywords {
 		"scope"
 	);
 
+	// reserved for possible future use
 	public static final Set<String> RESERVED = Set.of(
 		"pub",
 		"as",

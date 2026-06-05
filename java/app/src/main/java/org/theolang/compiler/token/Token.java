@@ -37,13 +37,23 @@ public class Token {
 	}
 
 	public String toString() {
-		return "Token(%s, '%s', line: %d-%d, column: %d-%d)".formatted(
-			type.name(),
-			value,
-			startLine,
-			endLine,
-			startColumn,
-			endColumn
-		);
+		if (startLine == endLine) {
+			return "Token(%s, '%s', line: %d, column: %d-%d)".formatted(
+				type.name(),
+				value,
+				startLine,
+				startColumn,
+				endColumn
+			);
+		} else {
+			return "Token(%s, '%s', line: %d-%d, column: %d-%d)".formatted(
+				type.name(),
+				value,
+				startLine,
+				endLine,
+				startColumn,
+				endColumn
+			);
+		}
 	}
 }

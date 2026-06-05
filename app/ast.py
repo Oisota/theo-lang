@@ -1,18 +1,21 @@
 from dataclasses import dataclass, field
 
+class Node:
+    pass
+
 @dataclass
-class Program:
+class Program(Node):
     imports: list = field(default_factory=list)
     expressions: list = field(default_factory=list)
 
 @dataclass
-class Import:
+class Import(Node):
     path: str = ''
     name: str = '' # package name, or alias if given
     items: list = field(default_factory=list) # specific items to import if any
 
 @dataclass
-class Expr:
+class Expr(Node):
     """Base expression class"""
 
 @dataclass

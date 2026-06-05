@@ -9,8 +9,3 @@ Variable declaration will look like:
 let x: string = 'Hello, World' //with type annotation
 let a = 5 // with type inference
 ```
-
-Should we add a `const` or `define` keyword for compile time constants that are simply inlined wherever used?
-```
-const FOO = 25
-```

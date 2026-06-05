@@ -1,0 +1,77 @@
+@buildable // some kind of macro syntax to autobuild the below builder class?
+pub class HttpRequest { // mark this public but leave builder class private?
+	url string
+	headers Dict[string, string]
+	json JSON
+	timeout int
+
+	construct(
+		url string,
+		headers Dict[string, string],
+		json JSON,
+		timeout int,
+	) {
+		this.url = url
+		this.headers = headers
+		this.json = json
+		this.timeout = timeout
+	}
+
+	// this would get auto generated as well
+	fun builder() HttpRequestBuilder {
+		HttpRequestBuilder()
+	}
+}
+
+// can we generate this with some sort of macro?
+// macro could generate everything and simply name the class "{class_name}Builder"
+class HttpRequestBuilder {
+	url Mut[string]
+	headers Mut[Dict[string, string]]
+	json Mut[JSON]
+	timeout Mut[int]
+
+	construct() {
+		this.url = Mut[string]("")
+		this.headers = Mut[Dict[string, string]]()
+		this.json = Mut[JSON]()
+		this.timeout = Mut[int]()
+	}
+
+	fun build() {
+		HttpRequest(
+			this.url.get(),
+			this.headers.get(),
+			this.json.get(),
+			this.timeout.get()
+		)
+	}
+
+	fun url(value string) {
+		this.url.set(value)
+		this
+	}
+	fun headers(value Dict[string, string]) {
+		this.headers.set(value)
+		this
+	}
+	fun json(value JSON) {
+		this.json.set(value)
+		this
+	}
+	fun timeout(value int) {
+		this.timeout.set(value)
+		this
+	}
+}
+
+let req = HttpRequest.builder()
+	.url("foobar.com/api/v1/foos")
+	.headers(headers_dict)
+	.json(json_data)
+	.timeout(30)
+	.build()
+
+I like the builder pattern since it doesn't require new language constructs and is fairly readable if slightly more verbose than named parameters.
+I think if we can autogenerate the builder classes with a macro or something, this will be the best way forward.
+Would probably be worth it to hard code the builder macro from the start even if we don't fully implement the macro system since it would save a lot of verbose boilerplate code.

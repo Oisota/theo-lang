@@ -1,8 +1,8 @@
 " Vim syntax file
-" Language:	Func
+" Language:	Theo
 " Maintainer: Derek Morey
 
-if exists("b:current_syntax") && b:current_syntax == "func"
+if exists("b:current_syntax") && b:current_syntax == "theo"
   finish
 endif
 
@@ -24,15 +24,15 @@ syn match   javaScriptNumber	       "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
 syn match	javaScriptBraces	   "[{}\[\]<>#]"
 syn match	javaScriptParens	   "[()]"
 
-syn keyword javaScriptReserved	class as private public pub export module mod namespace const while do in prop
+syn keyword javaScriptReserved	for if else as private public export module mod namespace const while do in prop
 syn keyword javaScriptType	float int string char void uint byte ubyte int8 int16 int32 int64 uint8 uint16 uint32 uint64
-syn keyword javaScriptConditional	case if else loop break continue for
+syn keyword javaScriptConditional	case loop break continue 
 syn keyword javaScriptOperator		and or xor not
-syn keyword javaScriptStatement		type struct enum union interface impl
+syn keyword javaScriptStatement		class type struct enum union interface fun fn
 "syn keyword javaScriptBoolean		true false
 "syn keyword javaScriptNull		nil _
-syn keyword javaScriptIdentifier	let scope distinct
-syn keyword javaScriptFunction	fun fn done recur import
+syn keyword javaScriptIdentifier	let scope distinct pub
+syn keyword javaScriptFunction	done recur import construct this
 
 highlight link javaScriptComment		Comment
 highlight link javaScriptLineComment		Comment

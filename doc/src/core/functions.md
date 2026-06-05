@@ -23,9 +23,10 @@ Types must be specified for function definitions to aid readability.
 ## Anonymous Functions
 
 Anonymous functions can be defined using the `fn` keyword like so:
+Do we need types for anonymous functions?
 
 ```
-let add = fn (a, b) { a + b }
+let add = fn (a int, b int) int { a + b }
 
 let l1 = List()
 l1.map(fn (a) { a * 2 }) // single expression
@@ -74,6 +75,9 @@ Will need to see how this plays out but I'm thinking the `done` keyword should b
 Early returns are very useful it would be annoying to have to implement a function using chained `Option.map()`/`Option.flatMap()`
 
 ## Named Parameters?
+
+*NOTE: thinking of leaving this out as I don't think it's worth the added complexity*
+
 It would be nice to support named parameters in functions.
 Not sure what it would take to support this.
 
@@ -157,6 +161,17 @@ fun send_request({
 	body string
 }) {
 }
+```
+
+Using the builder pattern instead of named arguments:
+```
+let resp = send_request(HttpRequest.builder()
+	.url("www.google.com")
+	.method(Method.GET)
+	.timeout(10)
+	.follow_redirects(False)
+    .build()
+)
 ```
 
 ## Recursion keyword

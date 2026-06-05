@@ -110,49 +110,6 @@ let bar = Bar(5)
 bar.a.set(6)
 ```
 
-## Methods
-Structs can have methods defined in `impl` blocks.
-An `impl` block of the form `impl <struct-name>` will define methods on the struct whereas the form `impl <interface-name> for <struct-name>` will define an implementation of an interface for a given struct.
-
-```text
-struct Rect {
-	x1: int,
-	y1: int,
-	x2: int,
-	y2: int,
-}
-
-impl Rect {
-	fun area(self) {
-		(self.x2 - self.x1) * (self.y2 - self.y1)
-	}
-}
-
-// This could just as easily be an interface implementation
-interface Shape {
-	fun area(self): int
-}
-
-impl Shape for Rect {
-	fun area(self) {
-		(self.x2 - self.x1) * (self.y2 - self.y1)
-	}
-}
-
-let rect = Rect { x1 = 4, y1 = 0, x2 = 10, y2 = 20 }
-let area = rect.area()
-```
-Should `self` be a keyword or just convention?
-
-Should we allow adding `impl`s wherever?
-Rust only allows a bare `impl` in the same crate.
-Allowing anyone to add methods to an existing `struct` could be confusing with not knowing where something is defined or when its available to call.
-Would make things a bit harder to understand.
-Seems like it would be better to just create your own interface and use that if you need methods added to a struct.
-Rust allows implementing traits from anywhere.
-This allows extending a `struct` if you need to.
-
-
 ## Creation/Initialization
 Structs instances can be created by calling the struct name like a function.
 Values for all fields without default values must be provided at creation time.
@@ -171,15 +128,6 @@ let p4 = Point(3, x=3) // compile time error
 let p5 = Point(y=3, x=3) // ok
 let p6 = Point(y=3, x) // compile time error
 let p7 = Point() // compile time error
-```
-
-## Updates
-Since struct fields are immutable by default, it might be nice to have a simple way of updating struct fields by creating a new struct with the new data.
-```
-let p = Point(x = 5, y = 6)
-let j = p.update(x=10) // simple method present on all structs? (Don't have keyword args so this wouldn't work)
-let j = Point(base=p, x=10) // use a special base arg to specify data to inherit (This seems like the best option)
-let j = Point(**p, x=10) // some kind of splat operator that expands collections?
 ```
 
 ## Properties
